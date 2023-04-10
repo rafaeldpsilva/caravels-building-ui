@@ -7,54 +7,11 @@ import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
 
-import BuildingEnergy from "../pages/BuildingEnergy.vue";
-import BuildingHistoric from "../pages/BuildingHistoric.vue";
-import CMDView from "../pages/CMDataVisualization.vue";
-import Correlations from "../pages/Correlations.vue";
-import EnergyForecast from "../pages/EnergyForecast.vue";
-import TokenGeneration from "../pages/TokenGenerationForm.vue";
-import Tokens from "../pages/Tokens.vue";
-
 const routes = [
   {
     path: "/",
     name: "/",
     redirect: "/dashboard-default",
-  },
-  {
-    path: "/building-energy",
-    name: "Building Energy",
-    component: BuildingEnergy,
-  },
-  {
-    path: "/building-historic",
-    name: "Building Historic",
-    component: BuildingHistoric,
-  },
-  {
-    path: "/cmd-view",
-    name: "CMD View",
-    component: CMDView,
-  },
-  {
-    path: "/correlations",
-    name: "Correlations",
-    component: Correlations,
-  },
-  {
-    path: "/energy-forecast",
-    name: "Energy Forecast",
-    component: EnergyForecast,
-  },
-  {
-    path: "/tokens",
-    name: "Tokens",
-    component: Tokens,
-  },
-  {
-    path: "/token-generation",
-    name: "Token Generation",
-    component: TokenGeneration,
   },
   {
     path: "/dashboard-default",
