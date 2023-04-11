@@ -3,95 +3,98 @@
     <div class="card-header pb-0 p-3">
       <div class="row">
         <div class="col-6 d-flex align-items-center">
-          <h6 class="mb-0">Invoices</h6>
+          <h6 class="mb-0">Generate Token</h6>
         </div>
         <div class="col-6 text-end">
-          <argon-button color="success" size="sm" variant="outline">View All</argon-button>
+          <argon-button color="success" size="sm" variant="outline">Generate</argon-button>
         </div>
       </div>
     </div>
-    <div class="card-body p-3 pb-0 mb-0">
-      <ul class="list-group">
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex flex-column">
-            <h6 class="mb-1 text-dark font-weight-bold text-sm">March, 01, 2020</h6>
-            <span class="text-xs">#MS-415646</span>
-          </div>
-          <div class="d-flex align-items-center text-sm">
-            $180
-            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4">
-              <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i> PDF
-            </button>
-          </div>
-        </li>
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex flex-column">
-            <h6 class="text-dark mb-1 font-weight-bold text-sm">February, 10, 2021</h6>
-            <span class="text-xs">#RV-126749</span>
-          </div>
-          <div class="d-flex align-items-center text-sm">
-            $250
-            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4">
-              <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i> PDF
-            </button>
-          </div>
-        </li>
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex flex-column">
-            <h6 class="text-dark mb-1 font-weight-bold text-sm">April, 05, 2020</h6>
-            <span class="text-xs">#FB-212562</span>
-          </div>
-          <div class="d-flex align-items-center text-sm">
-            $560
-            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4">
-              <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i> PDF
-            </button>
-          </div>
-        </li>
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex flex-column">
-            <h6 class="text-dark mb-1 font-weight-bold text-sm">June, 25, 2019</h6>
-            <span class="text-xs">#QW-103578</span>
-          </div>
-          <div class="d-flex align-items-center text-sm">
-            $120
-            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4">
-              <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i> PDF
-            </button>
-          </div>
-        </li>
-        <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-          <div class="d-flex flex-column">
-            <h6 class="text-dark mb-1 font-weight-bold text-sm">March, 01, 2019</h6>
-            <span class="text-xs">#AR-803481</span>
-          </div>
-          <div class="d-flex align-items-center text-sm">
-            $300
-            <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4">
-              <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i> PDF
-            </button>
-          </div>
-        </li>
-      </ul>
+    <div class="card-body p-3 pb-0 mb-0">      
+      <div class="row">
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">Name</label>
+          <input class="form-control" type="text" value="Name" />
+        </div>
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">List of Resources</label>
+          <select v-model="resources_selected">
+            <option v-for="option in resources" :key="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">Data Aggregation</label>
+          <select v-model="data_selected">
+            <option v-for="option in data_agg" :key="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">Time Aggregation</label>
+          <select v-model="time_selected">
+            <option v-for="option in time_agg" :key="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">Embargo Period</label>
+            <input class="form-control" type="text" value="Embargo Period" />
+        </div>
+        <div class="col-md-6">
+          <label for="example-text-input" class="form-control-label">Expiration Date</label>                  
+          <VueDatePicker v-model="date"></VueDatePicker>
+        </div>
+      </div>
+      <hr class="horizontal dark" />
+      <p class="text-uppercase text-sm">Token</p>
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" type="text" value="Name" />
+        </div>
+      </div>          
     </div>
   </div>
 </template>
-
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
   name: "invoice-card",
   components: {
+    VueDatePicker,
     ArgonButton,
   },
+  data() {
+    return {
+      resources_selected: '5',
+      resources: [
+        { text: 'IoT_1', value: '1' },
+        { text: 'IoT_2', value: '2' },
+        { text: 'IoT_3', value: '3' }
+      ],
+      data_selected: '5',
+      data_agg: [
+        { text: '5 min', value: '5' },
+        { text: '10 min', value: '10' },
+        { text: '15 min', value: '15' }
+      ],
+      time_selected: '5',
+      time_agg: [
+        { text: '5 min', value: '5' },
+        { text: '10 min', value: '10' },
+        { text: '15 min', value: '15' }
+      ],
+    }
+  }
 };
 </script>
