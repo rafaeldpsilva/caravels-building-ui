@@ -17,6 +17,17 @@
       </li>
       <li class="nav-item">
         <sidenav-item
+          url="/tokens"
+          :class="getRoute() === 'tokens' ? 'active' : ''"
+          :navText="'Tokens'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
+        <sidenav-item
           url="/tables"
           :class="getRoute() === 'tables' ? 'active' : ''"
           :navText="'Tables'"
