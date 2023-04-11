@@ -37,7 +37,7 @@
               directionReverse
             ></card>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
+          <!--div class="col-lg-3 col-md-6 col-12">
             <card
               :title="stats.sales.title"
               :value="stats.sales.value"
@@ -47,18 +47,21 @@
               :detail="stats.sales.detail"
               directionReverse
             ></card>
-          </div>
+          </div-->
         </div>
         <div class="row">
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
             <div class="card z-index-2">
-              <gradient-line-chart />
+              <building-overview />
             </div>
           </div>
           <div class="col-lg-5">
-            <carousel />
+            <categories-card />
           </div>
+          <!--div class="col-lg-5">
+            <carousel />
+          </div-->
         </div>
         <div class="row mt-4">
           <div class="col-lg-7 mb-lg-0 mb-4">
@@ -107,9 +110,6 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-5">
-            <categories-card />
-          </div>
         </div>
       </div>
     </div>
@@ -117,8 +117,8 @@
 </template>
 <script>
 import Card from "@/examples/Cards/Card.vue";
-import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
-import Carousel from "./components/Carousel.vue";
+import BuildingOverview from "@/examples/Charts/BuildingOverview.vue";
+//import Carousel from "./components/Carousel.vue";
 import CategoriesCard from "./components/CategoriesCard.vue";
 
 import US from "@/assets/img/icons/flags/US.png";
@@ -213,8 +213,8 @@ export default {
   },
   components: {
     Card,
-    GradientLineChart,
-    Carousel,
+    BuildingOverview,
+   // Carousel,
     CategoriesCard,
   },
 };

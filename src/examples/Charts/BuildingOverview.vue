@@ -20,7 +20,7 @@
 import Chart from "chart.js/auto";
 
 export default {
-  name: "gradient-line-chart",
+  name: "building-overview",
 
   props: {
     title: {
@@ -48,10 +48,10 @@ export default {
     new Chart(ctx1, {
       type: "line",
       data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"],
         datasets: [
           {
-            label: "Mobile apps",
+            label: "Consumption",
             tension: 0.4,
             borderWidth: 0,
             pointRadius: 0,
@@ -60,7 +60,7 @@ export default {
             // eslint-disable-next-line no-dupe-keys
             borderWidth: 3,
             fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            data: [0, 0, 0, 0, 0, 0, 0, 20, 60, 150, 300, 600, 1000, 1300, 1600, 1400, 1230, 1000, 800, 400, 100, 50, 0, 0, 0, 0],
             maxBarThickness: 6,
           },
         ],
