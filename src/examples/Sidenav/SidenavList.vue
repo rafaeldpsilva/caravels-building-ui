@@ -22,7 +22,7 @@
           :navText="'Tokens'"
         >
           <template v-slot:icon>
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            <i class="ni ni-key-25 text-success text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>

@@ -15,13 +15,14 @@ const TokenService = {
     };
   },
 
-  generateToken(payload) {
-    axios.post('/generate_token', payload).then((response) => {
-      return response.data.token;
-    })
-    .catch((error) => {
+  async generateToken(payload) {
+    const path = `http://192.168.2.171:5006/tokens/generate`
+    try{
+      const response = await axios.post(path,payload);
+      return response.data.tokens
+    }catch(error) {
       console.error(error);
-    });
+    };
   }
 };
 
