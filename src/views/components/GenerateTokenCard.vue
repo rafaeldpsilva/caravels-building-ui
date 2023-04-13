@@ -14,39 +14,42 @@
       <div class="row">
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Name</label>
-          <input class="form-control" type="text" value="Name" />
+          <input class="form-control" type="text" placeholder="Name" :value="name"/>
         </div>
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">List of Resources</label>
-          <select v-model="resources_selected">
-            <option v-for="option in resources" :key="option.value">
-              {{ option.text }}
-            </option>
-          </select>
+          <div>
+            <VueMultiselect
+              v-model="resources_selected"
+              :options="resources"
+              :multiple="true"/>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Data Aggregation</label>
-          <select v-model="data_selected">
-            <option v-for="option in data_agg" :key="option.value">
-              {{ option.text }}
-            </option>
-          </select>
+          <div>
+            <VueMultiselect
+              v-model="data_selected"
+              :options="data_agg">
+            </VueMultiselect>
+          </div>
         </div>
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Time Aggregation</label>
-          <select v-model="time_selected">
-            <option v-for="option in time_agg" :key="option.value">
-              {{ option.text }}
-            </option>
-          </select>
+          <div>
+            <VueMultiselect
+              v-model="time_selected"
+              :options="time_agg">
+            </VueMultiselect>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Embargo Period</label>
-            <input class="form-control" type="text" value="Embargo Period" />
+            <input class="form-control" type="text" placeholder="Embargo Period" :value="embargo"/>
         </div>
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Expiration Date</label>                  
@@ -56,8 +59,17 @@
       <hr class="horizontal dark" />
       <p class="text-uppercase text-sm">Token</p>
       <div class="row">
-        <div class="col-md-12">
-          <input class="form-control" type="text" value="Name" />
+        <div class="col-md-10">
+          <input class="form-control" type="text" placeholder="Token" v-model="token" />
+        </div>
+        
+        <div class="col-md-2">
+          <a class="btn btn-link text-dark px-1 mb-0" href="javascript:;" @click="copyToClipboard()">
+            <i class="fas fa-copy text-dark me-2" aria-hidden="true"></i>
+          </a> 
+          <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:;" @click="removeItem(index)">
+            <i class="fa fa-upload me-2" aria-hidden="true"></i>
+          </a>
         </div>
       </div>          
     </div>
@@ -65,36 +77,45 @@
 </template>
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
+import VueMultiselect from 'vue-multiselect'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
   name: "generate-token-card",
   components: {
+    VueMultiselect,
     VueDatePicker,
     ArgonButton,
   },
   data() {
     return {
-      resources_selected: '5',
-      resources: [
-        { text: 'IoT_1', value: '1' },
-        { text: 'IoT_2', value: '2' },
-        { text: 'IoT_3', value: '3' }
-      ],
-      data_selected: '5',
-      data_agg: [
-        { text: '5 min', value: '5' },
-        { text: '10 min', value: '10' },
-        { text: '15 min', value: '15' }
-      ],
-      time_selected: '5',
-      time_agg: [
-        { text: '5 min', value: '5' },
-        { text: '10 min', value: '10' },
-        { text: '15 min', value: '15' }
-      ],
+      name: '',
+      embargo: '',
+      token: '',
+      date: null,
+      resources_selected: 'All',
+      resources: ['All','IoT_1','IoT_2','IoT_3'],
+      data_selected: null,
+      data_agg: ['5 min','10 min','15 min'],
+      time_selected: null,
+      time_agg: ['5 min','10 min','15 min'],
     }
+  },
+  methods:{
+    getResources () {
+      
+    },
+    copyToClipboard() {    
+      navigator.clipboard.writeText(this.token)
+        .then(() => {
+          console.log('Text copied to clipboard',this.token)
+        })
+        .catch((error) => {
+          console.error('Error copying text: ', error)
+        })
+    },
   }
 };
 </script>
