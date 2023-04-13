@@ -40,7 +40,7 @@
         <billing-card />
       </div>
       <div class="col-md-5">
-        <transaction-card />
+        <token-historic-card />
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@ import DefaultInfoCard from "@/examples/Cards/DefaultInfoCard.vue";
 import PaymentCard from "./components/PaymentCard.vue";
 import GenerateTokenCard from "./components/GenerateTokenCard.vue";
 import BillingCard from "./components/BillingCard.vue";
-import TransactionCard from "./components/TransactionCard.vue";
+import TokenHistoricCard from "./components/TokenHistoricCard.vue";
 
 export default {
   name: "Billing",
@@ -62,7 +62,7 @@ export default {
     PaymentCard,
     GenerateTokenCard,
     BillingCard,
-    TransactionCard,
+    TokenHistoricCard,
   },
   data() {
     return {
