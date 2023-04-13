@@ -69,7 +69,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
-  name: "invoice-card",
+  name: "generate-token-card",
   components: {
     VueDatePicker,
     ArgonButton,

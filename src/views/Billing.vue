@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <invoice-card class="mt-4" />
+        <generate-token-card class="mt-4" />
       </div>
     </div>
     <div class="row">
@@ -50,7 +50,7 @@
 import MasterCard from "@/examples/Cards/MasterCard.vue";
 import DefaultInfoCard from "@/examples/Cards/DefaultInfoCard.vue";
 import PaymentCard from "./components/PaymentCard.vue";
-import InvoiceCard from "./components/InvoiceCard.vue";
+import GenerateTokenCard from "./components/GenerateTokenCard.vue";
 import BillingCard from "./components/BillingCard.vue";
 import TransactionCard from "./components/TransactionCard.vue";
 
@@ -60,7 +60,7 @@ export default {
     MasterCard,
     DefaultInfoCard,
     PaymentCard,
-    InvoiceCard,
+    GenerateTokenCard,
     BillingCard,
     TransactionCard,
   },
