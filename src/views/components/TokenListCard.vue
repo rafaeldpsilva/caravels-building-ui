@@ -37,7 +37,6 @@
 
 <script>
 import TokenService from '../../services/TokenService.js';
-import axios from 'axios';
 
 export default {
   name: "token-list-card",
@@ -65,16 +64,6 @@ export default {
     },
     async loadTokenList (){
       this.tokenlist = await TokenService.getTokens()
-    },
-    getTokens() {
-      const path = `http://192.168.2.171:5006/tokens?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicmFmYWVsIiwiTGlzdCBvZiBSZXNvdXJjZXMiOiJyYWZhZWwiLCJEYXRhIEFnZ3JlZ2F0aW9uIjoicmFmYWVsIiwiVGltZSBBZ2dyZWdhdGlvbiI6InJhZmFlbCIsIkVtYmFyZ28gUGVyaW9kIjoicmFmYWVsIiwiZXhwIjoxNzE5NzQ0NDE3fQ.Dzz5-JyYVL5jqO9jYFFUmAUV3jtGKIIWD9E7RM5kjP8`
-      axios.get(path)
-        .then((res) => {
-          this.tokenlist = res.data.tokens;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     },
     addItem() {
       this.tokenlist.push({ id: 4, name: 'Item 4' })

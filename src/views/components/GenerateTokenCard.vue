@@ -6,7 +6,7 @@
           <h6 class="mb-0">Generate Token</h6>
         </div>
         <div class="col-6 text-end">
-          <argon-button color="success" size="sm" variant="outline">Generate</argon-button>
+          <argon-button color="success" size="sm" variant="outline" @click="generateToken()">Generate</argon-button>
         </div>
       </div>
     </div>
@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Name</label>
-          <input class="form-control" type="text" placeholder="Name" :value="name"/>
+          <input class="form-control" type="text" placeholder="Name" v-model="name"/>
         </div>
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">List of Resources</label>
@@ -49,7 +49,7 @@
       <div class="row">
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Embargo Period</label>
-            <input class="form-control" type="text" placeholder="Embargo Period" :value="embargo"/>
+            <input class="form-control" type="text" placeholder="Embargo Period" v-model="embargo"/>
         </div>
         <div class="col-md-6">
           <label for="example-text-input" class="form-control-label">Expiration Date</label>                  
@@ -67,7 +67,7 @@
           <a class="btn btn-link text-dark px-1 mb-0" href="javascript:;" @click="copyToClipboard()">
             <i class="fas fa-copy text-dark me-2" aria-hidden="true"></i>
           </a> 
-          <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:;" @click="removeItem(index)">
+          <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:;" @click="saveToken()">
             <i class="fa fa-upload me-2" aria-hidden="true"></i>
           </a>
         </div>
@@ -76,11 +76,13 @@
   </div>
 </template>
 <script>
+
 import ArgonButton from "@/components/ArgonButton.vue";
 import VueMultiselect from 'vue-multiselect'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import "vue-multiselect/dist/vue-multiselect.css";
+import TokenService from '../../services/TokenService.js';
 
 export default {
   name: "generate-token-card",
@@ -89,11 +91,13 @@ export default {
     VueDatePicker,
     ArgonButton,
   },
+  async created (){
+    await this.generateToken();
+  },
   data() {
     return {
       name: '',
       embargo: '',
-      token: '',
       date: null,
       resources_selected: 'All',
       resources: ['All','IoT_1','IoT_2','IoT_3'],
@@ -101,11 +105,21 @@ export default {
       data_agg: ['5 min','10 min','15 min'],
       time_selected: null,
       time_agg: ['5 min','10 min','15 min'],
+      token: '',
     }
   },
   methods:{
-    getResources () {
+    async getResources () {
       
+    },
+    async generateToken () {
+      this.token = await TokenService.postGenerateToken(this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
+    },
+    async saveToken() {    
+      let response = await TokenService.postSaveToken(this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
+      if (response['active'] == true){
+        this.token == "SAVED"
+      }
     },
     copyToClipboard() {    
       navigator.clipboard.writeText(this.token)

@@ -15,11 +15,31 @@ const TokenService = {
     };
   },
 
-  async generateToken(payload) {
+  async postGenerateToken(name, listOfResources, dataAggregation, timeAggregation, embargo, expirationInMinutes) {
+    const payload = {
+      "name": name,
+      "listofresources": listOfResources,
+      "dataaggregation": dataAggregation,
+      "timeaggregation": timeAggregation,
+      "embargo": embargo,
+      "exp": expirationInMinutes
+    }
     const path = `http://192.168.2.171:5006/tokens/generate`
     try{
       const response = await axios.post(path,payload);
-      return response.data.tokens
+      return response.data.token
+    }catch(error) {
+      console.error(error);
+    };
+  },
+  async postSaveToken(token) {
+    const payload = {
+      "token": token
+    }
+    const path = `http://192.168.2.171:5006/tokens/save`
+    try{
+      const response = await axios.post(path,payload);
+      return response.data
     }catch(error) {
       console.error(error);
     };

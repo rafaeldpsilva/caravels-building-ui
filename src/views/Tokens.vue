@@ -10,19 +10,19 @@
             <div class="row">
               <div class="col-md-6">
                 <default-info-card
-                  :classIcon="salary.classIcon"
-                  :title="salary.title"
-                  :desc="salary.desc"
-                  :price="salary.price"
-                />
+                  :classIcon="check.classIcon"
+                  :title="check.title"
+                  :desc="check.desc"
+                  :price="check.price"
+                  @click="loading_check()"/>
               </div>
               <div class="col-md-6">
                 <default-info-card
-                  :classIcon="paypal.classIcon"
-                  :title="paypal.title"
-                  :desc="paypal.desc"
-                  :price="paypal.price"
-                />
+                  :classIcon="forget.classIcon"
+                  :title="forget.title"
+                  :desc="forget.desc"
+                  :price="forget.price"
+                  @click="loading_forget()"/>
               </div>
             </div>
           </div>
@@ -66,19 +66,29 @@ export default {
   },
   data() {
     return {
-      salary: {
-        classIcon: "text-white fas fa-landmark",
-        title: "Salary",
-        desc: "Belong Interactive",
-        price: "+$2000",
+      check: {
+        classIcon: "text-white fas fa-check",
+        title: "Stored data",
+        desc: "Check stored private data",
+        price: "Assert",
       },
-      paypal: {
-        classIcon: "text-white fab fa-paypal",
-        title: "Paypal",
-        desc: "Freelance Payment",
-        price: "$455.00",
+      forget: {
+        classIcon: "text-white fas fa-bomb",
+        title: "Forget",
+        desc: "Evoke right to forget",
+        price: "Forget",
       },
     };
   },
+  methods:{
+    loading_check(){
+      this.check.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
+      this.check.price = 'Checking'
+    },
+    loading_forget(){
+      this.forget.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
+      this.forget.price = 'Checking'
+    }
+  }
 };
 </script>
