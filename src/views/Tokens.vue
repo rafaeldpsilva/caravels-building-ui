@@ -68,8 +68,8 @@ export default {
     return {
       check: {
         classIcon: "text-white fas fa-check",
-        title: "Stored data",
-        desc: "Check stored private data",
+        title: "Data Sharing",
+        desc: "Assert data sharing contracts compliance",
         price: "Assert",
       },
       forget: {
