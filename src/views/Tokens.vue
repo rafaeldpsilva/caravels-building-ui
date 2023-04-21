@@ -83,11 +83,12 @@ export default {
   methods:{
     loading_check(){
       this.check.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
-      this.check.price = 'Checking'
+      this.check.price = 'Checking';
     },
     loading_forget(){
       this.forget.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
-      this.forget.price = 'Checking'
+      this.forget.price = 'Checking';
+      
     }
   }
 };
