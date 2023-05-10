@@ -20,7 +20,7 @@ const BuildingService = {
     this.forget = "/forget"
   },
   async getHistoric() {
-    const path = `${this.baseURL}${this.historic}?token=${this.token}`
+    const path = this.baseURL+this.historic+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.historic
@@ -29,7 +29,7 @@ const BuildingService = {
     };
   },
   async getIots() {
-    const path = `${this.baseURL}${this.iots}?token=${this.token}`
+    const path = this.baseURL+this.iots+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.iots
@@ -38,7 +38,7 @@ const BuildingService = {
     };
   },
   async getEnergyNow() {
-    const path = `${this.baseURL}${this.historic}?token=${this.token}`
+    const path = this.baseURL+this.historic+'?token='+this.token
     try{
       const response = await axios.get(path);
       return {"consumption": response.data.consumption, "generation" : response.data.generation, "flexibility": response.data.flexibility};
@@ -48,7 +48,7 @@ const BuildingService = {
     };
   },
   async getEnergyTotalPower() {
-    const path = `${this.baseURL}${this.energy_totalpower}?token=${this.token}`
+    const path = this.baseURL+this.energy_totalpower+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.totalpower
@@ -57,7 +57,7 @@ const BuildingService = {
     };
   },
   async getEnergyConsumption() {
-    const path = `${this.baseURL}${this.energy_consumption}?token=${this.token}`
+    const path = this.baseURL+this.energy_consumption+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data
@@ -66,7 +66,7 @@ const BuildingService = {
     };
   },
   async getEnergyGeneration() {
-    const path = `${this.baseURL}${this.energy_generation}?token=${this.token}`
+    const path = this.baseURL+this.energy_generation+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data
@@ -75,7 +75,7 @@ const BuildingService = {
     };
   },
   async getEnergyFlexibility() {
-    const path = `${this.baseURL}${this.energy_flexibility}?token=${this.token}`
+    const path = this.baseURL+this.energy_flexibility+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.flexibility
@@ -84,7 +84,7 @@ const BuildingService = {
     };
   },
   async getCorrelations() {
-    const path = `${this.baseURL}${this.correlations}?token=${this.token}`
+    const path = this.baseURL+this.correlations+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.correlations
@@ -93,7 +93,7 @@ const BuildingService = {
     };
   },
   async getForecastConsumption() {
-    const path = `${this.baseURL}${this.forecast_consumption}?token=${this.token}`
+    const path = this.baseURL+this.forecast_consumption+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.forecasted_consumption
@@ -102,7 +102,7 @@ const BuildingService = {
     };
   },
   async getForecastFlexibility() {
-    const path = `${this.baseURL}${this.forecast_flexibility}?token=${this.token}`
+    const path = this.baseURL+this.forecast_flexibility+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.forecasted_flexibility
@@ -111,7 +111,7 @@ const BuildingService = {
     };
   },
   async getForecast() {
-    const path = `${this.baseURL}${this.forecast}?token=${this.token}`
+    const path = this.baseURL+this.forecast+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.tokens
@@ -120,7 +120,7 @@ const BuildingService = {
     };
   },
   async getAuditCheck() {
-    const path = `${this.baseURL}${this.audit_check}?token=${this.token}`
+    const path = this.baseURL+this.audit_check+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.response
@@ -132,7 +132,7 @@ const BuildingService = {
     const payload = {
       "building": building
     }
-    const path = `${this.communityOperatorURL}${this.forget}?token=${this.token}`
+    const path = this.communityOperatorURL+this.forget+'?token='+this.token
     try{
       const response = await axios.post(path,payload);
       return response.data.deleted_data_count

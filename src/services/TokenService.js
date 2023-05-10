@@ -12,7 +12,7 @@ const TokenService = {
   },
 
   async getTokens() {
-    const path = `${this.baseURL}${this.tokens}?token=${this.token}`
+    const path = this.baseURL+this.tokens+'?token='+this.token
     try{
       const response = await axios.get(path);
       return response.data.tokens
@@ -30,7 +30,7 @@ const TokenService = {
       "embargo": embargo,
       "exp": expirationInMinutes
     }
-    const path = `${this.baseURL}${this.tokens_generate}?token=${this.token}`
+    const path = this.baseURL+this.tokens_generate+'?token='+this.token
     try{
       const response = await axios.post(path,payload);
       return response.data.token
@@ -43,7 +43,7 @@ const TokenService = {
     const payload = {
       "token": token
     }
-    const path = `${this.baseURL}${this.tokens_check}?token=${this.token}`
+    const path = this.baseURL+this.tokens_check+'?token='+this.token
     try{
       const response = await axios.post(path,payload);
       return response.data
@@ -56,7 +56,7 @@ const TokenService = {
     const payload = {
       "token": token
     }
-    const path = `${this.baseURL}${this.tokens_save}?token=${this.token}`
+    const path = this.baseURL+this.tokens_save+'?token='+this.token
     try{
       const response = await axios.post(path,payload);
       return {"token": response.data.token, "datetime" : response.data.datetime, "active": response.data.active}
@@ -69,7 +69,7 @@ const TokenService = {
     const payload = {
       "token": token
     }
-    const path = `${this.baseURL}${this.tokens_revoke}?token=${this.token}`
+    const path = this.baseURL+this.tokens_revoke+'?token='+this.token
     try{
       const response = await axios.post(path,payload);
       return {"token": response.data.token, "datetime" : response.data.datetime, "active": response.data.active}
