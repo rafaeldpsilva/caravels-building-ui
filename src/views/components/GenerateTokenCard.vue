@@ -91,9 +91,6 @@ export default {
     VueDatePicker,
     ArgonButton,
   },
-  async created (){
-    await this.generateToken();
-  },
   data() {
     return {
       name: '',

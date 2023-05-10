@@ -1,15 +1,13 @@
 import axios from 'axios';
 
 const TokenService = {
-  init() {
-    this.baseURL = 'https://192.168.2.171:5006';
-    this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicmFmYWVsIiwiTGlzdCBvZiBSZXNvdXJjZXMiOiJyYWZhZWwiLCJEYXRhIEFnZ3JlZ2F0aW9uIjoicmFmYWVsIiwiVGltZSBBZ2dyZWdhdGlvbiI6InJhZmFlbCIsIkVtYmFyZ28gUGVyaW9kIjoicmFmYWVsIiwiZXhwIjoxNzE5NzQ0NDE3fQ.Dzz5-JyYVL5jqO9jYFFUmAUV3jtGKIIWD9E7RM5kjP8';
-    this.tokens = "/tokens";
-    this.tokens_generate = "/tokens/generate";
-    this.tokens_check = "/tokens/check";
-    this.tokens_save = "/tokens/save";
-    this.tokens_revoke = "/tokens/revoke";
-  },
+  baseURL : 'http://192.168.2.171:5006',
+  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ29tbXVuaXR5IE9wZXJhdG9yIiwibGlzdF9vZl9yZXNvdXJjZXMiOlsiYWdncmVnYXRlZCIsImRpc2NyZXRlIiwiY29tbXVuaXR5X21hbmFnZXIiLCJhZG1pbiJdLCJkYXRhX2FnZ3JlZ2F0aW9uIjoiYWxsIiwidGltZV9hZ2dyZWdhdGlvbiI6ImFsbCIsImVtYmFyZ29fcGVyaW9kIjoiMTIzNTEyMyIsImV4cCI6MTcxMzU0MDk4Mn0.Mn7NycJse-gptdVe7_9Ozu218Q2JZ_IfoQqVpjMRQx8',
+  tokens : "/tokens",
+  tokens_generate : "/tokens/generate",
+  tokens_check : "/tokens/check",
+  tokens_save : "/tokens/save",
+  tokens_revoke : "/tokens/revoke",
 
   async getTokens() {
     const path = this.baseURL+this.tokens+'?token='+this.token

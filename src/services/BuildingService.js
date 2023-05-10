@@ -1,24 +1,23 @@
 import axios from 'axios';
 
 const BuildingService = {
-  init() {
-    this.communityOperatorURL = 'https://192.168.2.171:5000';
-    this.baseURL = 'https://192.168.2.171:5006';
-    this.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicmFmYWVsIiwiTGlzdCBvZiBSZXNvdXJjZXMiOiJyYWZhZWwiLCJEYXRhIEFnZ3JlZ2F0aW9uIjoicmFmYWVsIiwiVGltZSBBZ2dyZWdhdGlvbiI6InJhZmFlbCIsIkVtYmFyZ28gUGVyaW9kIjoicmFmYWVsIiwiZXhwIjoxNzE5NzQ0NDE3fQ.Dzz5-JyYVL5jqO9jYFFUmAUV3jtGKIIWD9E7RM5kjP8';
-    this.historic = "/historic";
-    this.iots = "/iots";
-    this.energy_now = "/energy/now";
-    this.energy_totalpower = "/energy/totalpower";
-    this.energy_consumption = "/energy/consumption";
-    this.energy_generation = "/energy/generation";
-    this.energy_flexibility = "/energy/flexibility";
-    this.correlations = "/correlations";
-    this.forecast = "/forecast";
-    this.forecast_consumption = "/forecast/consumption";
-    this.forecast_flexibility = "/forecast/flexibility";
-    this.audit_check = "/audit/check";
-    this.forget = "/forget"
-  },
+  communityOperatorURL : 'http://192.168.2.171:5000',
+  baseURL : 'http://192.168.2.171:5006',
+  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicmFmYWVsIiwiTGlzdCBvZiBSZXNvdXJjZXMiOiJyYWZhZWwiLCJEYXRhIEFnZ3JlZ2F0aW9uIjoicmFmYWVsIiwiVGltZSBBZ2dyZWdhdGlvbiI6InJhZmFlbCIsIkVtYmFyZ28gUGVyaW9kIjoicmFmYWVsIiwiZXhwIjoxNzE5NzQ0NDE3fQ.Dzz5-JyYVL5jqO9jYFFUmAUV3jtGKIIWD9E7RM5kjP8',
+  historic : "/historic",
+  iots : "/iots",
+  energy_now : "/energy/now",
+  energy_totalpower : "/energy/totalpower",
+  energy_consumption : "/energy/consumption",
+  energy_generation : "/energy/generation",
+  energy_flexibility : "/energy/flexibility",
+  correlations : "/correlations",
+  forecast : "/forecast",
+  forecast_consumption : "/forecast/consumption",
+  forecast_flexibility : "/forecast/flexibility",
+  audit_check : "/audit/check",
+  forget : "/forget",
+  
   async getHistoric() {
     const path = this.baseURL+this.historic+'?token='+this.token
     try{
@@ -38,7 +37,7 @@ const BuildingService = {
     };
   },
   async getEnergyNow() {
-    const path = this.baseURL+this.historic+'?token='+this.token
+    const path = this.baseURL+this.energy_now+'?token='+this.token
     try{
       const response = await axios.get(path);
       return {"consumption": response.data.consumption, "generation" : response.data.generation, "flexibility": response.data.flexibility};

@@ -209,6 +209,7 @@ export default {
   },
   beforeMount() {
     this.sales.brasil.sales = "1234"
+    this.updateMonitoringValues();
     this.stats.consumption.value = "0 W";
     this.stats.generation.value = "0 W";
     this.stats.flexibility.value = "0 W";
