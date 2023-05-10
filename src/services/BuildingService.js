@@ -41,9 +41,10 @@ const BuildingService = {
     const path = `${this.baseURL}${this.historic}?token=${this.token}`
     try{
       const response = await axios.get(path);
-      return {"consumption": response.data.consumption, "generation" : response.data.generation, "flexibility": response.data.flexibility}
+      return {"consumption": response.data.consumption, "generation" : response.data.generation, "flexibility": response.data.flexibility};
     }catch(error) {
       console.error(error);
+      return {"consumption": 0, "generation" : 0, "flexibility": 0};
     };
   },
   async getEnergyTotalPower() {

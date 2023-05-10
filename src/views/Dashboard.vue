@@ -118,6 +118,7 @@
 <script>
 import Card from "@/examples/Cards/Card.vue";
 import BuildingOverview from "@/examples/Charts/BuildingOverview.vue";
+import BuildingService from "../services/BuildingService.js"
 //import Carousel from "./components/Carousel.vue";
 import CategoriesCard from "./components/CategoriesCard.vue";
 
@@ -198,18 +199,19 @@ export default {
     };
   },
   methods: {  
-    values() {
-      this.sales.brasil.sales = "1234"
-      this.stats.consumption.value = "123 W";
-      this.stats.generation.value = "123 W";
-      this.stats.flexibility.value = "123 W";
+    async updateMonitoringValues() {
+      this.sales.brasil.sales = "1234";
+      this.energyNow = await BuildingService.getEnergyNow();
+      this.stats.consumption.value = this.energyNow['consumption'] + " W";
+      this.stats.generation.value = this.energyNow['generation'] + " W";
+      this.stats.flexibility.value = this.energyNow['flexibility'] + " W";
     }
   },
   beforeMount() {
     this.sales.brasil.sales = "1234"
-    this.stats.consumption.value = "123 W";
-    this.stats.generation.value = "123 W";
-    this.stats.flexibility.value = "123 W";
+    this.stats.consumption.value = "0 W";
+    this.stats.generation.value = "0 W";
+    this.stats.flexibility.value = "0 W";
   },
   components: {
     Card,

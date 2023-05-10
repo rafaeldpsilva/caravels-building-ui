@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import BuildingService from '../services/BuildingService.js';
 import MasterCard from "@/examples/Cards/MasterCard.vue";
 import DefaultInfoCard from "@/examples/Cards/DefaultInfoCard.vue";
 import PaymentCard from "./components/PaymentCard.vue";
@@ -81,14 +82,15 @@ export default {
     };
   },
   methods:{
-    loading_check(){
+    async loading_check(){
       this.check.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
       this.check.price = 'Checking';
+      this.tokenlist = await BuildingService.getAuditCheck();
     },
-    loading_forget(){
+    async loading_forget(){
       this.forget.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
       this.forget.price = 'Checking';
-      
+      this.tokenlist = await BuildingService.forgetUser();
     }
   }
 };
