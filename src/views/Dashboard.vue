@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="col-lg-5">
-            <categories-card />
+            <demand-response-events-card />
           </div>
           <!--div class="col-lg-5">
             <carousel />
@@ -120,7 +120,7 @@ import Card from "@/examples/Cards/Card.vue";
 import BuildingOverview from "@/examples/Charts/BuildingOverview.vue";
 import BuildingService from "../services/BuildingService.js"
 //import Carousel from "./components/Carousel.vue";
-import CategoriesCard from "./components/CategoriesCard.vue";
+import DemandResponseEventsCard from "./components/DemandResponseEventsCard.vue";
 
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";
@@ -217,8 +217,8 @@ export default {
   components: {
     Card,
     BuildingOverview,
-   // Carousel,
-    CategoriesCard,
+    // Carousel,
+    DemandResponseEventsCard,
   },
 };
 </script>
