@@ -49,15 +49,15 @@
           <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
             v-for="invite in answeredInvitationsList" :key="invite.event_time">
             <div class="d-flex align-items-center">
-              <div class="mb-0 me-3 d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.color">
-                <i class="fas " :class="invite.icon" aria-hidden="true"></i>
+              <div class="mb-0 me-3 d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.response == 'YES' ? 'text-success' : 'text-danger'">
+                <i class="fas " :class="invite.response == 'YES' ? 'fa-check' : 'fa-times'" aria-hidden="true"></i>
               </div>
               <div class="d-flex flex-column">
                 <h6 class="mb-1 text-dark text-sm">{{invite.iots}}</h6>
                 <span class="text-xs">{{invite.event_time}}</span>
               </div>
             </div>
-            <div class="d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.color">{{invite.load_kwh}} kwh | {{invite.load_percentage}} %</div>
+            <div class="d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.response == 'YES' ? 'text-success' : 'text-danger'">{{invite.load_kwh}} kwh | {{invite.load_percentage}} %</div>
           </li>
         </ul>
       </div>
@@ -72,6 +72,7 @@
     name: "demand-response-events-card",
     async created() {
       await this.loadPendingInvitations();
+      await this.loadAnsweredInvitations();
     },
     data() {
       return {
@@ -98,7 +99,8 @@
         this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations()
       },
       async loadAnsweredInvitations (){
-        this.pendingInvitationsList = await DemandResponseService.getAnsweredInvitations()
+        //TODO COLOR E ICON
+        this.answeredInvitationsList = await DemandResponseService.getAnsweredInvitations()
       }
     },
     components: {
