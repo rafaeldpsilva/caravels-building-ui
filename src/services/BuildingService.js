@@ -3,7 +3,7 @@ import axios from 'axios';
 const BuildingService = {
   communityOperatorURL : 'http://192.168.2.171:5000',
   baseURL : 'http://192.168.2.171:5005',
-  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoicmFmYWVsIiwiTGlzdCBvZiBSZXNvdXJjZXMiOiJyYWZhZWwiLCJEYXRhIEFnZ3JlZ2F0aW9uIjoicmFmYWVsIiwiVGltZSBBZ2dyZWdhdGlvbiI6InJhZmFlbCIsIkVtYmFyZ28gUGVyaW9kIjoicmFmYWVsIiwiZXhwIjoxNzE5NzQ0NDE3fQ.Dzz5-JyYVL5jqO9jYFFUmAUV3jtGKIIWD9E7RM5kjP8',
+  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ29tbXVuaXR5IE9wZXJhdG9yIiwibGlzdF9vZl9yZXNvdXJjZXMiOlsiYWdncmVnYXRlZCIsImRpc2NyZXRlIiwiY29tbXVuaXR5X21hbmFnZXIiLCJhZG1pbiJdLCJkYXRhX2FnZ3JlZ2F0aW9uIjoiYWxsIiwidGltZV9hZ2dyZWdhdGlvbiI6ImFsbCIsImVtYmFyZ29fcGVyaW9kIjoiMTIzNTEyMyIsImV4cCI6MTcxMzU0MDk4Mn0.Mn7NycJse-gptdVe7_9Ozu218Q2JZ_IfoQqVpjMRQx8',
   historic : "/historic",
   iots : "/iots",
   energy_now : "/energy/now",

@@ -63,7 +63,7 @@
             <carousel />
           </div-->
         </div>
-        <div class="row mt-4">
+        <!--div class="row mt-4">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">
               <div class="p-3 pb-0 card-header">
@@ -110,14 +110,14 @@
               </div>
             </div>
           </div>
-        </div>
+        </div-->
       </div>
     </div>
   </div>
 </template>
 <script>
 import Card from "@/examples/Cards/Card.vue";
-import BuildingOverview from "@/examples/Charts/BuildingOverview.vue";
+import BuildingOverview from "./components/BuildingOverview.vue";
 import BuildingService from "../services/BuildingService.js"
 //import Carousel from "./components/Carousel.vue";
 import DemandResponseEventsCard from "./components/DemandResponseEventsCard.vue";
