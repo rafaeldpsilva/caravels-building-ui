@@ -37,17 +37,6 @@
               directionReverse
             ></card>
           </div>
-          <!--div class="col-lg-3 col-md-6 col-12">
-            <card
-              :title="stats.sales.title"
-              :value="stats.sales.value"
-              :percentage="stats.sales.percentage"
-              :iconClass="stats.sales.iconClass"
-              :iconBackground="stats.sales.iconBackground"
-              :detail="stats.sales.detail"
-              directionReverse
-            ></card>
-          </div-->
         </div>
         <div class="row">
           <div class="col-lg-7 mb-lg">
@@ -63,6 +52,13 @@
             <carousel />
           </div-->
         </div>
+        <!--div class="row">
+          <div class="col-lg-7 mb-lg">
+            <div class="card z-index-2">
+              <building-forecast-overview />
+            </div>
+          </div>
+        </div-->
         <!--div class="row mt-4">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card">

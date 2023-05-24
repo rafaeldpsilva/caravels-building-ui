@@ -22,7 +22,9 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-overview",
-
+  async created(){
+    await this.loadBuildingOverview();
+  },
   props: {
     title: {
       type: String,
@@ -39,12 +41,35 @@ export default {
   },
   data() {
     return {
-      historic: [0, 0, 0, 0, 0, 0, 0, 20, 60, 150, 300, 600, 1000, 1300, 1600, 1400, 1230, 1000, 800, 400, 100, 50, 0, 0, 0, 0]
+      consumption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      generation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      flexibility: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      hours: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
     }
   },
   methods: {  
-    async updateBuildingOverview() {
-      this.historic = await BuildingService.getHistoric();
+    async loadBuildingOverview() {
+      await BuildingService.getHistoric().then( historic => {
+        let consumption = [];
+        let generation = [];
+        let flexibility = [];
+        let hours = [];
+        let i = 0;
+        while (i < historic.length) {
+            consumption.push(historic[i][0]);
+            generation.push(historic[i][1]);
+            flexibility.push(historic[i][2]);
+            var dateObject = new Date(historic[i][3]);
+            hours.push(dateObject.getUTCHours());
+            i++;
+        }
+        this.consumption = consumption;
+        this.generation = generation;
+        this.flexibility = flexibility;
+        this.hours = hours;
+        this.createBuildingOverview();
+      });
+
     },
     createBuildingOverview() {
       var ctx1 = document.getElementById("chart-line").getContext("2d");
@@ -57,19 +82,45 @@ export default {
       new Chart(ctx1, {
         type: "line",
         data: {
-          labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"],
+          labels: this.hours,
           datasets: [
             {
               label: "Consumption",
               tension: 0.4,
               borderWidth: 0,
               pointRadius: 0,
-              borderColor: "#4BB543 ",
+              borderColor: "#825ee4",
               backgroundColor: gradientStroke1,
               // eslint-disable-next-line no-dupe-keys
               borderWidth: 3,
               fill: true,
-              data: this.historic,
+              data: this.consumption,
+              maxBarThickness: 6,
+            },
+            {
+              label: "Generation",
+              tension: 0.4,
+              borderWidth: 0,
+              pointRadius: 0,
+              borderColor: "#f5365c",
+              backgroundColor: gradientStroke1,
+              // eslint-disable-next-line no-dupe-keys
+              borderWidth: 3,
+              fill: true,
+              data: this.generation,
+              maxBarThickness: 6,
+            },
+            {
+              label: "Flexibility",
+              tension: 0.4,
+              borderWidth: 0,
+              pointRadius: 0,
+              borderColor: "#2dce89",
+              backgroundColor: gradientStroke1,
+              // eslint-disable-next-line no-dupe-keys
+              borderWidth: 3,
+              fill: true,
+              data: this.flexibility,
               maxBarThickness: 6,
             },
           ],
@@ -132,14 +183,8 @@ export default {
       });
     }
   },
-  beforeMount() {
-    this.updateBuildingOverview();
-  },
-  async created() {
-    //await this.updateBuildingOverview();
-  },
   mounted() {
-    this.createBuildingOverview();
+    
   },
 };
 </script>

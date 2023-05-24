@@ -82,16 +82,14 @@
     },
     methods: {
       async acceptInvite(index, event_time) {
-        console.log(event_time)
         let invite = this.pendingInvitationsList.at(index)
-        this.answeredInvitationsList.unshift({ "icon": "fa-check", "color": "text-success", "iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage},)
+        this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "YES"})
         await DemandResponseService.postAnsweredInvitation(event_time, "YES");
         this.pendingInvitationsList.splice(index, 1)
       },
       async declineInvite(index, event_time) {
-        console.log(event_time)
         let invite = this.pendingInvitationsList.at(index)
-        this.answeredInvitationsList.unshift({ "icon": "fa-times", "color": "text-danger", "iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage},)
+        this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "NO"})
         await DemandResponseService.postAnsweredInvitation(event_time, "NO");
         this.pendingInvitationsList.splice(index, 1)
       },
