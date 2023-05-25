@@ -21,14 +21,14 @@ import Chart from "chart.js/auto";
 import BuildingService from "../../services/BuildingService.js"
 
 export default {
-  name: "building-overview",
+  name: "building-forecast",
   async created(){
-    await this.loadBuildingOverview();
+    await this.loadBuildingForecast();
   },
   props: {
     title: {
       type: String,
-      default: "Building Overview",
+      default: "Consumption forecast",
     },
     detail1: {
       type: String,
@@ -48,18 +48,18 @@ export default {
     }
   },
   methods: {  
-    async loadBuildingOverview() {
-      await BuildingService.getHistoric().then( historic => {
+    async loadBuildingForecast() {
+      await BuildingService.getForecastConsumption().then( forecast => {
         let consumption = [];
         let generation = [];
         let flexibility = [];
         let hours = [];
         let i = 0;
-        while (i < historic.length) {
-            consumption.push(historic[i][0]);
-            generation.push(historic[i][1]);
-            flexibility.push(historic[i][2]);
-            var dateObject = new Date(historic[i][3]);
+        while (i < forecast.length) {
+            consumption.push(forecast[i][0]);
+            generation.push(forecast[i][1]);
+            flexibility.push(forecast[i][2]);
+            var dateObject = new Date(forecast[i][3]);
             hours.push(dateObject.getUTCHours());
             i++;
         }
@@ -67,11 +67,11 @@ export default {
         this.generation = generation;
         this.flexibility = flexibility;
         this.hours = hours;
-        this.createBuildingOverview();
+        this.createBuildingForecast();
       });
 
     },
-    createBuildingOverview() {
+    createBuildingForecast() {
       var ctx1 = document.getElementById("chart-line").getContext("2d");
 
       var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
