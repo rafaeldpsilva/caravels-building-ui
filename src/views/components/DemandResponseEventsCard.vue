@@ -84,21 +84,21 @@
       async acceptInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
         this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "YES"})
-        await DemandResponseService.postAnsweredInvitation(event_time, "YES");
+        await DemandResponseService.postAnsweredInvitation(localStorage.getItem('url'),localStorage.getItem('token'), event_time, "YES");
         this.pendingInvitationsList.splice(index, 1)
       },
       async declineInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
         this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "NO"})
-        await DemandResponseService.postAnsweredInvitation(event_time, "NO");
+        await DemandResponseService.postAnsweredInvitation(localStorage.getItem('url'),localStorage.getItem('token'), event_time, "NO");
         this.pendingInvitationsList.splice(index, 1)
       },
       async loadPendingInvitations (){
-        this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations()
+        this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations(localStorage.getItem('url'),localStorage.getItem('token'))
       },
       async loadAnsweredInvitations (){
         //TODO COLOR E ICON
-        this.answeredInvitationsList = await DemandResponseService.getAnsweredInvitations()
+        this.answeredInvitationsList = await DemandResponseService.getAnsweredInvitations(localStorage.getItem('url'),localStorage.getItem('token'))
       }
     },
     components: {

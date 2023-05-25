@@ -49,7 +49,7 @@ export default {
   },
   methods: {  
     async loadBuildingForecast() {
-      await BuildingService.getForecastConsumption().then( forecast => {
+      await BuildingService.getForecastConsumption(localStorage.getItem('url'),localStorage.getItem('token')).then( forecast => {
         let consumption = [];
         let hours = [];
         let i = 0;

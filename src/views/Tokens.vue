@@ -85,12 +85,12 @@ export default {
     async loading_check(){
       this.check.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
       this.check.price = 'Checking';
-      this.tokenlist = await BuildingService.getAuditCheck();
+      this.tokenlist = await BuildingService.getAuditCheck(localStorage.getItem('url'),localStorage.getItem('token'));
     },
     async loading_forget(){
       this.forget.classIcon = "text-white fa fa-cog fa-spin fa-3x fa-fw";
       this.forget.price = 'Checking';
-      this.tokenlist = await BuildingService.forgetUser();
+      this.tokenlist = await BuildingService.forgetUser(localStorage.getItem('url'),localStorage.getItem('token'));
     }
   }
 };

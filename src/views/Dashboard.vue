@@ -115,7 +115,7 @@ export default {
   },
   methods: {  
     async updateMonitoringValues() {
-      this.energyNow = await BuildingService.getEnergyNow();
+      this.energyNow = await BuildingService.getEnergyNow(localStorage.getItem('url'),localStorage.getItem('token'));
       this.stats.consumption.value = this.energyNow['consumption'] + " W";
       this.stats.generation.value = this.energyNow['generation'] + " W";
       this.stats.flexibility.value = this.energyNow['flexibility'] + " W";

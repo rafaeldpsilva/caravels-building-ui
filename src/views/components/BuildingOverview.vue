@@ -49,7 +49,7 @@ export default {
   },
   methods: {  
     async loadBuildingOverview() {
-      await BuildingService.getHistoric().then( historic => {
+      await BuildingService.getHistoric(localStorage.getItem('url'),localStorage.getItem('token')).then( historic => {
         let consumption = [];
         let generation = [];
         let flexibility = [];
