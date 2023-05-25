@@ -1,18 +1,20 @@
 <template>
-  <div class="form-group">
+  <div class="form-group has-danger">
     <div :class="hasIcon(icon)">
       <span v-if="iconDir === 'left'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
       </span>
       <input
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
         :type="type"
         class="form-control"
         :class="getClasses(size, valid)"
         :name="name"
         :id="id"
-        :value="value"
         :placeholder="placeholder"
         :isRequired="isRequired"
+        
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
@@ -41,14 +43,16 @@ export default {
     placeholder: String,
     type: String,
     isRequired: Boolean,
+    modelValue: String,
   },
+  emits: ['update:modelValue'],
   methods: {
     getClasses: (size, valid) => {
       let sizeValue, isValidValue;
 
       sizeValue = size ? `form-control-${size}` : null;
 
-      isValidValue = valid ? `${valid}` : "invalid";
+      isValidValue = valid ? `${valid}` : "is-invalid";
 
       return `${sizeValue} ${isValidValue}`;
     },
