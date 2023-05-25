@@ -24,10 +24,10 @@
                 <div class="card-body">
                   <form role="form">
                     <div class="mb-3">
-                      <argon-input type="email" placeholder="Email" name="email" size="lg" />
+                      <argon-input value="username" placeholder="Username" name="username" size="lg" /> {{ username }}
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Password" name="password" size="lg" />
+                      <argon-input type="password" placeholder="Password" name="password" size="lg" /> {{ password }}
                     </div>
                     <argon-switch id="rememberMe">Remember me</argon-switch>
 
@@ -82,6 +82,7 @@ import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import LoginService from "../services/LoginService";
 const body = document.getElementsByTagName("body")[0];
 
 export default {
@@ -91,6 +92,13 @@ export default {
     ArgonInput,
     ArgonSwitch,
     ArgonButton,
+  },
+  data() {
+    return {
+      username: 'null',
+      password: 'null',
+      community: [],
+    };
   },
   created() {
     this.$store.state.hideConfigButton = true;
@@ -106,5 +114,28 @@ export default {
     this.$store.state.showFooter = true;
     body.classList.add("bg-gray-100");
   },
+  mounted() {
+    this.username = this.$route.query.username;
+    this.password = this.$route.query.password;
+    this.login();
+  },
+  methods: {
+      async login() {
+        this.community = await LoginService.getCommunity()
+        console.log(this.community)
+        for (let i = 0; i < this.community.length; i++) {
+          console.log(this.community[i])
+          if (this.username == this.community[i]['name']){
+            this.$router.push({ path: 'dashboard-default' })
+            localStorage.setItem('user', JSON.stringify({ username: this.username }));
+            localStorage.setItem('uri', JSON.stringify({ uri: this.community[i]['uri'] }));
+            localStorage.setItem('token', JSON.stringify({ token: this.community[i]['token'] }));
+            this.validUser = true
+          } else {
+            this.validUser = false
+          }
+        }
+      },
+    },
 };
 </script>

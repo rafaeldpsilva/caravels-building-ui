@@ -8,7 +8,6 @@ const LoginService = {
     const path = this.communityOperatorURL+this.community
     try{
       const response = await axios.get(path);
-      console.log(response.data.community)
       return response.data.community
     }catch(error) {
       console.error(error);

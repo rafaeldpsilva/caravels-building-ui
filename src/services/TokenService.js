@@ -1,16 +1,14 @@
 import axios from 'axios';
 
 const TokenService = {
-  baseURL : 'http://192.168.2.171:5005',
-  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ29tbXVuaXR5IE9wZXJhdG9yIiwibGlzdF9vZl9yZXNvdXJjZXMiOlsiYWdncmVnYXRlZCIsImRpc2NyZXRlIiwiY29tbXVuaXR5X21hbmFnZXIiLCJhZG1pbiJdLCJkYXRhX2FnZ3JlZ2F0aW9uIjoiYWxsIiwidGltZV9hZ2dyZWdhdGlvbiI6ImFsbCIsImVtYmFyZ29fcGVyaW9kIjoiMTIzNTEyMyIsImV4cCI6MTcxMzU0MDk4Mn0.Mn7NycJse-gptdVe7_9Ozu218Q2JZ_IfoQqVpjMRQx8',
   tokens : "/tokens",
   tokens_generate : "/tokens/generate",
   tokens_check : "/tokens/check",
   tokens_save : "/tokens/save",
   tokens_revoke : "/tokens/revoke",
 
-  async getTokens() {
-    const path = this.baseURL+this.tokens+'?token='+this.token
+  async getTokens(url, token) {
+    const path = url+this.tokens+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.tokens
@@ -19,7 +17,7 @@ const TokenService = {
     };
   },
 
-  async postGenerateToken(name, listOfResources, dataAggregation, timeAggregation, embargo, expirationInMinutes) {
+  async postGenerateToken(url, token, name, listOfResources, dataAggregation, timeAggregation, embargo, expirationInMinutes) {
     const payload = {
       "name": name,
       "list_of_resources": listOfResources,
@@ -28,7 +26,7 @@ const TokenService = {
       "embargo": embargo,
       "exp": expirationInMinutes
     }
-    const path = this.baseURL+this.tokens_generate+'?token='+this.token
+    const path = url+this.tokens_generate+'?token='+token
     try{
       const response = await axios.post(path,payload);
       return response.data.token
@@ -37,11 +35,11 @@ const TokenService = {
     };
   },
   
-  async postCheckToken(token) {
+  async postCheckToken(url, token, check_token) {
     const payload = {
-      "token": token
+      "token": check_token
     }
-    const path = this.baseURL+this.tokens_check+'?token='+this.token
+    const path = url+this.tokens_check+'?token='+token
     try{
       const response = await axios.post(path,payload);
       return response.data
@@ -50,11 +48,11 @@ const TokenService = {
     };
   },
 
-  async postSaveToken(token) {
+  async postSaveToken(url, token, save_token) {
     const payload = {
-      "token": token
+      "token": save_token
     }
-    const path = this.baseURL+this.tokens_save+'?token='+this.token
+    const path = url+this.tokens_save+'?token='+token
     try{
       const response = await axios.post(path,payload);
       return {"token": response.data.token, "datetime" : response.data.datetime, "active": response.data.active}
@@ -63,11 +61,11 @@ const TokenService = {
     };
   },
   
-  async postRevokeToken(token) {
+  async postRevokeToken(url, token, revoke_token) {
     const payload = {
-      "token": token
+      "token": revoke_token
     }
-    const path = this.baseURL+this.tokens_revoke+'?token='+this.token
+    const path = url+this.tokens_revoke+'?token='+token
     try{
       const response = await axios.post(path,payload);
       return {"token": response.data.token, "datetime" : response.data.datetime, "active": response.data.active}

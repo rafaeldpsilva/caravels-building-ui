@@ -2,8 +2,6 @@ import axios from 'axios';
 
 const BuildingService = {
   communityOperatorURL : 'http://192.168.2.171:5000',
-  baseURL : 'http://192.168.2.171:5006',
-  token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ29tbXVuaXR5IE9wZXJhdG9yIiwibGlzdF9vZl9yZXNvdXJjZXMiOlsiYWdncmVnYXRlZCIsImRpc2NyZXRlIiwiY29tbXVuaXR5X21hbmFnZXIiLCJhZG1pbiJdLCJkYXRhX2FnZ3JlZ2F0aW9uIjoiYWxsIiwidGltZV9hZ2dyZWdhdGlvbiI6ImFsbCIsImVtYmFyZ29fcGVyaW9kIjoiMTIzNTEyMyIsImV4cCI6MTcxMzU0MDk4Mn0.Mn7NycJse-gptdVe7_9Ozu218Q2JZ_IfoQqVpjMRQx8',
   historic : "/historic",
   iots : "/iots",
   energy_now : "/energy/now",
@@ -18,8 +16,8 @@ const BuildingService = {
   audit_check : "/audit/check",
   forget : "/forget",
   
-  async getHistoric() {
-    const path = this.baseURL+this.historic+'?token='+this.token
+  async getHistoric(url, token) {
+    const path = url+this.historic+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.historic
@@ -27,8 +25,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getIots() {
-    const path = this.baseURL+this.iots+'?token='+this.token
+  async getIots(url, token) {
+    const path = url+this.iots+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.iots
@@ -36,8 +34,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getEnergyNow() {
-    const path = this.baseURL+this.energy_now+'?token='+this.token
+  async getEnergyNow(url, token) {
+    const path = url+this.energy_now+'?token='+token
     try{
       const response = await axios.get(path);
       return {"consumption": response.data.consumption, "generation" : response.data.generation, "flexibility": response.data.flexibility};
@@ -46,8 +44,8 @@ const BuildingService = {
       return {"consumption": 0, "generation" : 0, "flexibility": 0};
     };
   },
-  async getEnergyTotalPower() {
-    const path = this.baseURL+this.energy_totalpower+'?token='+this.token
+  async getEnergyTotalPower(url, token) {
+    const path = url+this.energy_totalpower+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.totalpower
@@ -55,8 +53,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getEnergyConsumption() {
-    const path = this.baseURL+this.energy_consumption+'?token='+this.token
+  async getEnergyConsumption(url, token) {
+    const path = url+this.energy_consumption+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data
@@ -64,8 +62,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getEnergyGeneration() {
-    const path = this.baseURL+this.energy_generation+'?token='+this.token
+  async getEnergyGeneration(url, token) {
+    const path = url+this.energy_generation+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data
@@ -73,8 +71,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getEnergyFlexibility() {
-    const path = this.baseURL+this.energy_flexibility+'?token='+this.token
+  async getEnergyFlexibility(url, token) {
+    const path = url+this.energy_flexibility+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.flexibility
@@ -82,8 +80,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getCorrelations() {
-    const path = this.baseURL+this.correlations+'?token='+this.token
+  async getCorrelations(url, token) {
+    const path = url+this.correlations+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.correlations
@@ -91,8 +89,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getForecastConsumption() {
-    const path = this.baseURL+this.forecast_consumption+'?token='+this.token
+  async getForecastConsumption(url, token) {
+    const path = url+this.forecast_consumption+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.forecasted_consumption
@@ -100,8 +98,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getForecastFlexibility() {
-    const path = this.baseURL+this.forecast_flexibility+'?token='+this.token
+  async getForecastFlexibility(url, token) {
+    const path = url+this.forecast_flexibility+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.forecasted_flexibility
@@ -109,8 +107,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getForecast() {
-    const path = this.baseURL+this.forecast+'?token='+this.token
+  async getForecast(url, token) {
+    const path = url+this.forecast+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.tokens
@@ -118,8 +116,8 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getAuditCheck() {
-    const path = this.baseURL+this.audit_check+'?token='+this.token
+  async getAuditCheck(url, token) {
+    const path = url+this.audit_check+'?token='+token
     try{
       const response = await axios.get(path);
       return response.data.response
@@ -127,11 +125,11 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async forgetUser(building) {
+  async forgetUser(url, token, building) {
     const payload = {
       "building": building
     }
-    const path = this.communityOperatorURL+this.forget+'?token='+this.token
+    const path = this.communityOperatorURL+this.forget+'?token='+token
     try{
       const response = await axios.post(path,payload);
       return response.data.deleted_data_count
