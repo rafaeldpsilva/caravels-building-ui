@@ -10,7 +10,7 @@
     </div>
     <div class="p-3 card-body">
       <div class="chart">
-        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+        <canvas id="building-forecast" class="chart-canvas" height="300"></canvas>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Consumption forecast",
+      default: "Consumption Forecast",
     },
     detail1: {
       type: String,
@@ -51,28 +51,21 @@ export default {
     async loadBuildingForecast() {
       await BuildingService.getForecastConsumption().then( forecast => {
         let consumption = [];
-        let generation = [];
-        let flexibility = [];
         let hours = [];
         let i = 0;
         while (i < forecast.length) {
-            consumption.push(forecast[i][0]);
-            generation.push(forecast[i][1]);
-            flexibility.push(forecast[i][2]);
-            var dateObject = new Date(forecast[i][3]);
-            hours.push(dateObject.getUTCHours());
+            consumption.push(forecast[i]);
+            hours.push(i);
             i++;
         }
         this.consumption = consumption;
-        this.generation = generation;
-        this.flexibility = flexibility;
         this.hours = hours;
         this.createBuildingForecast();
       });
 
     },
     createBuildingForecast() {
-      var ctx1 = document.getElementById("chart-line").getContext("2d");
+      var ctx1 = document.getElementById("building-forecast").getContext("2d");
 
       var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
@@ -95,32 +88,6 @@ export default {
               borderWidth: 3,
               fill: true,
               data: this.consumption,
-              maxBarThickness: 6,
-            },
-            {
-              label: "Generation",
-              tension: 0.4,
-              borderWidth: 0,
-              pointRadius: 0,
-              borderColor: "#f5365c",
-              backgroundColor: gradientStroke1,
-              // eslint-disable-next-line no-dupe-keys
-              borderWidth: 3,
-              fill: true,
-              data: this.generation,
-              maxBarThickness: 6,
-            },
-            {
-              label: "Flexibility",
-              tension: 0.4,
-              borderWidth: 0,
-              pointRadius: 0,
-              borderColor: "#2dce89",
-              backgroundColor: gradientStroke1,
-              // eslint-disable-next-line no-dupe-keys
-              borderWidth: 3,
-              fill: true,
-              data: this.flexibility,
               maxBarThickness: 6,
             },
           ],
