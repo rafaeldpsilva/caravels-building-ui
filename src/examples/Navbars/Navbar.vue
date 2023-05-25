@@ -35,10 +35,9 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li v-if="!logged" class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'Signin' }"
+            <div
               class="px-0 nav-link font-weight-bold text-white"
-              target="_blank"
+              @click="login"
             >
               <i
                 class="fa fa-user"
@@ -48,13 +47,11 @@
                 >يسجل دخول</span
               >
               <span v-else class="d-sm-inline d-none">Sign In</span>
-            </router-link>
+          </div>
           </li>
           <li v-else class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'Signin' }"
+            <div              
               class="px-0 nav-link font-weight-bold text-white"
-              target="_blank"
               @click="logout"
             >
               <i
@@ -65,7 +62,7 @@
                 >يسجل دخول</span
               >
               <span v-else class="d-sm-inline d-none">Log Out</span>
-            </router-link>
+          </div>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -247,10 +244,14 @@ export default {
         this.logged = true;
       }
     },
+    login() {
+      this.$router.push({ path: 'signin' })
+    },
     logout() {
+      this.$router.push({ path: 'signin' })
       // Clear the user information from local storage
       localStorage.removeItem('user');
-      localStorage.removeItem('uri');
+      localStorage.removeItem('url');
       localStorage.removeItem('token');
       // Redirect to the login page or perform other actions
     },

@@ -24,10 +24,10 @@
                 <div class="card-body">
                   <form role="form">
                     <div class="mb-3">
-                      <argon-input value="username" placeholder="Username" name="username" size="lg" /> {{ username }}
+                      <argon-input value="username" placeholder="Username" name="username" size="lg" />
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Password" name="password" size="lg" /> {{ password }}
+                      <argon-input type="password" placeholder="Password" name="password" size="lg" />
                     </div>
                     <argon-switch id="rememberMe">Remember me</argon-switch>
 
@@ -58,16 +58,16 @@
             >
               <div
                 class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
-                style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
+                style="background-image: url('https://tiocps.pt/img/bg1.jpg');
           background-size: cover;"
               >
                 <span class="mask bg-gradient-success opacity-6"></span>
-                <h4
+                <h1
                   class="mt-5 text-white font-weight-bolder position-relative"
-                >"Attention is the new currency"</h4>
+                >TIoCPS</h1>
                 <p
                   class="text-white position-relative"
-                >The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                >Trustworthy and Smart Communities of Cyber-Physical Systems</p>
               </div>
             </div>
           </div>
@@ -115,21 +115,23 @@ export default {
     body.classList.add("bg-gray-100");
   },
   mounted() {
-    this.username = this.$route.query.username;
-    this.password = this.$route.query.password;
+    if(!localStorage.getItem('user')){
+      this.username = this.$route.query.username;
+      this.password = this.$route.query.password;
+    } else {
+      this.username = localStorage.getItem('user');
+    }
     this.login();
   },
   methods: {
       async login() {
         this.community = await LoginService.getCommunity()
-        console.log(this.community)
         for (let i = 0; i < this.community.length; i++) {
-          console.log(this.community[i])
           if (this.username == this.community[i]['name']){
             this.$router.push({ path: 'dashboard-default' })
-            localStorage.setItem('user', JSON.stringify({ username: this.username }));
-            localStorage.setItem('uri', JSON.stringify({ uri: this.community[i]['uri'] }));
-            localStorage.setItem('token', JSON.stringify({ token: this.community[i]['token'] }));
+            localStorage.setItem('user', this.username);
+            localStorage.setItem('url', this.community[i]['uri']);
+            localStorage.setItem('token', this.community[i]['token']);
             this.validUser = true
           } else {
             this.validUser = false
