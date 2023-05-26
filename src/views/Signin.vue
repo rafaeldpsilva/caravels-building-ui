@@ -22,12 +22,11 @@
                   <p class="mb-0">Enter your email and password to sign in</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
                     <div class="mb-3">
-                      <argon-input value="username" placeholder="Username" name="username" size="lg" />
+                      <argon-input v-model="username" value="username" placeholder="Username" name="username" size="lg" />
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Password" name="password" size="lg" />
+                      <argon-input v-model="password" type="password" placeholder="Password" name="password" size="lg" />
                     </div>
                     <argon-switch id="rememberMe">Remember me</argon-switch>
 
@@ -38,9 +37,9 @@
                         color="success"
                         fullWidth
                         size="lg"
+                        @click="login"
                       >Sign in</argon-button>
                     </div>
-                  </form>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
@@ -95,8 +94,8 @@ export default {
   },
   data() {
     return {
-      username: 'null',
-      password: 'null',
+      username: '',
+      password: '',
       community: [],
     };
   },
@@ -115,16 +114,14 @@ export default {
     body.classList.add("bg-gray-100");
   },
   mounted() {
-    if(!localStorage.getItem('user')){
-      this.username = this.$route.query.username;
-      this.password = this.$route.query.password;
-    } else {
+    if(localStorage.getItem('user')){      
       this.username = localStorage.getItem('user');
     }
     this.login();
   },
   methods: {
       async login() {
+        console.log(this.username)
         this.community = await LoginService.getCommunity()
         for (let i = 0; i < this.community.length; i++) {
           if (this.username == this.community[i]['name']){

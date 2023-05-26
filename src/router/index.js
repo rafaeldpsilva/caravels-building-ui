@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Tokens from "../views/Tokens.vue";
-import Tables from "../views/Tables.vue";
+import IoTs from "../views/IoTs.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
@@ -23,9 +23,9 @@ const routes = [
     component: Tokens,
   },
   {
-    path: "/tables",
-    name: "Tables",
-    component: Tables,
+    path: "/iots",
+    name: "IoTs",
+    component: IoTs,
   },
   {
     path: "/profile",
