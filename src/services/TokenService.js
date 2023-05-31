@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const TokenService = {
-  tokens : "/tokens",
-  tokens_generate : "/tokens/generate",
-  tokens_check : "/tokens/check",
-  tokens_save : "/tokens/save",
-  tokens_revoke : "/tokens/revoke",
+  tokens : "tokens",
+  tokens_generate : "tokens/generate",
+  tokens_check : "tokens/check",
+  tokens_save : "tokens/save",
+  tokens_revoke : "tokens/revoke",
 
   async getTokens(url, token) {
     const path = url+this.tokens+'?token='+token

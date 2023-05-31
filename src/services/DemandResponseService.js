@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const DemandResponseService = {
   communityOperatorURL : 'http://192.168.2.171:5000',
-  get_unanswered_invitations : "/invitation/unanswered",
-  get_answered_invitations : "/invitation/answered",
-  answer_invitation : "/invitation/answer",
+  get_unanswered_invitations : "invitation/unanswered",
+  get_answered_invitations : "invitation/answered",
+  answer_invitation : "invitation/answer",
   
   async getUnansweredInvitations(url, token) {
     const path = url+this.get_unanswered_invitations+'?token='+token

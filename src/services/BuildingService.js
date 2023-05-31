@@ -2,19 +2,19 @@ import axios from 'axios';
 
 const BuildingService = {
   communityOperatorURL : 'http://192.168.2.171:5000',
-  historic : "/historic",
-  iots : "/iots",
-  energy_now : "/energy/now",
-  energy_totalpower : "/energy/totalpower",
-  energy_consumption : "/energy/consumption",
-  energy_generation : "/energy/generation",
-  energy_flexibility : "/energy/flexibility",
-  correlations : "/correlations",
-  forecast : "/forecast",
-  forecast_consumption : "/forecast/consumption",
-  forecast_flexibility : "/forecast/flexibility",
-  audit_check : "/audit/check",
-  forget : "/forget",
+  historic : "historic",
+  iots : "iots",
+  energy_now : "energy/now",
+  energy_totalpower : "energy/totalpower",
+  energy_consumption : "energy/consumption",
+  energy_generation : "energy/generation",
+  energy_flexibility : "energy/flexibility",
+  correlations : "correlations",
+  forecast : "forecast",
+  forecast_consumption : "forecast/consumption",
+  forecast_flexibility : "forecast/flexibility",
+  audit_check : "audit/check",
+  forget : "forget",
   
   async getHistoric(url, token) {
     const path = url+this.historic+'?token='+token
