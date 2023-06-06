@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const LoginService = {
-  communityOperatorURL : 'http://192.168.2.171:5000',
+  communityOperatorURL : 'http://192.168.2.171:5000/',
   community : "community",
   
   async getCommunity() {
