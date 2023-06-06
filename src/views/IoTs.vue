@@ -2,7 +2,7 @@
   <div class="py-4 container-fluid">
     <div class=" row">
       <div class="col-12">
-        <authors-table />
+        <iots-table />
       </div>
     </div>
     <div class="mt-4 row">
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import AuthorsTable from "./components/AuthorsTable.vue";
+import IotsTable from "./components/IotsTable.vue";
 import ProjectsTable from "./components/ProjectsTable.vue";
 
 export default {
   name: "iots",
   components: {
-    AuthorsTable,
+    IotsTable,
     ProjectsTable
   },
   data() {
