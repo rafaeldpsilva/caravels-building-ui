@@ -99,6 +99,9 @@
         await DemandResponseService.postAnsweredInvitation(localStorage.getItem('url'),localStorage.getItem('token'), event_time, "NO");
         this.pendingInvitationsList.splice(index, 1)
       },
+      async loadAutoAnswer (){
+        this.auto = await DemandResponseService.getAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'))
+      },
       async loadPendingInvitations (){
         this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations(localStorage.getItem('url'),localStorage.getItem('token'))
       },

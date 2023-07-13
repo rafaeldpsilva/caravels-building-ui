@@ -38,6 +38,15 @@ const DemandResponseService = {
       console.error(error);
     };
   },
+  async getAutoAccept(url, token) {
+    const path = url+this.get_answered_invitations+'?token='+token
+    try{
+      const response = await axios.get(path);      
+      return response.data['auto_answer']      
+    }catch(error) {
+      console.error(error);
+    };
+  },
   async postAutoAccept(url, token, auto_answer) {
     let payload = {
         "auto_answer": auto_answer,
