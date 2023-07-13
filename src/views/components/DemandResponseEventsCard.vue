@@ -86,7 +86,7 @@
     },
     methods: {
       async autoAcceptChange() {
-        if (this.auto){
+        if (this.auto == true){
           await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), true);
         }else{
           await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), false);
