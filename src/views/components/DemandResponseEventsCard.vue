@@ -75,10 +75,11 @@
     async created() {
       await this.loadPendingInvitations();
       await this.loadAnsweredInvitations();
+      await this.loadAutoAnswer();
     },
     data() {
       return {
-        auto: true,
+        auto: false,
         pendingInvitationsList: [],
         answeredInvitationsList:[]
       }
