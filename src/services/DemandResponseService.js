@@ -39,7 +39,7 @@ const DemandResponseService = {
     };
   },
   async getAutoAccept(url, token) {
-    const path = url+this.get_answered_invitations+'?token='+token
+    const path = url+this.answer_auto+'?token='+token
     try{
       const response = await axios.get(path);      
       return response.data['auto_answer']      
