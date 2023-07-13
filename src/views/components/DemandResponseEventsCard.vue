@@ -6,8 +6,10 @@
             <h6 class="mb-0">Your Demand Response Event Invitations</h6>
           </div>
           <div class="col-md-6 d-flex justify-content-end align-items-center">
-            <i class="far fa-calendar-alt me-2" aria-hidden="true"></i>
-            <small>23 - 30 May 2023</small>
+            <div class="form-check form-switch">
+              <input @click="autoAcceptChange()" v-model="auto" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <label class="form-check-label" for="flexSwitchCheckDefault">Auto Accept</label>
+            </div>
           </div>
         </div>
       </div>
@@ -76,11 +78,15 @@
     },
     data() {
       return {
+        auto: true,
         pendingInvitationsList: [],
         answeredInvitationsList:[]
       }
     },
     methods: {
+      async autoAcceptChange() {
+        await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), this.auto);
+      },
       async acceptInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
         this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "YES"})

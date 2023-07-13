@@ -5,6 +5,7 @@ const DemandResponseService = {
   get_unanswered_invitations : "invitation/unanswered",
   get_answered_invitations : "invitation/answered",
   answer_invitation : "invitation/answer",
+  answer_auto : "invitation/auto",
   
   async getUnansweredInvitations(url, token) {
     const path = url+this.get_unanswered_invitations+'?token='+token
@@ -30,6 +31,18 @@ const DemandResponseService = {
         "response": response
     }
     const path = url+this.answer_invitation+'?token='+token
+    try{
+      const response = await axios.post(path, payload);
+      return response.data
+    }catch(error) {
+      console.error(error);
+    };
+  },
+  async postAutoAccept(url, token, auto_answer) {
+    let payload = {
+        "auto_answer": auto_answer,
+    }
+    const path = url+this.answer_auto+'?token='+token
     try{
       const response = await axios.post(path, payload);
       return response.data
