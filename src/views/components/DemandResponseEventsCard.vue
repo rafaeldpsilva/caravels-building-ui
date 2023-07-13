@@ -79,18 +79,14 @@
     },
     data() {
       return {
-        auto: false,
+        auto: true,
         pendingInvitationsList: [],
         answeredInvitationsList:[]
       }
     },
     methods: {
       async autoAcceptChange() {
-        if (this.auto == true){
-          await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), true);
-        }else{
-          await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), false);
-        }
+          await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), !this.auto);
       },
       async acceptInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
