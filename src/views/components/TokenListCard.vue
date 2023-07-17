@@ -45,11 +45,7 @@ export default {
   },
   data() {
     return {
-      tokenlist: [
-        {'token':'Community Operator', 'expiration_time_minutes': '2023-07-13', 'datetime': '2022-07-13'},
-        {'token':'Building 1', 'expiration_time_minutes': '2023-07-13', 'datetime': '2022-07-13'},
-        {'token':'Building 2', 'expiration_time_minutes': '2023-07-13', 'datetime': '2022-07-13'}
-      ]
+      tokenlist: []
     }
   },
   methods: {

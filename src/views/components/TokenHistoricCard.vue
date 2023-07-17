@@ -5,39 +5,12 @@
         <div class="col-md-6">
           <h6 class="mb-0">Your Token Historic</h6>
         </div>
-        <div class="col-md-6 d-flex justify-content-end align-items-center">
-          <i class="far fa-calendar-alt me-2" aria-hidden="true"></i>
-          <small>23 - 30 March 2020</small>
-        </div>
       </div>
     </div>
     <div class="card-body pt-4 p-3">
-      <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6>
+      <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Created</h6>
       <ul class="list-group">
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex align-items-center">
-            <argon-button
-              color="danger"
-              variant="outline"
-              size="sm"
-              class="btn-icon-only btn-rounded mb-0 me-3 d-flex align-items-center justify-content-center"
-            >
-              <i class="fas fa-arrow-down" aria-hidden="true"></i>
-            </argon-button>
-            <div class="d-flex flex-column">
-              <h6 class="mb-1 text-dark text-sm">Building 1</h6>
-              <span class="text-xs">27 March 2020, at 12:30 PM</span>
-            </div>
-          </div>
-          <div
-            class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold"
-          >- $ 2,500</div>
-        </li>
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
+        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg" v-for="token in createdTokenList" :key="token.token">
           <div class="d-flex align-items-center">
             <argon-button
               color="success"
@@ -48,20 +21,15 @@
               <i class="fas fa-arrow-up" aria-hidden="true"></i>
             </argon-button>
             <div class="d-flex flex-column">
-              <h6 class="mb-1 text-dark text-sm">Community Operator</h6>
-              <span class="text-xs">27 March 2020, at 04:30 AM</span>
+              <h6 class="mb-1 text-dark text-sm">{{token.name}}</h6>
+              <span class="text-xs">{{token.datetime}}</span>
             </div>
           </div>
-          <div
-            class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold"
-          >+ $ 2,000</div>
         </li>
       </ul>
-      <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Yesterday</h6>
+      <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Expiring</h6>
       <ul class="list-group">
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
+        <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" v-for="token in expiringTokenList" :key="token.token">
           <div class="d-flex align-items-center">
             <argon-button
               color="success"
@@ -72,34 +40,10 @@
               <i class="fas fa-arrow-up" aria-hidden="true"></i>
             </argon-button>
             <div class="d-flex flex-column">
-              <h6 class="mb-1 text-dark text-sm">rafael</h6>
-              <span class="text-xs">26 March 2020, at 13:45 PM</span>
+              <h6 class="mb-1 text-dark text-sm">{{token.name}}</h6>
+              <span class="text-xs">{{token.datetime}}</span>
             </div>
           </div>
-          <div
-            class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold"
-          >+ $ 750</div>
-        </li>
-        <li
-          class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-        >
-          <div class="d-flex align-items-center">
-            <argon-button
-              color="success"
-              variant="outline"
-              size="sm"
-              class="btn-icon-only btn-rounded mb-0 me-3 d-flex align-items-center justify-content-center"
-            >
-              <i class="fas fa-arrow-up" aria-hidden="true"></i>
-            </argon-button>
-            <div class="d-flex flex-column">
-              <h6 class="mb-1 text-dark text-sm">Building 2</h6>
-              <span class="text-xs">26 March 2020, at 12:30 PM</span>
-            </div>
-          </div>
-          <div
-            class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold"
-          >+ $ 1,000</div>
         </li>
       </ul>
     </div>
@@ -107,6 +51,7 @@
 </template>
 
 <script>
+import TokenService from '../../services/TokenService.js';
 import ArgonButton from "@/components/ArgonButton.vue";
 
 export default {
@@ -114,5 +59,31 @@ export default {
   components: {
     ArgonButton,
   },
+  async created() {
+    await this.loadTokenList();
+  },
+  data() {
+    return {
+      tokenlist: [],
+      expiringTokenList: [],
+      createdTokenList: [],
+    }
+  },
+  methods: {
+    async loadTokenList (){
+      this.tokenlist = await TokenService.getTokens(localStorage.getItem('url'),localStorage.getItem('token'))
+      for(let i = 0; i < this.tokenlist.length; i++){
+        
+        var creationDate = new Date(this.tokenlist[i]['datetime']);
+        const expireDate = new Date(creationDate.getTime() + this.tokenlist[i]['expiration_time_minutes'] * 60000)
+        const diff = expireDate - new Date();
+        if(diff < 1000){
+          this.expiringTokenList.push(this.tokenlist[i])
+        }else{
+          this.createdTokenList.push(this.tokenlist[i])
+        }
+      }
+    }
+  }
 };
 </script>
