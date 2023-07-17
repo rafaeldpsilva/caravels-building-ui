@@ -3,7 +3,7 @@
     <div class="card-header pb-0 px-3">
       <div class="row">
         <div class="col-md-6">
-          <h6 class="mb-0">Your Token Historic</h6>
+          <h6 class="mb-0">Your Token Status</h6>
         </div>
       </div>
     </div>
