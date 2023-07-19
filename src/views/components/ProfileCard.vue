@@ -1,12 +1,12 @@
 <template>
   <div class="card card-profile">
-    <img src="../../assets/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top" />
+    <img src="../../assets/img/isep.jpg" alt="Image placeholder" class="card-img-top" />
     <div class="row justify-content-center">
       <div class="col-4 col-lg-4 order-lg-2">
         <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
           <a href="javascript:;">
             <img
-              src="../../assets/img/team-1.jpg"
+              src="../../assets/img/gecad-profile.jpg"
               class="rounded-circle img-fluid border border-2 border-white"
             />
           </a>
@@ -29,37 +29,18 @@
       </div>
     </div>
     <div class="card-body pt-0">
-      <div class="row">
-        <div class="col">
-          <div class="d-flex justify-content-center">
-            <div class="d-grid text-center">
-              <span class="text-lg font-weight-bolder">22</span>
-              <span class="text-sm opacity-8">Friends</span>
-            </div>
-            <div class="d-grid text-center mx-4">
-              <span class="text-lg font-weight-bolder">10</span>
-              <span class="text-sm opacity-8">Photos</span>
-            </div>
-            <div class="d-grid text-center">
-              <span class="text-lg font-weight-bolder">89</span>
-              <span class="text-sm opacity-8">Comments</span>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="text-center mt-4">
         <h5>
-          Mark Davis
-          <span class="font-weight-light">, 35</span>
+          {{ profile.name }}
         </h5>
         <div class="h6 font-weight-300">
-          <i class="ni location_pin mr-2"></i>Bucharest, Romania
+          <i class="ni location_pin mr-2"></i>Porto, Portugal
         </div>
         <div class="h6 mt-4">
-          <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+          <i class="ni business_briefcase-24 mr-2"></i>GECAD
         </div>
         <div>
-          <i class="ni education_hat mr-2"></i>University of Computer Science
+          <i class="ni education_hat mr-2"></i>Polytechnic Institute of Porto
         </div>
       </div>
     </div>
@@ -69,5 +50,12 @@
 <script>
 export default {
   name: "profile-card",
+  data() {
+    return {
+      profile: {
+        name:"Building1"
+      }
+    }
+  },
 };
 </script>

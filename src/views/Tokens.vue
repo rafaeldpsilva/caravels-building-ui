@@ -70,7 +70,7 @@ export default {
       check: {
         classIcon: "text-white fas fa-check",
         title: "Data Sharing",
-        desc: "Assert data sharing contracts compliance",
+        desc: "Assert contracts compliance",
         price: "Assert",
       },
       forget: {
