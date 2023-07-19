@@ -57,5 +57,8 @@ export default {
       }
     }
   },
+  mounted() {
+    this.profile.name = localStorage.getItem('user');
+  },
 };
 </script>

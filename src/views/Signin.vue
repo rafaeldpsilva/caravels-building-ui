@@ -113,7 +113,7 @@ export default {
     this.$store.state.showFooter = true;
     body.classList.add("bg-gray-100");
   },
-  mounted() {
+  beforeMount() {
     if(localStorage.getItem('user')){      
       this.username = localStorage.getItem('user');
     }
