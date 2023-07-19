@@ -25,7 +25,7 @@
                 <span class="text-xs">{{invite.event_time}}</span>
               </div>
             </div>
-            <div class="d-flex align-items-center text-dark text-gradient text-sm font-weight-bold">{{invite.load_kwh}} kwh | {{invite.load_percentage}} %</div>
+            <div class="d-flex align-items-center text-dark text-gradient text-sm font-weight-bold">{{invite.load_kwh}} kwh</div>
             <div class="d-flex align-items-center justify-content-center">
               <argon-button
                 @click="acceptInvite(index, invite.event_time)"
@@ -59,7 +59,7 @@
                 <span class="text-xs">{{invite.event_time}}</span>
               </div>
             </div>
-            <div class="d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.response == 'YES' ? 'text-success' : 'text-danger'">{{invite.load_kwh}} kwh | {{invite.load_percentage}} %</div>
+            <div class="d-flex align-items-center text-gradient text-sm font-weight-bold" :class="invite.response == 'YES' ? 'text-success' : 'text-danger'">{{invite.load_kwh}} kwh</div>
           </li>
         </ul>
       </div>
