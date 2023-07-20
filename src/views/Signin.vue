@@ -114,22 +114,19 @@ export default {
     body.classList.add("bg-gray-100");
   },
   beforeMount() {
-    if(localStorage.getItem('user')){      
-      this.username = localStorage.getItem('user');
+    if(this.$store.state.name){      
+      this.username = this.$store.state.name;
     }
     this.login();
   },
   methods: {
       async login() {
-        console.log(this.username)
         this.community = await LoginService.getCommunity()
         for (let i = 0; i < this.community.length; i++) {
           if (this.username == this.community[i]['name']){
-            this.$router.push({ path: 'dashboard-default' })
-            localStorage.setItem('user', this.username);
-            localStorage.setItem('url', this.community[i]['uri']);
-            localStorage.setItem('token', this.community[i]['token']);
+            this.$store.commit('login', [this.username, this.community[i]['uri'], this.community[i]['token']])
             this.validUser = true
+            this.$router.push({ path: 'dashboard-default' })
           } else {
             this.validUser = false
           }

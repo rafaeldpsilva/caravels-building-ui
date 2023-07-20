@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="card-body pt-4 p-3">
-        <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3" v-if="this.pendingInvitationsList.length != 0">Pending</h6>
+        <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3" v-if="pendingInvitationsList.length != 0">Pending</h6>
         <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3" v-else>No Pending Invitations</h6>
         <ul class="list-group">
           <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
@@ -72,7 +72,7 @@
 
   export default {
     name: "demand-response-events-card",
-    async created() {
+    async mounted() {
       await this.loadPendingInvitations();
       await this.loadAnsweredInvitations();
       await this.loadAutoAnswer();
@@ -86,29 +86,29 @@
     },
     methods: {
       async autoAcceptChange() {
-          await DemandResponseService.postAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'), !this.auto);
+          await DemandResponseService.postAutoAccept(this.$store.state.uri,this.$store.state.token, !this.auto);
       },
       async acceptInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
         this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "YES"})
-        await DemandResponseService.postAnsweredInvitation(localStorage.getItem('url'),localStorage.getItem('token'), event_time, "YES");
+        await DemandResponseService.postAnsweredInvitation(this.$store.state.uri,this.$store.state.token, event_time, "YES");
         this.pendingInvitationsList.splice(index, 1)
       },
       async declineInvite(index, event_time) {
         let invite = this.pendingInvitationsList.at(index)
         this.answeredInvitationsList.unshift({"iots": invite.iots, "event_time": invite.event_time, "load_kwh": invite.load_kwh, "load_percentage": invite.load_percentage, "response": "NO"})
-        await DemandResponseService.postAnsweredInvitation(localStorage.getItem('url'),localStorage.getItem('token'), event_time, "NO");
+        await DemandResponseService.postAnsweredInvitation(this.$store.state.uri,this.$store.state.token, event_time, "NO");
         this.pendingInvitationsList.splice(index, 1)
       },
       async loadAutoAnswer (){
-        this.auto = await DemandResponseService.getAutoAccept(localStorage.getItem('url'),localStorage.getItem('token'))
+        this.auto = await DemandResponseService.getAutoAccept(this.$store.state.uri,this.$store.state.token)
       },
       async loadPendingInvitations (){
-        this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations(localStorage.getItem('url'),localStorage.getItem('token'))
+        this.pendingInvitationsList = await DemandResponseService.getUnansweredInvitations(this.$store.state.uri,this.$store.state.token)
       },
       async loadAnsweredInvitations (){
         //TODO COLOR E ICON
-        this.answeredInvitationsList = await DemandResponseService.getAnsweredInvitations(localStorage.getItem('url'),localStorage.getItem('token'))
+        this.answeredInvitationsList = await DemandResponseService.getAnsweredInvitations(this.$store.state.uri,this.$store.state.token)
       }
     },
     components: {

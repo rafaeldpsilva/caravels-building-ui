@@ -22,7 +22,7 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-overview",
-  async created(){
+  async mounted(){
     await this.loadBuildingOverview();
   },
   props: {
@@ -49,7 +49,7 @@ export default {
   },
   methods: {  
     async loadBuildingOverview() {
-      await BuildingService.getHistoric(localStorage.getItem('url'),localStorage.getItem('token')).then( historic => {
+      await BuildingService.getHistoric(this.$store.state.uri,this.$store.state.token).then( historic => {
         let consumption = [];
         let generation = [];
         let flexibility = [];
@@ -182,9 +182,6 @@ export default {
         },
       });
     }
-  },
-  mounted() {
-    
   },
 };
 </script>

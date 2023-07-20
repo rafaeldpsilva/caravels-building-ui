@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     async loadIotsList (){
-      this.iotsList = await BuildingService.getIots(localStorage.getItem('url'),localStorage.getItem('token'))
+      this.iotsList = await BuildingService.getIots(this.$store.state.uri,this.$store.state.token)
     },
   }
 };

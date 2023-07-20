@@ -115,13 +115,13 @@ export default {
   },
   methods: {  
     async updateMonitoringValues() {
-      this.energyNow = await BuildingService.getEnergyNow(localStorage.getItem('url'),localStorage.getItem('token'));
+      this.energyNow = await BuildingService.getEnergyNow(this.$store.state.uri,this.$store.state.token);
       this.stats.consumption.value = this.energyNow['consumption'].toFixed(2) + " W";
       this.stats.generation.value = this.energyNow['generation'].toFixed(2) + " W";
       this.stats.flexibility.value = this.energyNow['flexibility'].toFixed(2) + " W";
     }
   },
-  beforeMount() {
+  mounted() {
     this.updateMonitoringValues();
     this.stats.consumption.value = "0 W";
     this.stats.generation.value = "0 W";

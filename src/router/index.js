@@ -5,12 +5,13 @@ import IoTs from "../views/IoTs.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
+import store from "../store/index.js";
 
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/signin",
+    redirect: "/dashboard-default",
   },
   {
     path: "/dashboard-default",
@@ -50,5 +51,14 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
 });
+
+router.beforeEach((to,from,next) => {
+  console.log(to)
+  if(to.path !== '/signin' && store.state.name == ""){
+    next('/signin')
+  } else {
+    next()
+  }
+})
 
 export default router;

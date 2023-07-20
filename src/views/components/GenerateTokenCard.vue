@@ -110,10 +110,10 @@ export default {
       
     },
     async generateToken () {
-      this.token = await TokenService.postGenerateToken(localStorage.getItem('url'), localStorage.getItem('token'), this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
+      this.token = await TokenService.postGenerateToken(this.$store.state.uri, this.$store.state.token, this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
     },
     async saveToken() {    
-      let response = await TokenService.postSaveToken(localStorage.getItem('url'), localStorage.getItem('token'), this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
+      let response = await TokenService.postSaveToken(this.$store.state.uri, this.$store.state.token, this.name, this.resources_selected, this.data_selected, this.time_selected, this.embargo, this.date)
       if (response['active'] == true){
         this.token == "SAVED"
       }

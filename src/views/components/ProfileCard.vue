@@ -58,7 +58,7 @@ export default {
     }
   },
   mounted() {
-    this.profile.name = localStorage.getItem('user');
+    this.profile.name = this.$store.state.name;
   },
 };
 </script>

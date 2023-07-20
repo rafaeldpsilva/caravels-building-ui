@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
@@ -16,9 +17,17 @@ export default createStore({
     showNavbar: true,
     showFooter: true,
     showMain: true,
-    layout: "default"
+    layout: "default",
+    name: "",
+    uri: "",
+    token: "",
   },
   mutations: {
+    login(state, [name, uri, token]){
+      state.name = name;
+      state.uri = uri;
+      state.token = token;
+    },
     toggleConfigurator(state) {
       state.showConfig = !state.showConfig;
     },
@@ -51,5 +60,6 @@ export default createStore({
       commit("sidebarType", payload);
     }
   },
-  getters: {}
+  getters: {},
+  plugins: [createPersistedState()]
 });
