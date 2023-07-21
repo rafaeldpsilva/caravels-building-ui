@@ -79,6 +79,7 @@ export default {
         this.flexibility = flexibility;
         this.hours = hours;
         this.$store.commit('saveOverview', [hours, consumption, generation, flexibility])
+        this.createBuildingOverview();
       });
 
     },

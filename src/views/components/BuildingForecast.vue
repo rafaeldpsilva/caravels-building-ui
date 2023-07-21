@@ -70,6 +70,7 @@ export default {
         this.consumption = consumption;
         this.hours = hours;
         this.$store.commit('saveForecast', [hours, consumption])
+        this.createBuildingForecast();
       });
 
     },
