@@ -42,7 +42,7 @@ export default createStore({
       state.showFooter = false;
     },
     uiLogged(state){
-      state.hideConfigButton = false;
+      state.hideConfigButton = true;
       state.showSidenav = true;
       state.showNavbar = true;
       state.showFooter = true;
