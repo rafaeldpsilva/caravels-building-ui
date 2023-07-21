@@ -26,7 +26,82 @@
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
-                    <img
+                    <img v-if=" iot.type == 'refrigerator' "
+                      src="../../assets/img/icons/refrigerator.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'dishwasher' "
+                      src="../../assets/img/icons/dishwasher.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'hvac' "
+                      src="../../assets/img/icons/hvac.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'kettle' "
+                      src="../../assets/img/icons/kettle.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'microwave' "
+                      src="../../assets/img/icons/microwave.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'sockets' "
+                      src="../../assets/img/icons/sockets.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'water heater' "
+                      src="../../assets/img/icons/waterheater.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'lamp' "
+                      src="../../assets/img/icons/lamp.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'generation' "
+                      src="../../assets/img/icons/generation.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'light' "
+                      src="../../assets/img/icons/light.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'temperature' "
+                      src="../../assets/img/icons/temperature.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'humidity' "
+                      src="../../assets/img/icons/humidity.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'co2' "
+                      src="../../assets/img/icons/co2.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'movement' "
+                      src="../../assets/img/icons/movement.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else-if=" iot.type == 'door' "
+                      src="../../assets/img/icons/door.png"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                    <img v-else
                       src="../../assets/img/icons/iot.png"
                       class="avatar avatar-sm me-3"
                       alt="user1"
