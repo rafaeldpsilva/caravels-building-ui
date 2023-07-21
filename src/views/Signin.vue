@@ -106,17 +106,7 @@ export default {
     this.$store.state.showFooter = false;
     body.classList.remove("bg-gray-100");
   },
-  beforeUnmount() {
-    this.$store.state.hideConfigButton = false;
-    this.$store.state.showNavbar = true;
-    this.$store.state.showSidenav = true;
-    this.$store.state.showFooter = true;
-    body.classList.add("bg-gray-100");
-  },
   beforeMount() {
-    if(this.$store.state.name){      
-      this.username = this.$store.state.name;
-    }
     this.login();
   },
   methods: {

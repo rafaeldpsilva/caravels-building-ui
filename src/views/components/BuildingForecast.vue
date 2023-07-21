@@ -22,8 +22,17 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-forecast",
-  async mounted(){
-    await this.loadBuildingForecast();
+  async created(){
+    const forecast = this.$store.state.forecast
+    if (forecast.length == 0){
+      await this.loadBuildingForecast();
+    } else {
+      this.hours = forecast[0];
+      this.consumption = forecast[1];
+    }
+  },
+  mounted(){
+    this.createBuildingForecast();
   },
   props: {
     title: {
@@ -60,7 +69,7 @@ export default {
         }
         this.consumption = consumption;
         this.hours = hours;
-        this.createBuildingForecast();
+        this.$store.commit('saveForecast', [hours, consumption])
       });
 
     },

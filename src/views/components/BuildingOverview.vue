@@ -22,8 +22,19 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-overview",
-  async mounted(){
-    await this.loadBuildingOverview();
+  async created(){
+    const overview = this.$store.state.overview
+    if (overview.length == 0){
+      await this.loadBuildingOverview();
+    } else {
+      this.hours = overview[0];
+      this.consumption = overview[1];
+      this.generation = overview[2];
+      this.flexibility = overview[3];
+    }
+  },
+  mounted(){
+    this.createBuildingOverview();
   },
   props: {
     title: {
@@ -67,7 +78,7 @@ export default {
         this.generation = generation;
         this.flexibility = flexibility;
         this.hours = hours;
-        this.createBuildingOverview();
+        this.$store.commit('saveOverview', [hours, consumption, generation, flexibility])
       });
 
     },

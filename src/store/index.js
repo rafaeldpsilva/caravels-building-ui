@@ -21,8 +21,32 @@ export default createStore({
     name: "",
     uri: "",
     token: "",
+    overview: [],
+    forecast: [],
+    iots: []
   },
   mutations: {
+    saveOverview(state,overview){
+      state.overview = overview
+    },
+    saveForecast(state,forecast){
+      state.forecast = forecast
+    },
+    saveIots(state,iots){
+      state.iots = iots
+    },
+    uiSignin(state){
+      state.hideConfigButton = true;
+      state.showSidenav = false;
+      state.showNavbar = false;
+      state.showFooter = false;
+    },
+    uiLogged(state){
+      state.hideConfigButton = false;
+      state.showSidenav = true;
+      state.showNavbar = true;
+      state.showFooter = true;
+    },
     login(state, [name, uri, token]){
       state.name = name;
       state.uri = uri;
@@ -60,6 +84,13 @@ export default createStore({
       commit("sidebarType", payload);
     }
   },
-  getters: {},
+  getters: {
+    isAuthenticated: state => {
+      if (state.user != ""){
+        return true
+      }
+      return false
+    }
+  },
   plugins: [createPersistedState()]
 });

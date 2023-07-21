@@ -52,11 +52,16 @@ const router = createRouter({
   linkActiveClass: "active",
 });
 
-router.beforeEach((to,from,next) => {
+router.beforeEach(async (to,from,next) => {
   console.log(to)
-  if(to.path !== '/signin' && store.state.name == ""){
+  const body = document.getElementsByTagName("body")[0];
+  if(to.path !== '/signin' && (await !store.getters.isAuthenticated)){
+    store.commit('uiSignin');
+    body.classList.remove("bg-gray-100");
     next('/signin')
   } else {
+    store.commit('uiLogged');
+    body.classList.add("bg-gray-100");
     next()
   }
 })
