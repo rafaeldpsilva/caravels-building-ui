@@ -27,13 +27,13 @@ export default createStore({
   },
   mutations: {
     saveOverview(state,overview){
-      state.overview = overview
+      state.overview = overview;
     },
     saveForecast(state,forecast){
-      state.forecast = forecast
+      state.forecast = forecast;
     },
     saveIots(state,iots){
-      state.iots = iots
+      state.iots = iots;
     },
     uiSignin(state){
       state.hideConfigButton = true;
@@ -51,6 +51,9 @@ export default createStore({
       state.name = name;
       state.uri = uri;
       state.token = token;
+      state.overview = [];
+      state.forecast  = [];
+      state.iots = [];
     },
     toggleConfigurator(state) {
       state.showConfig = !state.showConfig;
