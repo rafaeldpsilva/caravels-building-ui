@@ -239,7 +239,7 @@ export default {
       this.navbarMinimize();
     },
     retrieveUserInformation() {
-      const user = this.$store.state.name;
+      const user = localStorage.getItem("name");
       if (user) {
         this.logged = true;
       }
@@ -250,9 +250,9 @@ export default {
     logout() {
       this.$router.push({ path: 'signin' })
       // Clear the user information from local storage
-      this.$store.state.name = "";
-      this.$store.state.uri = "";
-      this.$store.state.token = "";
+      localStorage.setItem("name","")
+      localStorage.setItem("uri","")
+      localStorage.setItem("token","")
       // Redirect to the login page or perform other actions
     },
   },

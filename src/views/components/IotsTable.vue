@@ -144,7 +144,7 @@ import BuildingService from '../../services/BuildingService.js';
 export default {
   name: "iots-table",
   async created(){
-    const iots = this.$store.state.iots
+    const iots = localStorage.getItem("iots")
     if (iots.length == 0){
       await this.loadIotsList();
     } else {
@@ -158,8 +158,8 @@ export default {
   },
   methods: {
     async loadIotsList (){
-      this.iotsList = await BuildingService.getIots(this.$store.state.uri,this.$store.state.token)
-      this.$store.commit('saveIots', this.iotsList)
+      this.iotsList = await BuildingService.getIots(localStorage.getItem("uri"),localStorage.getItem("token"))
+      localStorage.setItem("iots", this.iotsList)
     },
   }
 };

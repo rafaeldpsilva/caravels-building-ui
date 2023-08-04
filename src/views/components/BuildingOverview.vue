@@ -22,20 +22,21 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-overview",
-  async created(){
-    const overview = this.$store.state.overview
-    if (overview.length == 0){
+  async mounted(){
+    const overview = localStorage.getItem("overview")
+    if (overview[0].length != 24){
       await this.loadBuildingOverview();
     } else {
       this.hours = overview[0];
       this.consumption = overview[1];
       this.generation = overview[2];
       this.flexibility = overview[3];
+      this.createBuildingOverview();
     }
   },
-  mounted(){
+/*   mounted(){
     this.createBuildingOverview();
-  },
+  }, */
   props: {
     title: {
       type: String,
@@ -52,6 +53,7 @@ export default {
   },
   data() {
     return {
+      chart: "",
       consumption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       generation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       flexibility: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -60,7 +62,7 @@ export default {
   },
   methods: {  
     async loadBuildingOverview() {
-      await BuildingService.getHistoric(this.$store.state.uri,this.$store.state.token).then( historic => {
+      await BuildingService.getHistoric(localStorage.getItem("uri"),localStorage.getItem("token")).then( historic => {
         let consumption = [];
         let generation = [];
         let flexibility = [];
@@ -78,10 +80,27 @@ export default {
         this.generation = generation;
         this.flexibility = flexibility;
         this.hours = hours;
-        this.$store.commit('saveOverview', [hours, consumption, generation, flexibility])
+        localStorage.setItem("overview", [hours, consumption, generation, flexibility])
         this.createBuildingOverview();
       });
 
+    },
+    updateData(hours, consumption, generation, flexibility){
+      this.chart.data.labels.pop();
+      this.chart.data.datasets.forEach((dataset) => {
+          dataset.data.pop();
+      });
+      this.chart.data.labels.push(hours);
+      this.chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(consumption);
+      });
+      this.chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(generation);
+      });
+      this.chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(flexibility);
+      });
+      this.chart.update();
     },
     createBuildingOverview() {
       var ctx1 = document.getElementById("chart-line").getContext("2d");
@@ -91,7 +110,7 @@ export default {
       gradientStroke1.addColorStop(1, "rgba(94, 114, 228, 0.2)");
       gradientStroke1.addColorStop(0.2, "rgba(94, 114, 228, 0.0)");
       gradientStroke1.addColorStop(0, "rgba(94, 114, 228, 0)");
-      new Chart(ctx1, {
+      this.chart = new Chart(ctx1, {
         type: "line",
         data: {
           labels: this.hours,

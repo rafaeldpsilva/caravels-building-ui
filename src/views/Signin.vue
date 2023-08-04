@@ -99,7 +99,14 @@ export default {
       community: [],
     };
   },
-  created() {
+/*   beforeUnmount() {
+    this.$store.state.hideConfigButton = false;
+    this.$store.state.showNavbar = true;
+    this.$store.state.showSidenav = true;
+    this.$store.state.showFooter = true;
+    body.classList.add("bg-gray-100");
+  }, */
+   created() {
     this.$store.state.hideConfigButton = true;
     this.$store.state.showNavbar = false;
     this.$store.state.showSidenav = false;
@@ -114,7 +121,12 @@ export default {
         this.community = await LoginService.getCommunity()
         for (let i = 0; i < this.community.length; i++) {
           if (this.username == this.community[i]['name']){
-            this.$store.commit('login', [this.username, this.community[i]['uri'], this.community[i]['token']])
+            localStorage.setItem("name", this.username)
+            localStorage.setItem("uri", this.community[i]['uri'])
+            localStorage.setItem("token", this.community[i]['token'])
+            localStorage.setItem("overview", [0])
+            localStorage.setItem("forecast", [0])
+            localStorage.setItem("iots", [])
             this.validUser = true
             this.$router.push({ path: 'dashboard-default' })
           } else {

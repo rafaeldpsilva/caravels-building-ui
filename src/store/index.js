@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
@@ -26,28 +25,33 @@ export default createStore({
     iots: []
   },
   mutations: {
-    saveOverview(state,overview){
-      state.overview = overview;
-    },
-    saveForecast(state,forecast){
-      state.forecast = forecast;
-    },
-    saveIots(state,iots){
-      state.iots = iots;
-    },
     uiSignin(state){
+      localStorage.setItem("hideConfigButton", true)
+      localStorage.setItem("showSidenav", false)
+      localStorage.setItem("showNavbar", false)
+      localStorage.setItem("showFooter", false)
       state.hideConfigButton = true;
       state.showSidenav = false;
       state.showNavbar = false;
       state.showFooter = false;
     },
     uiLogged(state){
+      localStorage.setItem("hideConfigButton", true)
+      localStorage.setItem("showSidenav", true)
+      localStorage.setItem("showNavbar", true)
+      localStorage.setItem("showFooter", true)
       state.hideConfigButton = true;
       state.showSidenav = true;
       state.showNavbar = true;
       state.showFooter = true;
     },
     login(state, [name, uri, token]){
+      localStorage.setItem("name", name)
+      localStorage.setItem("uri", uri)
+      localStorage.setItem("token", token)
+      localStorage.setItem("overview", [])
+      localStorage.setItem("forecast", [])
+      localStorage.setItem("iots", [])
       state.name = name;
       state.uri = uri;
       state.token = token;
@@ -88,12 +92,12 @@ export default createStore({
     }
   },
   getters: {
-    isAuthenticated: state => {
-      if (state.user != ""){
+    isAuthenticated: () => {
+      if (localStorage.getItem("name") != ""){
         return true
       }
       return false
     }
   },
-  plugins: [createPersistedState()]
+  plugins: []
 });

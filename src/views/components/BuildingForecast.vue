@@ -22,18 +22,19 @@ import BuildingService from "../../services/BuildingService.js"
 
 export default {
   name: "building-forecast",
-  async created(){
-    const forecast = this.$store.state.forecast
-    if (forecast.length == 0){
+  async mounted(){
+    const forecast = localStorage.getItem("forecast")
+    if (forecast[0].length != 24){
       await this.loadBuildingForecast();
     } else {
       this.hours = forecast[0];
       this.consumption = forecast[1];
+      this.createBuildingForecast();
     }
   },
-  mounted(){
+/*   mounted(){
     this.createBuildingForecast();
-  },
+  }, */
   props: {
     title: {
       type: String,
@@ -50,6 +51,7 @@ export default {
   },
   data() {
     return {
+      chart: "",
       consumption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       generation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       flexibility: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -58,7 +60,7 @@ export default {
   },
   methods: {  
     async loadBuildingForecast() {
-      await BuildingService.getForecastConsumption(this.$store.state.uri,this.$store.state.token).then( forecast => {
+      await BuildingService.getForecastConsumption(localStorage.getItem("uri"),localStorage.getItem("token")).then( forecast => {
         let consumption = [];
         let hours = [];
         let i = 0;
@@ -69,7 +71,7 @@ export default {
         }
         this.consumption = consumption;
         this.hours = hours;
-        this.$store.commit('saveForecast', [hours, consumption])
+        localStorage.setItem("forecast", [hours, consumption])
         this.createBuildingForecast();
       });
 
@@ -82,7 +84,7 @@ export default {
       gradientStroke1.addColorStop(1, "rgba(94, 114, 228, 0.2)");
       gradientStroke1.addColorStop(0.2, "rgba(94, 114, 228, 0.0)");
       gradientStroke1.addColorStop(0, "rgba(94, 114, 228, 0)");
-      new Chart(ctx1, {
+      this.chart = new Chart(ctx1, {
         type: "line",
         data: {
           labels: this.hours,

@@ -59,7 +59,7 @@ export default {
         })
     },
     async loadTokenList (){
-      this.tokenlist = await TokenService.getTokens(this.$store.state.uri,this.$store.state.token)
+      this.tokenlist = await TokenService.getTokens(localStorage.getItem("uri"),localStorage.getItem("token"))
     },
     addItem() {
       this.tokenlist.push({ id: 4, name: 'Item 4' })

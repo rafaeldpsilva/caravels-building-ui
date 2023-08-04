@@ -18,7 +18,7 @@
             </div>
             <div>
               <p class="text-white text-sm opacity-8 mb-0">{{ cardExpirationText }}</p>
-              <h6 class="text-white mb-0">11/22</h6>
+              <h6 class="text-white mb-0">11/23</h6>
             </div>
           </div>
           <div
@@ -48,10 +48,6 @@ export default {
       type: String,
       default: "Card Holder",
     },
-    name: {
-      type: String,
-      default: "Jack Peterson",
-    },
     cardExpirationText: {
       type: String,
       default: "Expires",
@@ -59,9 +55,13 @@ export default {
   },
   data() {
     return {
+      name: "",
       img,
       img1,
     };
   },
+  created(){
+    this.name = localStorage.getItem("name")
+  }
 };
 </script>
