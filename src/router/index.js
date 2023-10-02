@@ -5,7 +5,6 @@ import IoTs from "../views/IoTs.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
-import store from "../store/index.js";
 
 const routes = [
   {
@@ -17,21 +16,25 @@ const routes = [
     path: "/dashboard-default",
     name: "Dashboard",
     component: Dashboard,
+    meta: { requiresAuth: true }
   },
   {
     path: "/tokens",
     name: "Tokens",
     component: Tokens,
+    meta: { requiresAuth: true }
   },
   {
     path: "/iots",
     name: "IoTs",
     component: IoTs,
+    meta: { requiresAuth: true }
   },
   {
     path: "/profile",
     name: "Profile",
     component: Profile,
+    meta: { requiresAuth: true }
   },
   {
     path: "/signin",
@@ -52,7 +55,22 @@ const router = createRouter({
   linkActiveClass: "active",
 });
 
-router.beforeEach(async (to,from,next) => {
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("name") != "" ? true: false;
+  
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next('/signin');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+
+/* router.beforeEach(async (to,from,next) => {
   console.log(to)
   const body = document.getElementsByTagName("body")[0];
   if(to.path !== '/signin' && (await !store.getters.isAuthenticated)){
@@ -64,6 +82,6 @@ router.beforeEach(async (to,from,next) => {
     body.classList.add("bg-gray-100");
     next()
   }
-})
+}) */
 
 export default router;

@@ -99,13 +99,13 @@ export default {
       community: [],
     };
   },
-/*   beforeUnmount() {
+  beforeUnmount() {
     this.$store.state.hideConfigButton = false;
     this.$store.state.showNavbar = true;
     this.$store.state.showSidenav = true;
     this.$store.state.showFooter = true;
     body.classList.add("bg-gray-100");
-  }, */
+  },
    created() {
     this.$store.state.hideConfigButton = true;
     this.$store.state.showNavbar = false;
@@ -126,7 +126,7 @@ export default {
             localStorage.setItem("token", this.community[i]['token'])
             localStorage.setItem("overview", [0])
             localStorage.setItem("forecast", [0])
-            localStorage.setItem("iots", [])
+            localStorage.setItem("iots", null)
             this.validUser = true
             this.$router.push({ path: 'dashboard-default' })
           } else {

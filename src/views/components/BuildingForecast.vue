@@ -8,6 +8,9 @@
         {{detail2}}
       </p-->
     </div>
+    <div v-if="this.loading" class="fa-3x text-center">
+      <i class="fas fa-circle-notch fa-spin" ></i>
+    </div>
     <div class="p-3 card-body">
       <div class="chart">
         <canvas id="building-forecast" class="chart-canvas" height="300"></canvas>
@@ -23,18 +26,16 @@ import BuildingService from "../../services/BuildingService.js"
 export default {
   name: "building-forecast",
   async mounted(){
-    const forecast = localStorage.getItem("forecast")
-    if (forecast[0].length != 24){
+    const forecast = JSON.parse(localStorage.getItem("forecast"))
+    if (forecast.length != 2){
       await this.loadBuildingForecast();
     } else {
       this.hours = forecast[0];
       this.consumption = forecast[1];
+      this.loading = false;
       this.createBuildingForecast();
     }
   },
-/*   mounted(){
-    this.createBuildingForecast();
-  }, */
   props: {
     title: {
       type: String,
@@ -51,6 +52,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       chart: "",
       consumption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       generation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -69,9 +71,10 @@ export default {
             hours.push(i);
             i++;
         }
+        this.loading = false;
         this.consumption = consumption;
         this.hours = hours;
-        localStorage.setItem("forecast", [hours, consumption])
+        localStorage.setItem("forecast", JSON.stringify([hours, consumption]))
         this.createBuildingForecast();
       });
 

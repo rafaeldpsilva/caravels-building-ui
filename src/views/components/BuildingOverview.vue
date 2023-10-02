@@ -8,6 +8,9 @@
         {{detail2}}
       </p-->
     </div>
+    <div v-if="this.loading" class="fa-3x text-center">
+      <i class="fas fa-circle-notch fa-spin" ></i>
+    </div>
     <div class="p-3 card-body">
       <div class="chart">
         <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
@@ -23,10 +26,11 @@ import BuildingService from "../../services/BuildingService.js"
 export default {
   name: "building-overview",
   async mounted(){
-    const overview = localStorage.getItem("overview")
-    if (overview[0].length != 24){
+    const overview = JSON.parse(localStorage.getItem("overview"))
+    if (overview.length != 4){
       await this.loadBuildingOverview();
     } else {
+      this.loading = false;
       this.hours = overview[0];
       this.consumption = overview[1];
       this.generation = overview[2];
@@ -34,9 +38,6 @@ export default {
       this.createBuildingOverview();
     }
   },
-/*   mounted(){
-    this.createBuildingOverview();
-  }, */
   props: {
     title: {
       type: String,
@@ -53,7 +54,8 @@ export default {
   },
   data() {
     return {
-      chart: "",
+      loading: true,
+      chart: null,
       consumption: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       generation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       flexibility: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -76,11 +78,12 @@ export default {
             hours.push(dateObject.getUTCHours());
             i++;
         }
+        this.loading = false;
         this.consumption = consumption;
         this.generation = generation;
         this.flexibility = flexibility;
         this.hours = hours;
-        localStorage.setItem("overview", [hours, consumption, generation, flexibility])
+        localStorage.setItem("overview", JSON.stringify([hours, consumption, generation, flexibility]))
         this.createBuildingOverview();
       });
 
