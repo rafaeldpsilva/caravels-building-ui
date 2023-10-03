@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Tokens from "../views/Tokens.vue";
 import IoTs from "../views/IoTs.vue";
@@ -9,8 +9,8 @@ import Signin from "../views/Signin.vue";
 const routes = [
   {
     path: "/",
-    name: "/",
-    redirect: "/signin",
+    name: "Home",
+    redirect: "/dashboard-default",
   },
   {
     path: "/dashboard-default",
@@ -50,14 +50,13 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
 });
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("name") != "" ? true: false;
-  
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
       next('/signin');
