@@ -13,7 +13,6 @@
                   :classIcon="check.classIcon"
                   :title="check.title"
                   :desc="check.desc"
-                  :price="check.price"
                   @click="loading_check()"/>
               </div>
               <div class="col-md-6">
@@ -21,7 +20,6 @@
                   :classIcon="forget.classIcon"
                   :title="forget.title"
                   :desc="forget.desc"
-                  :price="forget.price"
                   @click="loading_forget()"/>
               </div>
             </div>
