@@ -136,6 +136,15 @@ const BuildingService = {
     }catch(error) {
       console.error(error);
     };
+  },
+  async getBalance(url, token) {
+    const path = url+this.balance+'?token='+token
+    try{
+      const response = await axios.get(path);
+      return response.data.balance
+    }catch(error) {
+      console.error(error);
+    };
   }
 };
 
