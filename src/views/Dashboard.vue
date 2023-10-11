@@ -42,7 +42,7 @@
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
             <div class="card z-index-2 mb-4">
-              <building-overview />
+              <building-overview-second />
             </div>
             <div class="card z-index-2">
               <building-forecast />
@@ -66,7 +66,7 @@
 </template>
 <script>
 import Card from "@/examples/Cards/Card.vue";
-import BuildingOverview from "./components/BuildingOverview.vue";
+import BuildingOverviewSecond from "./components/BuildingOverviewSecond.vue";
 import BuildingForecast from "./components/BuildingForecast.vue";
 import BuildingService from "../services/BuildingService.js"
 //import Carousel from "./components/Carousel.vue";
@@ -121,15 +121,19 @@ export default {
       this.stats.flexibility.value = this.energyNow['flexibility'].toFixed(2) + " W";
     }
   },
-  mounted() {
+  async mounted() {
     this.updateMonitoringValues();
     this.stats.consumption.value = "0 W";
     this.stats.generation.value = "0 W";
     this.stats.flexibility.value = "0 W";
+    await this.updateMonitoringValues()
+    setInterval(() => {
+      this.updateMonitoringValues();
+    }, 5000);
   },
   components: {
     Card,
-    BuildingOverview,
+    BuildingOverviewSecond,
     BuildingForecast,
     // Carousel,
     DemandResponseEventsCard,
