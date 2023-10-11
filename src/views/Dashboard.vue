@@ -42,7 +42,7 @@
           <div class="col-lg-7 mb-lg">
             <!-- line chart -->
             <div class="card z-index-2 mb-4">
-              <building-overview-second />
+              <building-overview />
             </div>
             <div class="card z-index-2">
               <building-forecast />
@@ -66,7 +66,7 @@
 </template>
 <script>
 import Card from "@/examples/Cards/Card.vue";
-import BuildingOverviewSecond from "./components/BuildingOverviewSecond.vue";
+import BuildingOverview from "./components/BuildingOverview.vue";
 import BuildingForecast from "./components/BuildingForecast.vue";
 import BuildingService from "../services/BuildingService.js"
 //import Carousel from "./components/Carousel.vue";
@@ -133,7 +133,7 @@ export default {
   },
   components: {
     Card,
-    BuildingOverviewSecond,
+    BuildingOverview,
     BuildingForecast,
     // Carousel,
     DemandResponseEventsCard,

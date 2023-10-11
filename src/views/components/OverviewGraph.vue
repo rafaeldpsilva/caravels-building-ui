@@ -22,11 +22,13 @@ use([
 ]);
 
 export default defineComponent({
+  name: "overview-graph-second",
   components: {
     VChart,
   },
   props: {
-    labels: [],
+    interval: [],
+    unit: [],
     consumption: [],
     generation: [],
     flexibility: [],
@@ -35,6 +37,7 @@ export default defineComponent({
     [THEME_KEY]: 'light',
   },
   async mounted(){
+    this.labels= ['-'+this.interval*10+this.unit, '-'+this.interval*9+this.unit,'-'+this.interval*8+this.unit, '-'+this.interval*7+this.unit, '-'+this.interval*6+this.unit,'-'+this.interval*5+this.unit, '-'+this.interval*4+this.unit, '-'+this.interval*3+this.unit, '-'+this.interval*2+this.unit, '-'+this.interval*1+this.unit];
     this.option.xAxis.data = this.labels;
     this.option.series[0].data = this.consumption
     this.option.series[1].data = this.generation
