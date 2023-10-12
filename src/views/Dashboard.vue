@@ -10,7 +10,7 @@
               :percentage="stats.consumption.percentage"
               :iconClass="stats.consumption.iconClass"
               :iconBackground="stats.consumption.iconBackground"
-              :detail="stats.consumption.detail"
+              :detail="detail"
               directionReverse
             ></card>
           </div>
@@ -21,7 +21,7 @@
               :percentage="stats.generation.percentage"
               :iconClass="stats.generation.iconClass"
               :iconBackground="stats.generation.iconBackground"
-              :detail="stats.generation.detail"
+              :detail="detail"
               directionReverse
             ></card>
           </div>
@@ -33,7 +33,7 @@
               :iconClass="stats.flexibility.iconClass"
               :iconBackground="stats.flexibility.iconBackground"
               :percentageColor="stats.flexibility.percentageColor"
-              :detail="stats.flexibility.detail"
+              :detail="detail"
               directionReverse
             ></card>
           </div>
@@ -76,13 +76,14 @@ export default {
   name: "dashboard-default",
   data() {
     return {
+      i: 0,
+      detail: "updated 5 seconds ago",
       stats: {
         consumption: {
           title: "Consumption",
           value: "",
           //percentage: "+55%",
           iconClass: "fa fa-flash",
-          detail: "updated 5 seconds ago",
           iconBackground: "bg-gradient-primary",
         },
         generation: {
@@ -91,7 +92,6 @@ export default {
           //percentage: "+3%",
           iconClass: "fa fa-sun-o",
           iconBackground: "bg-gradient-danger",
-          detail: "updated 5 seconds ago",
         },
         flexibility: {
           title: "Flexibility",
@@ -100,7 +100,6 @@ export default {
           iconClass: "ni ni-sound-wave",
           percentageColor: "text-danger",
           iconBackground: "bg-gradient-success",
-          detail: "updated 5 seconds ago",
         },
         sales: {
           title: "Sales",
@@ -115,6 +114,7 @@ export default {
   },
   methods: {  
     async updateMonitoringValues() {
+      this.i = -1;
       this.energyNow = await BuildingService.getEnergyNow(localStorage.getItem("uri"),localStorage.getItem("token"));
       this.stats.consumption.value = this.energyNow['consumption'].toFixed(2) + " W";
       this.stats.generation.value = this.energyNow['generation'].toFixed(2) + " W";
@@ -130,6 +130,10 @@ export default {
     setInterval(() => {
       this.updateMonitoringValues();
     }, 5000);
+    setInterval(() => {
+      this.i += 1;
+      this.detail = "updated "+ this.i +" seconds ago"
+    }, 1000);
   },
   components: {
     Card,
