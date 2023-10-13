@@ -9,13 +9,9 @@
             {{detail2}}
           </p-->
           <div class="col-md-6 d-flex justify-content-end align-items-center">
-            <div v-if="second" class = "btn btn-round" @click="intervalChange()">
-              <i class="fa fa-chevron-right"></i>
-              <label>1h</label>
-            </div>
-            <div v-else class = "btn btn-round" @click="intervalChange()">
-              <i class="fa fa-chevron-left"></i>
-              <label>5s</label>
+            <div class="form-check form-switch">
+              <input @click="intervalChange()" v-model="second" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <label class="form-check-label" for="flexSwitchCheckDefault">{{ interval + unit }}</label>
             </div>
           </div>
       </div>
