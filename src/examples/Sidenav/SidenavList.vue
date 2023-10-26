@@ -17,17 +17,6 @@
       </li>
       <li class="nav-item">
         <sidenav-item
-          url="/tokens"
-          :class="getRoute() === 'tokens' ? 'active' : ''"
-          :navText="'Tokens'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-key-25 text-success text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-      <li class="nav-item">
-        <sidenav-item
           url="/iots"
           :class="getRoute() === 'iots' ? 'active' : ''"
           :navText="'IoTs'"
@@ -36,6 +25,30 @@
             <i
               class="ni ni-bullet-list-67 text-warning text-sm opacity-10"
             ></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
+        <sidenav-item
+          url="/battery"
+          :class="getRoute() === 'battery' ? 'active' : ''"
+          :navText="'Battery'"
+        >
+          <template v-slot:icon>
+            <i
+              class="fa fa-battery-half text-danger text-sm opacity-10"
+            ></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
+        <sidenav-item
+          url="/tokens"
+          :class="getRoute() === 'tokens' ? 'active' : ''"
+          :navText="'Tokens'"
+        >
+          <template v-slot:icon>
+            <i class="ni ni-key-25 text-success text-sm opacity-10"></i>
           </template>
         </sidenav-item>
       </li>
