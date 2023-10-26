@@ -45,20 +45,24 @@ export default defineComponent({
     await this.updateMonitoringValues()
     setInterval(() => {
       this.updateMonitoringValues();
-    }, 5000);
+    }, 1000);
   },
   methods: {
       async updateMonitoringValues() {
-          this.energyNow = await BuildingService.getEnergyNow(localStorage.getItem("uri"),localStorage.getItem("token"));
-          this.updateData(this.energyNow['consumption'],this.energyNow['generation'],this.energyNow['flexibility'])
+        var now = new Date();
+        var data = now.getHours()+':' + now.getMinutes()+':' + now.getSeconds()
+        this.energyNow = await BuildingService.getEnergyNow(localStorage.getItem("uri"),localStorage.getItem("token"));
+        this.updateData(data, this.energyNow['consumption'],this.energyNow['generation'],this.energyNow['flexibility'])
       },
-      updateData(consumption, generation, flexibility){
+      updateData(data, consumption, generation, flexibility){
+        this.option.xAxis.data.shift(0);
         this.option.series[0].data.shift(0);
         this.option.series[1].data.shift(0);
         this.option.series[2].data.shift(0);
-        this.option.series[0].data.push(consumption)
-        this.option.series[1].data.push(generation)
-        this.option.series[2].data.push(flexibility)
+        this.option.xAxis.data.push(data);
+        this.option.series[0].data.push(consumption);
+        this.option.series[1].data.push(generation);
+        this.option.series[2].data.push(flexibility);
       },
   },
   setup() {
@@ -89,21 +93,24 @@ export default defineComponent({
             type: 'line',
             color: "#825ee4",
             showSymbol: false,
-            data: []
+            data: [],
+            smooth: true
             },
             {
             name: 'Generation',
             type: 'line',
             color: "#f5365c",
             showSymbol: false,
-            data: []
+            data: [],
+            smooth: true
             },
             {
             name: 'Flexibility',
             type: 'line',
             color: "#2dce89",
             showSymbol: false,
-            data: []
+            data: [],
+            smooth: true
             }
         ]
         }

@@ -51,19 +51,19 @@ export default {
   },
   data() {
     return {
-      second: true,
-      interval : 5,
-      unit: 's',
-      consumption: [0,0,0,0,0,0,0,0,0,0],
-      generation: [0,0,0,0,0,0,0,0,0,0],
-      flexibility: [0,0,0,0,0,0,0,0,0,0],
+      second: false,
+      interval : 1,
+      unit: 'h',
+      consumption: [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+      generation: [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+      flexibility: [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
     }
   },
   methods:{
     intervalChange(){
       this.second = !this.second;
       if (this.second){
-        this.interval = 5;
+        this.interval = 1;
         this.unit = 's';
       }else{
         this.interval = 1;

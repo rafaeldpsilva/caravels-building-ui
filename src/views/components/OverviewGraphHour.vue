@@ -47,8 +47,9 @@ export default defineComponent({
   },
   async mounted(){
     this.loading = true;
+    const now = new Date();
     const overview = JSON.parse(localStorage.getItem("overview"))
-    if (overview.length != 4){
+    if (overview.length != 4 || now.getHours() != overview[0][23]){
       await this.loadBuildingOverview();
     } else {
       this.option.xAxis.data= overview[0];

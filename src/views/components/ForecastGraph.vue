@@ -2,7 +2,7 @@
     <div v-if="this.loading" class="fa-3x text-center">
       <i class="fas fa-circle-notch fa-spin" ></i>
     </div>
-    <v-chart class="chart" :option="option" autoresize/>
+    <v-chart v-else class="chart" :option="option" autoresize/>
 </template>
 <script>
 import { use } from 'echarts/core';
