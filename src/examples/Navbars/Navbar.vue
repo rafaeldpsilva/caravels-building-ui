@@ -249,6 +249,7 @@ export default {
     },
     logout() {
       this.$router.push({ path: 'signin' })
+      this.$store.commit('logout');
       // Clear the user information from local storage
       localStorage.setItem("name","")
       localStorage.setItem("uri","")

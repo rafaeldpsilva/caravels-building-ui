@@ -22,7 +22,9 @@ export default createStore({
     token: "",
     overview: [],
     forecast: [],
-    iots: []
+    iots: [],
+    batteries: [],
+    batteries_historic: []
   },
   mutations: {
     uiSignin(state){
@@ -49,15 +51,32 @@ export default createStore({
       localStorage.setItem("name", name)
       localStorage.setItem("uri", uri)
       localStorage.setItem("token", token)
-      localStorage.setItem("overview", JSON.stringify([0]))
-      localStorage.setItem("forecast", JSON.stringify([0]))
-      localStorage.setItem("iots", JSON.stringify([0]))
+      localStorage.setItem("overview", JSON.stringify([]))
+      localStorage.setItem("forecast", JSON.stringify([]))
+      localStorage.setItem("iots", JSON.stringify([]))
+      localStorage.setItem("batteries", JSON.stringify([]))
+      localStorage.setItem("batteries_historic", JSON.stringify([]))
       state.name = name;
       state.uri = uri;
       state.token = token;
+    },
+    logout(state){
+      localStorage.setItem("name", "")
+      localStorage.setItem("uri", "")
+      localStorage.setItem("token", "")
+      localStorage.setItem("overview", JSON.stringify([]))
+      localStorage.setItem("forecast", JSON.stringify([]))
+      localStorage.setItem("iots", JSON.stringify([]))
+      localStorage.setItem("batteries", JSON.stringify([]))
+      localStorage.setItem("batteries_historic", JSON.stringify([]))
+      state.name = "";
+      state.uri = "";
+      state.token = "";
       state.overview = [];
       state.forecast  = [];
       state.iots = [];
+      state.batteries = [];
+      state.batteries_historic = [];
     },
     toggleConfigurator(state) {
       state.showConfig = !state.showConfig;
