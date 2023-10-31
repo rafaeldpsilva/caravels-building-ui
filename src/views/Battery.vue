@@ -5,16 +5,25 @@
         <batteries-table />
       </div>
     </div>
+    <div class="mt-4 row">
+      <div class="col-12">
+        <div class="card z-index-2 mb-4">
+          <batteries-graph-hour />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import BatteriesTable from "./components/BatteriesTable.vue";
+import BatteriesGraphHour from "./components/BatteriesGraphHour.vue";
 
 export default {
   name: "tables",
   components: {
-    BatteriesTable
+    BatteriesTable,
+    BatteriesGraphHour
   },
   data() {
     return {

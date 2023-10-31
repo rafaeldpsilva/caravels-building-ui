@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Projects table</h6>
+      <h6>Batteries table</h6>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -11,6 +11,7 @@
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Capacity</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Charging Rate</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Charge
               </th>
               <th></th>
@@ -37,6 +38,11 @@
               </td>
               <td>
                 <span class="text-xs font-weight-bold">{{battery.status}}</span>
+              </td>
+              <td class="align-middle text-center">
+                <span v-if="battery.status=='charging'" class="text-xs text-success font-weight-bold">{{battery.charging_rate}}</span>
+                <span v-else-if="battery.status=='discharging'" class="text-xs text-danger font-weight-bold">{{battery.charging_rate}}</span>
+                <span v-else class="text-xs text-info font-weight-bold">{{battery.charging_rate}}</span>
               </td>
               <td class="align-middle text-center">
                 <div class="d-flex align-items-center justify-content-center">
@@ -74,42 +80,36 @@ export default {
     return {
       batteryList: [ 
         {
-          logo:"../../assets/img/small-logos/logo-spotify.svg",
           name: "spotify",
           capacity: 2500,
           status: "charging",
           charge: 60
         },
         {
-          logo:"../../assets/img/small-logos/logo-invision.svg",
           name: "Invision",
           capacity: 5000,
           status: "full",
           charge: "100"
         },
         {
-          logo:"../../assets/img/small-logos/logo-jira.svg",
           name: "Jira",
           capacity: 3400,
           status: "discharging",
           charge: "30"
         },
         {
-          logo:"../../assets/img/small-logos/logo-slack.svg",
           name: "Slack",
           capacity: 1000,
           status: "full",
           charge: "100"
         },
         {
-          logo:"https://demos.creative-tim.com/argon-dashboard/assets/img/small-logos/logo-webdev.svg",
           name: "Webdev",
           capacity: 14000,
           status: "charging",
           charge: "80"
         },
         {
-          logo:"../../assets/img/small-logos/logo-xd.svg",
           name: "Adobe",
           capacity: 2300,
           status: "full",
@@ -118,10 +118,30 @@ export default {
       ]
     }
   },
+  async mounted(){
+    const batteries = JSON.parse(localStorage.getItem("batteries"))
+    
+    if (batteries.length == 0){
+      await this.loadBatteryList();
+    } else {
+      this.batteryList = batteries;
+    }
+  },
   methods: {
     async loadBatteryList (){
-      this.batteryList = await BatteryService.getBatteries(localStorage.getItem("uri"),localStorage.getItem("token"))
-      localStorage.setItem("batteries", JSON.stringify(this.batteryList))
+      const batteries = await BatteryService.getBatteries(localStorage.getItem("uri"),localStorage.getItem("token"))
+      var list = []
+      for(var i = 0; i < batteries.length; i++){
+        var status = "on hold"
+        if (batteries[i]['charging_rate'] > 0){
+          status = "charging"
+        } else if (batteries[i]['charging_rate'] < 0){
+          status = "discharging"
+        }
+        list.push({name: batteries[i]['name'], capacity: batteries[i]['capacity'], status: status, charging_rate: batteries[i]['charging_rate'], charge: batteries[i]['charge']})
+      }
+      this.batteryList = list
+      localStorage.setItem("batteries", JSON.stringify(list))
     },
   }
 }
