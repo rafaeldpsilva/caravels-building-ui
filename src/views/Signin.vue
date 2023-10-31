@@ -124,9 +124,11 @@ export default {
             localStorage.setItem("name", this.username)
             localStorage.setItem("uri", this.community[i]['uri'])
             localStorage.setItem("token", this.community[i]['token'])
-            localStorage.setItem("overview", [0])
-            localStorage.setItem("forecast", [0])
-            localStorage.setItem("iots", null)
+            //localStorage.setItem("overview", [])
+            //localStorage.setItem("forecast", [])
+            //localStorage.setItem("batteries", JSON.stringify([]))
+            //localStorage.setItem("batteries_historic", [])
+            //localStorage.setItem("iots", null)
             this.validUser = true
             this.$router.push({ path: 'dashboard-default' })
           } else {
