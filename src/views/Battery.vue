@@ -8,7 +8,22 @@
     <div class="mt-4 row">
       <div class="col-12">
         <div class="card z-index-2 mb-4">
-          <batteries-graph-hour />
+          <div class="card">
+              <div class="pb-0 card-header mb-0">
+                  <div class="row">
+                    <h6 class="col-md-6">Batteries Overview</h6>
+                    <!--div class="col-md-6 d-flex justify-content-end align-items-center">
+                      <div class="form-check form-switch">
+                        <input @click="intervalChange()" v-model="second" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">{{ interval + unit }}</label>
+                      </div>
+                    </div-->
+                </div>
+              </div>
+              <div class="p-3 card-body">
+                <batteries-graph-hour />
+              </div>
+            </div>
         </div>
       </div>
     </div>
