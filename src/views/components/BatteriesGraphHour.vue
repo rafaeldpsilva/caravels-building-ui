@@ -45,19 +45,28 @@ export default defineComponent({
   },
   async mounted(){
     this.loading = true;
-    const now = new Date();
     const batteries = JSON.parse(localStorage.getItem("batteries"))
     const batteries_historic = JSON.parse(localStorage.getItem("batteries_historic"))
-
-    if (batteries_historic.length != batteries.length + 2 || now.getHours() != batteries_historic[0][23]){
+    
+    const now = new Date();
+    console.log(now.getHours() != batteries_historic[0][23])
+    if (batteries_historic.length != 3 && now.getHours() != batteries_historic[0][23]){
       await this.loadBatteriesHistoric(batteries);
     } else {
       this.option.xAxis.data = batteries_historic[0];
-      //TODO insert batteries dynamicaly
-      
-
+      this.option.series[0].data = batteries_historic[1];
       //TODO insert batteries get last as date
-      this.option.series[0].data = batteries_historic[7];
+      var j = 1;
+      for(j = 1; j <= batteries.length; j++){
+        this.option.legend.data.push(batteries[j-1]['name'])
+        this.option.series.push({
+            name: batteries[j-1]['name'],
+            type: 'line',
+            color: this.getRandomHexColor(),
+            showSymbol: false,
+            data: batteries_historic[2][j-1]
+            });
+      }
 
       this.loading = false;
     }
@@ -73,7 +82,6 @@ export default defineComponent({
       for(var i = 0; i < batteries.length; i++){
           battery_energy.push([]);
       }
-      console.log(battery_energy)
       i = 0;
       while (i < historic.length) {
         stored_energy.push(historic[i][0]);
@@ -82,9 +90,10 @@ export default defineComponent({
         for(j = 0; j < batteries.length; j++){
           battery_energy[j].push(historic[i][j]);
         }
-        
+        j++;
+
         //TODO insert batteries get last as date
-        var dateObject = new Date(historic[i][j++]);
+        var dateObject = new Date(historic[i][j]);
         hours.push(dateObject.getUTCHours());
         i++;
       }
@@ -93,7 +102,6 @@ export default defineComponent({
       this.option.series[0].data = stored_energy;
       j = 1;
       for(j = 1; j <= batteries.length; j++){
-        console.log(batteries[j-1]['name'])
         this.option.legend.data.push(batteries[j-1]['name'])
         this.option.series.push({
             name: batteries[j-1]['name'],
