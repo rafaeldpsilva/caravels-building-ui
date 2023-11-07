@@ -3,7 +3,10 @@
     <div class="card-header pb-0">
       <h6>Batteries Table</h6>
     </div>
-    <div class="card-body px-0 pt-0 pb-2">
+    <div v-if="this.loading" class="fa-3x text-center">
+    <i class="fas fa-circle-notch fa-spin" ></i>
+  </div>
+    <div v-else class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center justify-content-center mb-0">
           <thead>
@@ -80,40 +83,10 @@ export default {
     return {
       batteryList: [ 
         {
-          name: "spotify",
+          name: "bat",
           capacity: 2500,
           status: "charging",
           charge: 60
-        },
-        {
-          name: "Invision",
-          capacity: 5000,
-          status: "full",
-          charge: "100"
-        },
-        {
-          name: "Jira",
-          capacity: 3400,
-          status: "discharging",
-          charge: "30"
-        },
-        {
-          name: "Slack",
-          capacity: 1000,
-          status: "full",
-          charge: "100"
-        },
-        {
-          name: "Webdev",
-          capacity: 14000,
-          status: "charging",
-          charge: "80"
-        },
-        {
-          name: "Adobe",
-          capacity: 2300,
-          status: "full",
-          charge: "100"
         }
       ]
     }

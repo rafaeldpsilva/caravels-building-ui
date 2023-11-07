@@ -49,7 +49,6 @@ export default defineComponent({
     const batteries_historic = JSON.parse(localStorage.getItem("batteries_historic"))
     
     const now = new Date();
-    console.log(now.getHours() != batteries_historic[0][23])
     if (batteries_historic.length != 3 && now.getHours() != batteries_historic[0][23]){
       await this.loadBatteriesHistoric(batteries);
     } else {
