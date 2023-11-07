@@ -145,7 +145,7 @@ export default {
   name: "iots-table",
   async mounted(){
     const iots = JSON.parse(localStorage.getItem("iots"))
-    if (iots == null){
+    if (iots.length == 0){
       await this.loadIotsList();
     } else {
       this.iotsList = iots;

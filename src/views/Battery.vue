@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="mt-4 row">
-      <div class="col-12">
+      <div class="col-8">
         <div class="card z-index-2 mb-4">
           <div class="card">
               <div class="pb-0 card-header mb-0">
