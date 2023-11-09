@@ -250,10 +250,6 @@ export default {
     logout() {
       this.$router.push({ path: 'signin' })
       this.$store.commit('logout');
-      // Clear the user information from local storage
-      localStorage.setItem("name","")
-      localStorage.setItem("uri","")
-      localStorage.setItem("token","")
       // Redirect to the login page or perform other actions
     },
   },

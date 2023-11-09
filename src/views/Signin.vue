@@ -121,16 +121,17 @@ export default {
         this.community = await LoginService.getCommunity()
         for (let i = 0; i < this.community.length; i++) {
           if (this.username == this.community[i]['name']){
-            localStorage.setItem("name", this.username)
-            localStorage.setItem("uri", this.community[i]['uri'])
-            localStorage.setItem("token", this.community[i]['token'])
-            //localStorage.setItem("overview", [])
-            //localStorage.setItem("forecast", [])
+            //localStorage.setItem("name", this.username)
+            //localStorage.setItem("uri", this.community[i]['uri'])
+            //localStorage.setItem("token", this.community[i]['token'])
+            //localStorage.setItem("overview", JSON.stringify([]))
+            //localStorage.setItem("forecast", JSON.stringify([]))
+            //localStorage.setItem("iots", JSON.stringify([]))
             //localStorage.setItem("batteries", JSON.stringify([]))
-            //localStorage.setItem("batteries_historic", [])
-            //localStorage.setItem("iots", null)
+            //localStorage.setItem("batteries_historic", JSON.stringify([0]))
             this.validUser = true
             this.$router.push({ path: 'dashboard-default' })
+            this.$store.commit('login',[this.username, this.community[i]['uri'], this.community[i]['token']]);
           } else {
             this.validUser = false
           }

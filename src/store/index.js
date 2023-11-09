@@ -68,7 +68,7 @@ export default createStore({
       localStorage.setItem("forecast", JSON.stringify([]))
       localStorage.setItem("iots", JSON.stringify([]))
       localStorage.setItem("batteries", JSON.stringify([]))
-      localStorage.setItem("batteries_historic", JSON.stringify([]))
+      localStorage.setItem("batteries_historic", JSON.stringify([0]))
       state.name = "";
       state.uri = "";
       state.token = "";
