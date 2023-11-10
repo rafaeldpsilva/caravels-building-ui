@@ -73,7 +73,7 @@
                 </div>
                 <ul class="px-2 py-3 dropdown-menu dropdown-menu-end" :class="showMenu[battery.i] ? 'show' : ''"
                   aria-labelledby="dropdownMenuButton">
-                  <li class="mb-2">
+                  <li class="mb-2" @click="showChargeModal(battery.i)">
                     <a class="dropdown-item border-radius-md">
                       <div class="py-1 d-flex">
                         <div class="d-flex flex-column justify-content-center">
@@ -84,7 +84,7 @@
                       </div>
                     </a>
                   </li>
-                  <li class="mb-2">
+                  <li class="mb-2" @click="showDischargeModal(battery.i)">
                     <a class="dropdown-item border-radius-md" href="javascript:;">
                       <div class="py-1 d-flex">
                         <div class="d-flex flex-column justify-content-center">
@@ -102,17 +102,34 @@
         </table>
       </div>
     </div>
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <charge-modal-dialog :show="showCharge" :battery="selectedBattery" @close="showCharge = false"></charge-modal-dialog>
+    </Teleport>
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <discharge-modal-dialog :show="showDischarge" :battery="selectedBattery" @close="showDischarge = false"></discharge-modal-dialog>
+    </Teleport>
   </div>
 </template>
 
 <script>
 import BatteryService from '../../services/BatteryService.js';
+import ChargeModalDialog from './ChargeModalDialog.vue';
+import DischargeModalDialog from './DischargeModalDialog.vue';
 
 export default {
   name: "batteries-table",
+  components: {
+    ChargeModalDialog,
+    DischargeModalDialog,
+  },
   data() {
     return {
       loading: true,
+      showCharge: false,
+      showDischarge: false,
+      selectedBattery: null,
       showMenu: [],
       batteryList: [
         {
@@ -126,14 +143,7 @@ export default {
     }
   },
   async mounted() {
-    const batteries = JSON.parse(localStorage.getItem("batteries"))
-
-    if (batteries.length == 0) {
-      await this.loadBatteryList();
-    } else {
-      this.batteryList = batteries;
-    }
-
+    await this.loadBatteryList();
     this.showMenu = [];
     for (var i = 0; i < this.batteryList; i++) {
       this.showMenu.push(false)
@@ -167,6 +177,16 @@ export default {
         menu.push(false)
       }
       this.showMenu = menu
+    },
+    showChargeModal(i) {
+      this.showMenu[i]=false;
+      this.selectedBattery = this.batteryList[i]['name'] 
+      this.showCharge = true;
+    },
+    showDischargeModal(i) {
+      this.showMenu[i]=false;
+      this.selectedBattery = this.batteryList[i]['name']
+      this.showDischarge = true;
     }
   }
 }
