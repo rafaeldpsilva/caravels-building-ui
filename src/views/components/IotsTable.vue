@@ -12,11 +12,11 @@
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">URL</th>
-              <th class="text-secondary opacity-7"></th>
+              <!--th class="text-secondary opacity-7"></th-->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="iot in iotsList" :key="iot.name">
+            <tr v-for="iot in iotsList" :key="iot.name" @click="showChargeModal(iot)">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -65,15 +65,16 @@
                 <span class="badge badge-sm bg-gradient-success">Online</span>
               </td>
               <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">Edit</span>
-              </td>
-              <!--td class="align-middle">
                 <a
                   href="javascript:;"
                   class="text-secondary font-weight-bold text-xs"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
                 >Edit</a>
+                
+              </td>
+              <!--td class="align-middle">
+                <span class="text-secondary text-xs font-weight-bold">Edit</span>
               </td-->
             </tr>
           </tbody>
@@ -81,13 +82,21 @@
       </div>
     </div>
   </div>
+  <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <iot-modal :show="isModalVisible" :battery="selectedIot" @close="isModalVisible = false"></iot-modal>
+    </Teleport>
 </template>
 
 <script>
 import BuildingService from '../../services/BuildingService.js';
+import IotModal from './IotModal.vue';
 
 export default {
   name: "iots-table",
+  components: {
+    IotModal
+  },
   async mounted() {
     const iots = JSON.parse(localStorage.getItem("iots"))
     if (iots.length == 0) {
@@ -98,16 +107,15 @@ export default {
   },
   data() {
     return {
+      selectedIot: null,
       isModalVisible: false,
       iotsList: []
     }
   },
   methods: {
-    showModal() {
+    showChargeModal(i) {
+      this.selectedIot = this.iotsList.indexOf(i).toString()
       this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
     },
     async loadIotsList() {
       this.iotsList = await BuildingService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
@@ -116,3 +124,27 @@ export default {
   }
 };
 </script>
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+tr:hover td {
+  background-color: #f5f5f5; /* Or any other color you prefer */
+}
+
+tr.active {
+  background-color: #e0e0e0; /* Highlight color when row is active */
+}
+
+</style>
