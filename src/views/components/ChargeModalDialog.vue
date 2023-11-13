@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async sendCharge() {
-      await BatteryService.postChargeBattery(localStorage.getItem("uri"), localStorage.getItem("token"), this.battery, this.watts)
+      await BatteryService.postChargeBattery(localStorage.getItem("uri"), localStorage.getItem("token"), this.battery, parseInt(this.watts))
       this.$emit('close')
     }
   }
