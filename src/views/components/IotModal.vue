@@ -3,12 +3,12 @@
     <div v-if="show" class="modal-mask" @keydown.esc="$emit('close')">
       <div class="modal-container">
         <div class="modal-header">
-          <h3 name="header">Iot</h3>
+          <h3 name="header">{{iot}}</h3>
         </div>
 
         <div class="modal-body">
           <div class="input-group">
-            <span>Index {{battery}}</span>
+            <iot-historic :iot="iot"/>
           </div>
         </div>
 
@@ -22,29 +22,36 @@
   </Transition>
 </template>
 <script>
-import BatteryService from "../../services/BatteryService";
+import IotService from "../../services/IotService";
 import ArgonButton from "@/components/ArgonButton.vue";
+import IotHistoric from "./IotHistoric.vue";
 
 export default {
-  name: "charge-modal-dialog",
+  name: "iot-modal-dialog",
   props: {
     show: Boolean,
-    battery: String,
+    iot: String,
   },
   components: {
+    IotHistoric,
     ArgonButton,
   },
   data() {
     return {
-      watts: '',
-      showCharge: false,
-      showDischarge: false,
+      
+    }
+  },
+  async mounted() {
+    const iots = JSON.parse(localStorage.getItem("iots"))
+    if (iots.length == 0) {
+      await this.loadIotsList();
+    } else {
+      this.iotsList = iots;
     }
   },
   methods: {
     async sendCharge() {
-      await BatteryService.postChargeBattery(localStorage.getItem("uri"), localStorage.getItem("token"), this.battery, parseInt(this.watts))
-      this.$emit('close')
+      await IotService.getIotHistoric(localStorage.getItem("uri"), localStorage.getItem("token"), this.iot)
     }
   }
 }

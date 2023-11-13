@@ -84,7 +84,7 @@
   </div>
   <Teleport to="body">
       <!-- use the modal component, pass in the prop -->
-      <iot-modal :show="isModalVisible" :battery="selectedIot" @close="isModalVisible = false"></iot-modal>
+      <iot-modal :show="isModalVisible" :iot="selectedIot" @close="isModalVisible = false"></iot-modal>
     </Teleport>
 </template>
 
@@ -113,8 +113,8 @@ export default {
     }
   },
   methods: {
-    showChargeModal(i) {
-      this.selectedIot = this.iotsList.indexOf(i).toString()
+    showChargeModal(iot) {
+      this.selectedIot = iot['name']
       this.isModalVisible = true;
     },
     async loadIotsList() {

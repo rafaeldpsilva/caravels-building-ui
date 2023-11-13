@@ -61,7 +61,7 @@ export default defineComponent({
         let hours = [];
         let i = 0;
         while (i < forecast.length) {
-            consumption.push(forecast[i]);
+            consumption.push(forecast[i].toFixed(2));
             hours.push(i);
             i++;
         }

@@ -68,9 +68,9 @@ export default defineComponent({
         let hours = [];
         let i = 0;
         while (i < historic.length) {
-            consumption.push(historic[i][0]);
-            generation.push(historic[i][1]);
-            flexibility.push(historic[i][2]);
+            consumption.push(historic[i][0].toFixed(2));
+            generation.push(historic[i][1].toFixed(2));
+            flexibility.push(historic[i][2].toFixed(2));
             var dateObject = new Date(historic[i][3]);
             hours.push(dateObject.getUTCHours());
             i++;
