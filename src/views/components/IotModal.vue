@@ -13,9 +13,7 @@
         </div>
 
         <div class="text-center">
-          <argon-button class="m-2" variant="gradient" color="success" size="sm" @click="sendCharge()">Send</argon-button>
-          <argon-button class="m-2" variant="gradient" color="danger" size="sm"
-            @click="$emit('close')">Cancel</argon-button>
+          <argon-button class="m-2" variant="gradient" color="success" size="sm" @click="$emit('close')">Ok</argon-button>
         </div>
       </div>
     </div>
@@ -49,11 +47,6 @@ export default {
       this.iotsList = iots;
     }
   },
-  methods: {
-    async sendCharge() {
-      await IotService.getIotHistoric(localStorage.getItem("uri"), localStorage.getItem("token"), this.iot)
-    }
-  }
 }
 </script>
 <style>
