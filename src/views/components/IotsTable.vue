@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import BuildingService from '../../services/BuildingService.js';
+import IotService from '../../services/IotService.js';
 import IotModal from './IotModal.vue';
 
 export default {
@@ -118,7 +118,7 @@ export default {
       this.isModalVisible = true;
     },
     async loadIotsList() {
-      this.iotsList = await BuildingService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+      this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
       localStorage.setItem("iots", JSON.stringify(this.iotsList))
     },
   }

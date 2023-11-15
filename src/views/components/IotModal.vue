@@ -20,7 +20,7 @@
   </Transition>
 </template>
 <script>
-import IotService from "../../services/IotService";
+
 import ArgonButton from "@/components/ArgonButton.vue";
 import IotHistoric from "./IotHistoric.vue";
 
@@ -33,19 +33,6 @@ export default {
   components: {
     IotHistoric,
     ArgonButton,
-  },
-  data() {
-    return {
-      
-    }
-  },
-  async mounted() {
-    const iots = JSON.parse(localStorage.getItem("iots"))
-    if (iots.length == 0) {
-      await this.loadIotsList();
-    } else {
-      this.iotsList = iots;
-    }
   },
 }
 </script>
