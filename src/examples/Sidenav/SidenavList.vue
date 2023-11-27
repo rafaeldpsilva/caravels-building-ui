@@ -30,6 +30,19 @@
       </li>
       <li class="nav-item">
         <sidenav-item
+          url="/divisions"
+          :class="getRoute() === 'divisions' ? 'active' : ''"
+          :navText="'Divisions'"
+        >
+          <template v-slot:icon>
+            <i
+              class="ni ni-ungroup text-primary text-sm opacity-10"
+            ></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
+        <sidenav-item
           url="/battery"
           :class="getRoute() === 'battery' ? 'active' : ''"
           :navText="'Battery'"

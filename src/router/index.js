@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Battery from "../views/Battery.vue";
 import Tokens from "../views/Tokens.vue";
 import IoTs from "../views/IoTs.vue";
+import Divisions from "../views/Divisions.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
@@ -23,6 +24,12 @@ const routes = [
     path: "/battery",
     name: "Battery",
     component: Battery,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/divisions",
+    name: "Divisions",
+    component: Divisions,
     meta: { requiresAuth: true }
   },
   {
