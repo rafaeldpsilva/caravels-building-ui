@@ -11,11 +11,13 @@
             <div class="row">
               <div class="pb-3">
                 <label for="example-text-input" class="form-control-label">Division Name</label>
-                <input class="form-control" type="text" placeholder="Name" v-model="name"/>
+                <input class="form-control" type="text" placeholder="Name" v-model="name" />
               </div>
               <label for="example-text-input" class="form-control-label">Which IoT's do you want to add?</label>
               <div>
-                <VueMultiselect v-model="data_selected" :options="iotsList" :multiple="true"  :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick at least one" label="name" track-by="name" :preselect-first="false"/>
+                <VueMultiselect v-model="iots_selected" :options="iotsList" :multiple="true" :close-on-select="false"
+                  :clear-on-select="false" :preserve-search="true" placeholder="Pick at least one" label="name"
+                  track-by="name" :preselect-first="false" />
               </div>
             </div>
 
@@ -23,7 +25,8 @@
         </div>
 
         <div class="text-center">
-          <argon-button class="m-2" variant="gradient" color="primary" size="sm" @click="$emit('close')">Create</argon-button>
+          <argon-button class="m-2" variant="gradient" color="primary" size="sm"
+            @click="createDivision()">Create</argon-button>
         </div>
       </div>
     </div>
@@ -49,12 +52,19 @@ export default {
   },
   data() {
     return {
-      data_selected: null,
+      name: null,
+      iots_selected: null,
       iotsList: [],
     }
   },
   async mounted() {
     this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+  },
+  methods: {
+    async createDivision() {
+      await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), name, this.iots_selected)
+      this.$emit('close')
+    },
   },
 }
 </script>
@@ -76,7 +86,7 @@ export default {
   margin: auto;
   padding: 20px 30px;
   background-color: #fff;
-  border-radius: 2px;
+  border-radius: 10px; /* Adjust the value to control the roundness of the corners */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
@@ -115,5 +125,4 @@ export default {
 .modal-leave-to .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}
-</style>
+}</style>
