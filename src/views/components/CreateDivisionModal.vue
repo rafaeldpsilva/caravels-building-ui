@@ -38,13 +38,12 @@ import ArgonButton from "@/components/ArgonButton.vue";
 import VueMultiselect from 'vue-multiselect';
 import "vue-multiselect/dist/vue-multiselect.css";
 import IotService from '../../services/IotService.js';
-import DivisionsService from '../../services/DivisionsService.js';
+//import DivisionsService from '../../services/DivisionsService.js';
 
 export default {
   name: "create-division-modal-dialog",
   props: {
-    show: Boolean,
-    iot: String,
+    show: Boolean
   },
   components: {
     ArgonButton,
@@ -52,6 +51,7 @@ export default {
   },
   data() {
     return {
+      newDivision: null,
       name: null,
       iots_selected: null,
       iotsList: [],
@@ -62,7 +62,12 @@ export default {
   },
   methods: {
     async createDivision() {
-      await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), name, this.iots_selected)
+      this.newDivision = {
+          title: this.name,
+          value: '0 W',
+      }
+      this.$emit("add-division", this.newDivision);
+      //await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), this.name, this.iots_selected)
       this.$emit('close')
     },
   },

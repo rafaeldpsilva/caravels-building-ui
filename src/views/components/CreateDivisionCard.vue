@@ -8,7 +8,7 @@
     </div>
     <Teleport to="body">
       <!-- use the modal component, pass in the prop -->
-      <create-division-modal :show="isModalVisible" :iot="selectedIot" @close="isModalVisible = false"></create-division-modal>
+      <create-division-modal :show="isModalVisible" :newDivision="newDivision" @addDivision="addNewDivision" @close="isModalVisible = false"></create-division-modal>
     </Teleport>
   </template>
   
@@ -20,12 +20,21 @@
     components: {
       CreateDivisionModal
     },
+    props: {
+      newDivision: {
+        required: true,
+      },
+    },
     data() {
       return {
         isModalVisible: false,
       }
     },
     methods: {
+      addNewDivision(newDivision){
+        console.log(newDivision)
+        this.$emit('add-division', newDivision)
+      },
       showChargeModal() {
         this.isModalVisible = true;
       },

@@ -6,12 +6,11 @@
           <div v-for="(division, index) in divisionList" :key="index" class="col-lg-3 col-md-6 col-12">
             <div >
               <division-card :title="division.title" :value="division.value"
-              :percentage="division.percentage" :iconClass="division.iconClass"
-              :iconBackground="division.iconBackground" :detail="detail" directionReverse></division-card>
+              :percentage="division.percentage" :detail="detail" directionReverse></division-card>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-12">
-            <create-division-card />
+            <create-division-card :newDivision="newDivision" @addDivision="handleAddDivision" />
           </div>
         </div>
       </div>
@@ -28,6 +27,7 @@ export default {
     return {
       i: 0,
       detail: "There are no iots in this room",
+      newDivision: "",
       divisionList : [{
           title: "Garagem",
           value: "0 W",
@@ -46,12 +46,14 @@ export default {
   methods: {
     async updateMonitoringValues() {
       this.i = -1;
+    },
+    handleAddDivision(newDivision){
+      console.log(newDivision)
+      this.divisionList.push(newDivision)
     }
   },
   async mounted() {
-    this.division.value = "0 W";
-    this.stats.generation.value = "0 W";
-    this.stats.flexibility.value = "0 W";
+    //GET DIVISIONS
   },
   components: {
     DivisionCard,

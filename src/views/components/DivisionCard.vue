@@ -12,7 +12,7 @@
             <div class="numbers">
               <p class="mb-0 text-sm text-uppercase font-weight-bold" :class="titleColor">{{ title }}</p>
               <h5 class="font-weight-bolder" :class="valueColor">{{ value }}</h5>
-              <span class="text-sm"  :class="percentageColor">{{ percentage }}</span> 
+              <span class="text-sm">{{ percentage }}</span> 
               {{detail}}
             </div>
           </div>
