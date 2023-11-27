@@ -16,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="iot in iotsList" :key="iot.name" @click="showChargeModal(iot)">
+            <tr v-for="iot in iotsList" :key="iot.name" @click="showIotModal(iot)">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -113,7 +113,7 @@ export default {
     }
   },
   methods: {
-    showChargeModal(iot) {
+    showIotModal(iot) {
       this.selectedIot = iot['name']
       this.isModalVisible = true;
     },
