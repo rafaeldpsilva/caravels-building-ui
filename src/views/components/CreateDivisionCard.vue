@@ -1,7 +1,7 @@
 <template>
     <div class="card bg-gradient-dark">
       <div class="card-body">
-        <button class="btn btn-sm btn-white mb-0 w-100" @click="showChargeModal()">
+        <button class="btn btn-sm btn-white mb-0 w-100" @click="showCreateDivisionModal()">
             <i class="fa fa-plus" aria-hidden="true"></i>
         </button>
       </div>
@@ -33,7 +33,7 @@
       addNewDivision(newDivision){
         this.$emit('add-division', newDivision)
       },
-      showChargeModal() {
+      showCreateDivisionModal() {
         this.isModalVisible = true;
       },
     }

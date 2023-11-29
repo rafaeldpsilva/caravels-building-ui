@@ -2,9 +2,9 @@
   <Transition name="modal">
     <div v-if="show" class="modal-mask" @keydown.esc="close()">
       <div class="modal-container">
-        <div class="modal-header ">
+        <div class="modal-header">
           <div class="d-flex justify-content-between w-100">
-            <h3 name="header">Create New Division</h3>
+            <h3 name="header">{{ division.name }}</h3>
             <button class="btn btn-transparent align-self-start" type="button" aria-haspopup="true" aria-expanded="false"
               @click="close()">
               <i class="fa fa-times" aria-hidden="true"></i>
@@ -13,25 +13,62 @@
         </div>
 
         <div class="modal-body">
-          <div>
+          <div class="config">
+            <h6>AC Status Model</h6>
             <div class="row">
-              <div class="pb-3">
-                <label for="example-text-input" class="form-control-label">Division Name</label>
-                <input class="form-control" type="text" placeholder="Name" v-model="name" required />
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Outdoor Temperature:</label>
+                <div>
+                  <VueMultiselect v-model="outdoorTemperature" :options="iots_selected" :multiple="false"
+                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick one"
+                    label="name" track-by="name" :preselect-first="false" />
+                </div>
               </div>
-              <label for="example-text-input" class="form-control-label">Which IoT's do you want to add?</label>
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Temperature:</label>
+                <div>
+                  <VueMultiselect v-model="temperature" :options="iots_selected" :multiple="false" :close-on-select="false"
+                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
+                    :preselect-first="false" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Humidity:</label>
+                <div>
+                  <VueMultiselect v-model="humidity" :options="iots_selected" :multiple="false" :close-on-select="false"
+                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
+                    :preselect-first="false" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Light:</label>
+                <div>
+                  <VueMultiselect v-model="light" :options="iots_selected" :multiple="false" :close-on-select="false"
+                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
+                    :preselect-first="false" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h6>IoT's</h6>
+            <div class="row">
+
+
+              <label for="example-text-input" class="form-control-label">Room's IoT:</label>
               <div>
                 <VueMultiselect v-model="iots_selected" :options="iotsList" :multiple="true" :close-on-select="false"
                   :clear-on-select="false" :preserve-search="true" placeholder="Pick at least one" label="name"
                   track-by="name" :preselect-first="false" />
               </div>
             </div>
-
           </div>
         </div>
         <div class="text-center">
-          <argon-button :disabled="isCreateButtonDisabled" class="m-2" variant="gradient" color="primary" size="sm"
-            @click="createDivision()">Create</argon-button>
+          <argon-button :disabled="isUpdateButtonDisabled" class="m-2" variant="gradient" color="primary" size="sm"
+            @click="updateDivision()">Update</argon-button>
         </div>
       </div>
     </div>
@@ -46,9 +83,12 @@ import IotService from '../../services/IotService.js';
 import DivisionsService from '../../services/DivisionsService.js';
 
 export default {
-  name: "create-division-modal-dialog",
+  name: "division-modal-dialog",
   props: {
-    show: Boolean
+    show: Boolean,
+    division: {
+      required: true,
+    }
   },
   components: {
     ArgonButton,
@@ -57,43 +97,35 @@ export default {
   data() {
     return {
       newDivision: null,
-      name: "",
-      iots_selected: "",
+      iots_selected: [],
       iotsList: [],
+      outdoorTemperature: "",
+      temperature: "",
+      humidity: "",
+      light: "",
     }
   },
   async mounted() {
-    this.clear()
     this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+    for (var i = 0; i < this.iotsList.length; i++) {
+      for (var j = 0; j < this.division.iots.length; j++) {
+        if (this.iotsList[i]['name'] == this.division.iots[j]) {
+          this.iots_selected.push(this.iotsList[i])
+        }
+      }
+    }
   },
   methods: {
-    clear() {
-      this.newDivision = null
-      this.name = "";
-      this.iots_selected = "";
-    },
     close() {
       this.$emit('close')
       this.clear()
     },
     async createDivision() {
-      var aux = []
-      for (var i = 0; i < this.iots_selected.length; i++) {
-        aux.push(this.iots_selected[i]['name'])
-      }
-
-      this.newDivision = {
-        name: this.name,
-        iots: aux,
-      }
-
-      await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), this.name, aux)
-      this.$emit("add-new-division", this.newDivision);
-      this.close();
+      await DivisionsService.postSetConfigACStatus()
     },
   },
   computed: {
-    isCreateButtonDisabled: function () {
+    isUpdateButtonDisabled: function () {
       return !this.name || !this.iots_selected || this.iots_selected.length === 0;
     },
   },
@@ -123,6 +155,11 @@ export default {
   transition: all 0.3s ease;
 }
 
+.modal-header {
+  display: block !important;
+  padding-bottom: 0;
+}
+
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
@@ -130,6 +167,12 @@ export default {
 
 .modal-body {
   margin: 20px 0;
+}
+
+.config {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .modal-default-button {

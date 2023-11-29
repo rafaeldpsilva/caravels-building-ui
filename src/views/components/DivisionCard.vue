@@ -12,24 +12,33 @@
           <h5 class="font-weight-bolder">{{ iotsList }}</h5>
         </div>
         <button class="btn btn-transparent align-self-start" type="button" aria-haspopup="true" aria-expanded="false"
-          @click="removeDivision()">
+          @click="showDivisionModal()">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
       </div>
     </div>
+    <Teleport to="body">
+      <division-modal :show="isModalVisible" :division="division" @addNewDivision="addNewDivision"
+        @close="isModalVisible = false"></division-modal>
+    </Teleport>
   </div>
 </template>
   
 <script>
+import DivisionModal from './DivisionModal.vue';
 
 export default {
   name: "division-card",
+  components: {
+    DivisionModal
+  },
   data() {
     return {
-      iotsList: ""
+      iotsList: "",
+      isModalVisible: false,
     };
   },
-  mounted(){
+  mounted() {
     this.iotsToString()
   },
   beforeUpdate() {
@@ -58,7 +67,10 @@ export default {
       } else {
         this.iotsList = string.slice(0, string.length - 2)
       }
-    }
+    },
+    showDivisionModal() {
+      this.isModalVisible = true;
+    },
   },
 };
 </script>
