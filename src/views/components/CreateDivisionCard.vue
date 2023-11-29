@@ -7,8 +7,7 @@
       </div>
     </div>
     <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <create-division-modal :show="isModalVisible" :newDivision="newDivision" @addDivision="addNewDivision" @close="isModalVisible = false"></create-division-modal>
+      <create-division-modal :show="isModalVisible" @addNewDivision="addNewDivision" @close="isModalVisible = false"></create-division-modal>
     </Teleport>
   </template>
   
@@ -32,7 +31,6 @@
     },
     methods: {
       addNewDivision(newDivision){
-        console.log(newDivision)
         this.$emit('add-division', newDivision)
       },
       showChargeModal() {

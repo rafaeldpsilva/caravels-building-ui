@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const DivisionsService = {
   divisions: "divisions",
-  create_division: "create/division",
+  create_division: "divisions/create",
 
   async getDivisions(url, token) {
     const path = url + this.divisions + '?token=' + token
     try {
       const response = await axios.get(path);
-      return response.data.iots
+      return response.data.divisions
     } catch (error) {
       console.error(error);
     };

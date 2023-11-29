@@ -4,9 +4,8 @@
       <div class="col-lg-12">
         <div class="row">
           <div v-for="(division, index) in divisionList" :key="index" class="col-lg-3 col-md-6 col-12">
-            <div >
-              <division-card :title="division.title" :value="division.value"
-              :percentage="division.percentage" :detail="detail" directionReverse></division-card>
+            <div>
+              <division-card :division="division" :index="index" directionReverse @removeDivision="handleRemoveDivision"></division-card>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-12">
@@ -20,40 +19,31 @@
 <script>
 import DivisionCard from "./components/DivisionCard.vue"
 import CreateDivisionCard from "./components/CreateDivisionCard.vue"
+import DivisionService from "../services/DivisionsService.js"
 
 export default {
   name: "divisions",
   data() {
     return {
       i: 0,
-      detail: "There are no iots in this room",
       newDivision: "",
-      divisionList : [{
-          title: "Garagem",
-          value: "0 W",
-        },
-        {
-          title: "Cozinha",
-          value: "0 W",
-        },
-        {
-          title: "Sala",
-          value: "0 W",
-        }
-      ],
+      divisionList: [],
     };
   },
-  methods: {
-    async updateMonitoringValues() {
-      this.i = -1;
-    },
-    handleAddDivision(newDivision){
-      console.log(newDivision)
-      this.divisionList.push(newDivision)
-    }
-  },
   async mounted() {
-    //GET DIVISIONS
+    this.getDivisions();
+  },
+  methods: {
+    async getDivisions() {
+      this.divisionList = await DivisionService.getDivisions(localStorage.getItem("uri"), localStorage.getItem("token"))
+    },
+    handleAddDivision(newDivision) {
+      this.divisionList.push(newDivision)
+    },
+    handleRemoveDivision(index) {
+      this.divisionList.splice(index,1)
+      console.log(this.divisionList[this.divisionList.length-1])
+    }
   },
   components: {
     DivisionCard,

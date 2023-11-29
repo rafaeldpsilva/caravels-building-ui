@@ -1,6 +1,6 @@
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask" @keydown.esc="$emit('close')">
+    <div v-if="show" class="modal-mask" @keydown.esc="close()">
       <div class="modal-container">
         <div class="modal-header">
           <h3 name="header">Create New Division</h3>
@@ -11,7 +11,7 @@
             <div class="row">
               <div class="pb-3">
                 <label for="example-text-input" class="form-control-label">Division Name</label>
-                <input class="form-control" type="text" placeholder="Name" v-model="name" />
+                <input class="form-control" type="text" placeholder="Name" v-model="name" required />
               </div>
               <label for="example-text-input" class="form-control-label">Which IoT's do you want to add?</label>
               <div>
@@ -23,9 +23,8 @@
 
           </div>
         </div>
-
         <div class="text-center">
-          <argon-button class="m-2" variant="gradient" color="primary" size="sm"
+          <argon-button :disabled="isCreateButtonDisabled" class="m-2" variant="gradient" color="primary" size="sm"
             @click="createDivision()">Create</argon-button>
         </div>
       </div>
@@ -38,7 +37,7 @@ import ArgonButton from "@/components/ArgonButton.vue";
 import VueMultiselect from 'vue-multiselect';
 import "vue-multiselect/dist/vue-multiselect.css";
 import IotService from '../../services/IotService.js';
-//import DivisionsService from '../../services/DivisionsService.js';
+import DivisionsService from '../../services/DivisionsService.js';
 
 export default {
   name: "create-division-modal-dialog",
@@ -52,23 +51,44 @@ export default {
   data() {
     return {
       newDivision: null,
-      name: null,
-      iots_selected: null,
+      name: "",
+      iots_selected: "",
       iotsList: [],
     }
   },
   async mounted() {
+    this.clear()
     this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
   },
   methods: {
-    async createDivision() {
-      this.newDivision = {
-          title: this.name,
-          value: '0 W',
-      }
-      this.$emit("add-division", this.newDivision);
-      //await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), this.name, this.iots_selected)
+    clear() {
+      this.newDivision = null
+      this.name = "";
+      this.iots_selected = "";
+    },
+    close(){
       this.$emit('close')
+      this.clear()
+    },
+    async createDivision() {
+      var aux = []
+      for (var i = 0; i < this.iots_selected.length; i++) {
+        aux.push(this.iots_selected[i]['name'])
+      }
+
+      this.newDivision = {
+        name: this.name,
+        iots: aux,
+      }
+
+      await DivisionsService.postCreateDivision(localStorage.getItem("uri"), localStorage.getItem("token"), this.name, aux)
+      this.$emit("add-new-division", this.newDivision);
+      this.close();
+    },
+  },
+  computed: {
+    isCreateButtonDisabled: function () {
+      return !this.name || !this.iots_selected || this.iots_selected.length === 0;
     },
   },
 }
@@ -91,7 +111,8 @@ export default {
   margin: auto;
   padding: 20px 30px;
   background-color: #fff;
-  border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+  border-radius: 10px;
+  /* Adjust the value to control the roundness of the corners */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
 }
@@ -130,4 +151,5 @@ export default {
 .modal-leave-to .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}</style>
+}
+</style>
