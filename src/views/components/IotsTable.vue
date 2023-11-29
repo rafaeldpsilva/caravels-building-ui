@@ -10,6 +10,7 @@
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Type</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Values</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">URL</th>
               <!--th class="text-secondary opacity-7"></th-->
@@ -59,7 +60,9 @@
               </td>
               <td>
                 <p class="text-xs font-weight-bold mb-0">{{ iot.type }}</p>
-                <!--p class="text-xs text-secondary mb-0">Organization</p-->
+              </td>
+              <td>
+                <p class="text-xs font-weight-bold mb-0">{{ iot.values.toString().replaceAll(",",", ") }}</p>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="badge badge-sm bg-gradient-success">Online</span>
@@ -118,7 +121,15 @@ export default {
       this.isModalVisible = true;
     },
     async loadIotsList() {
-      this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+      var list = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+      for(var i = 0; i< list.length; i++){
+        var aux = [];
+        for (var j = 0; j< list[i]['values'].length; j++){
+          aux.push(list[i]['values'][j]['type'])
+        }
+        list[i]['values'] = aux;
+      }
+      this.iotsList = list
       localStorage.setItem("iots", JSON.stringify(this.iotsList))
     },
   }

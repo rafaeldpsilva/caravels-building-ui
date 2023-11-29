@@ -33,13 +33,13 @@
             <demand-response-events-card />
           </div>
         </div>
-        <div class="row">
+        <!--div class="row">
           <div class="col-lg-7 mb-lg">
             <div class="card z-index-2 mb-4">
               <production-breakdown />
             </div>
           </div>
-        </div>
+        </div-->
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@ import BuildingOverview from "./components/BuildingOverview.vue";
 import BuildingForecast from "./components/BuildingForecast.vue";
 import BuildingService from "../services/BuildingService.js"
 import DemandResponseEventsCard from "./components/DemandResponseEventsCard.vue";
-import ProductionBreakdown from "./components/ProductionBreakdown.vue";
+//import ProductionBreakdown from "./components/ProductionBreakdown.vue";
 
 export default {
   name: "dashboard-default",
@@ -109,7 +109,7 @@ export default {
     BuildingOverview,
     BuildingForecast,
     DemandResponseEventsCard,
-    ProductionBreakdown,
+    //ProductionBreakdown,
   },
 };
 </script>
