@@ -51,7 +51,6 @@ export default defineComponent({
   async mounted() {
     const cena = await RenDatahubService.getProductionBreakdown(localStorage.getItem("uri"), localStorage.getItem("token"))
     for (var i = 0; i < 2; i++) {
-      console.log(this.option.series)
       this.option.series.push({
         name: cena['series'][i]['name'],
         type: 'line',
@@ -62,10 +61,8 @@ export default defineComponent({
         },
         data: cena['series'][i]['data']
       })
-      console.log(this.option)
     }
     for (i = 2; i < cena['series'].length; i++) {
-      console.log(this.option.series)
       this.option.series.push({
         name: cena['series'][i]['name'],
         type: 'line',
@@ -78,7 +75,6 @@ export default defineComponent({
         },
         data: cena['series'][i]['data']
       })
-      console.log(this.option)
     }
     this.option.legend.data = cena['labels']
     this.option.xAxis.data = cena['legend']
