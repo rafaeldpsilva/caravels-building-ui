@@ -14,6 +14,12 @@
 
         <div class="modal-body">
           <div class="config">
+            <h6>AC Should be:</h6>
+            <h6>{{ ac_status }}</h6>
+            <!--span v-if="ac_status" class="badge badge-sm bg-gradient-success">{{ ac_status }}]</span>
+            <span v-else class="badge badge-sm bg-gradient-danger">{{ac_status}}</span-->
+          </div>
+          <div class="config">
             <h6>IoT's</h6>
             <div class="row">
 
@@ -96,6 +102,7 @@ export default {
   },
   data() {
     return {
+      ac_status: true,
       iots_selected: [],
       iotsList: [],
       temperature_iots: [],
@@ -108,44 +115,8 @@ export default {
     }
   },
   async mounted() {
-    var list = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
-    for (var i = 0; i < list.length; i++) {
-      var aux = [];
-      for (var j = 0; j < list[i]['values'].length; j++) {
-        aux.push(list[i]['values'][j]['type'])
-      }
-      list[i]['values'] = aux;
-    }
-    this.iotsList = list
-
-    for (i = 0; i < this.iotsList.length; i++) {
-      for (j = 0; j < this.division.iots.length; j++) {
-        if (this.iotsList[i]['name'] == this.division.iots[j]) {
-          this.iots_selected.push(this.iotsList[i])
-          if (this.iotsList[i]["values"].includes("temperature")) {
-            
-            if(this.division.ac_status_configuration.outside_temperature == this.iotsList[i]['name']){
-              this.outdoorTemperature = this.iotsList[i]
-            } else if (this.division.ac_status_configuration.temperature == this.iotsList[i]['name']){
-              this.temperature = this.iotsList[i]
-            }
-            this.temperature_iots.push(this.iotsList[i])
-          }
-          if (this.iotsList[i]["values"].includes("humidity")) {
-            if(this.division.ac_status_configuration.humidity == this.iotsList[i]['name']){
-              this.humidity = this.iotsList[i]
-            }
-            this.humidity_iots.push(this.iotsList[i])
-          }
-          if (this.iotsList[i]["values"].includes("light")) {
-            if(this.division.ac_status_configuration.light == this.iotsList[i]['name']){
-              this.light = this.iotsList[i]
-            }
-            this.light_iots.push(this.iotsList[i])
-          }
-        }
-      }
-    }
+    this.iotsList = await this.getIots()
+    this.savedConfigurations();
   },
   methods: {
     close() {
@@ -158,6 +129,47 @@ export default {
       }
       await DivisionsService.postDivisionUpdate(localStorage.getItem("uri"), localStorage.getItem("token"), this.division.id, this.division.name, aux, this.outdoorTemperature['name'], this.temperature['name'], this.humidity['name'], this.light['name'])
     },
+    async getIots() {
+      var list = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+      for (var i = 0; i < list.length; i++) {
+        var aux = [];
+        for (var j = 0; j < list[i]['values'].length; j++) {
+          aux.push(list[i]['values'][j]['type'])
+        }
+        list[i]['values'] = aux;
+      }
+      return list
+    },
+    savedConfigurations() {
+      for (var i = 0; i < this.iotsList.length; i++) {
+        for (var j = 0; j < this.division.iots.length; j++) {
+          if (this.iotsList[i]['name'] == this.division.iots[j]) {
+            this.iots_selected.push(this.iotsList[i])
+            if (this.iotsList[i]["values"].includes("temperature")) {
+
+              if (this.division.ac_status_configuration.outside_temperature == this.iotsList[i]['name']) {
+                this.outdoorTemperature = this.iotsList[i]
+              } else if (this.division.ac_status_configuration.temperature == this.iotsList[i]['name']) {
+                this.temperature = this.iotsList[i]
+              }
+              this.temperature_iots.push(this.iotsList[i])
+            }
+            if (this.iotsList[i]["values"].includes("humidity")) {
+              if (this.division.ac_status_configuration.humidity == this.iotsList[i]['name']) {
+                this.humidity = this.iotsList[i]
+              }
+              this.humidity_iots.push(this.iotsList[i])
+            }
+            if (this.iotsList[i]["values"].includes("light")) {
+              if (this.division.ac_status_configuration.light == this.iotsList[i]['name']) {
+                this.light = this.iotsList[i]
+              }
+              this.light_iots.push(this.iotsList[i])
+            }
+          }
+        }
+      }
+    }
   },
   computed: {
     isUpdateButtonDisabled: function () {
