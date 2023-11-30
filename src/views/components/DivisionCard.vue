@@ -18,8 +18,7 @@
       </div>
     </div>
     <Teleport to="body">
-      <division-modal :show="isModalVisible" :division="division" @addNewDivision="addNewDivision"
-        @close="isModalVisible = false"></division-modal>
+      <division-modal :show="isModalVisible" :division="division" @close="isModalVisible = false"></division-modal>
     </Teleport>
   </div>
 </template>
@@ -51,7 +50,7 @@ export default {
     },
     index: {
       required: true,
-    }
+    },
   },
   methods: {
     removeDivision() {

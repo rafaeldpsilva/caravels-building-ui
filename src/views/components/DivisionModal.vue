@@ -14,45 +14,6 @@
 
         <div class="modal-body">
           <div class="config">
-            <h6>AC Status Model</h6>
-            <div class="row">
-              <div class="col-md-6">
-                <label for="example-text-input" class="form-control-label">Outdoor Temperature:</label>
-                <div>
-                  <VueMultiselect v-model="outdoorTemperature" :options="iots_selected" :multiple="false"
-                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick one"
-                    label="name" track-by="name" :preselect-first="false" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="example-text-input" class="form-control-label">Temperature:</label>
-                <div>
-                  <VueMultiselect v-model="temperature" :options="iots_selected" :multiple="false" :close-on-select="false"
-                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
-                    :preselect-first="false" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label for="example-text-input" class="form-control-label">Humidity:</label>
-                <div>
-                  <VueMultiselect v-model="humidity" :options="iots_selected" :multiple="false" :close-on-select="false"
-                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
-                    :preselect-first="false" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="example-text-input" class="form-control-label">Light:</label>
-                <div>
-                  <VueMultiselect v-model="light" :options="iots_selected" :multiple="false" :close-on-select="false"
-                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
-                    :preselect-first="false" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
             <h6>IoT's</h6>
             <div class="row">
 
@@ -65,9 +26,48 @@
               </div>
             </div>
           </div>
+          <div>
+            <h6>AC Status Model</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Outdoor Temperature:</label>
+                <div>
+                  <VueMultiselect v-model="outdoorTemperature" :options="temperature_iots" :multiple="false"
+                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick one"
+                    label="name" track-by="name" :preselect-first="false" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Temperature:</label>
+                <div>
+                  <VueMultiselect v-model="temperature" :options="temperature_iots" :multiple="false"
+                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick one"
+                    label="name" track-by="name" :preselect-first="false" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Humidity:</label>
+                <div>
+                  <VueMultiselect v-model="humidity" :options="humidity_iots" :multiple="false" :close-on-select="false"
+                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
+                    :preselect-first="false" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="example-text-input" class="form-control-label">Light:</label>
+                <div>
+                  <VueMultiselect v-model="light" :options="light_iots" :multiple="false" :close-on-select="false"
+                    :clear-on-select="false" :preserve-search="true" placeholder="Pick one" label="name" track-by="name"
+                    :preselect-first="false" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="text-center">
-          <argon-button :disabled="isUpdateButtonDisabled" class="m-2" variant="gradient" color="primary" size="sm"
+          <argon-button class="m-2" variant="gradient" color="primary" size="sm"
             @click="updateDivision()">Update</argon-button>
         </div>
       </div>
@@ -83,12 +83,12 @@ import IotService from '../../services/IotService.js';
 import DivisionsService from '../../services/DivisionsService.js';
 
 export default {
-  name: "division-modal-dialog",
+  name: "division-modal",
   props: {
     show: Boolean,
     division: {
       required: true,
-    }
+    },
   },
   components: {
     ArgonButton,
@@ -96,9 +96,11 @@ export default {
   },
   data() {
     return {
-      newDivision: null,
       iots_selected: [],
       iotsList: [],
+      temperature_iots: [],
+      light_iots: [],
+      humidity_iots: [],
       outdoorTemperature: "",
       temperature: "",
       humidity: "",
@@ -106,11 +108,41 @@ export default {
     }
   },
   async mounted() {
-    this.iotsList = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
-    for (var i = 0; i < this.iotsList.length; i++) {
-      for (var j = 0; j < this.division.iots.length; j++) {
+    var list = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
+    for (var i = 0; i < list.length; i++) {
+      var aux = [];
+      for (var j = 0; j < list[i]['values'].length; j++) {
+        aux.push(list[i]['values'][j]['type'])
+      }
+      list[i]['values'] = aux;
+    }
+    this.iotsList = list
+
+    for (i = 0; i < this.iotsList.length; i++) {
+      for (j = 0; j < this.division.iots.length; j++) {
         if (this.iotsList[i]['name'] == this.division.iots[j]) {
           this.iots_selected.push(this.iotsList[i])
+          if (this.iotsList[i]["values"].includes("temperature")) {
+            
+            if(this.division.ac_status_configuration.outside_temperature == this.iotsList[i]['name']){
+              this.outdoorTemperature = this.iotsList[i]
+            } else if (this.division.ac_status_configuration.temperature == this.iotsList[i]['name']){
+              this.temperature = this.iotsList[i]
+            }
+            this.temperature_iots.push(this.iotsList[i])
+          }
+          if (this.iotsList[i]["values"].includes("humidity")) {
+            if(this.division.ac_status_configuration.humidity == this.iotsList[i]['name']){
+              this.humidity = this.iotsList[i]
+            }
+            this.humidity_iots.push(this.iotsList[i])
+          }
+          if (this.iotsList[i]["values"].includes("light")) {
+            if(this.division.ac_status_configuration.light == this.iotsList[i]['name']){
+              this.light = this.iotsList[i]
+            }
+            this.light_iots.push(this.iotsList[i])
+          }
         }
       }
     }
@@ -118,10 +150,13 @@ export default {
   methods: {
     close() {
       this.$emit('close')
-      this.clear()
     },
-    async createDivision() {
-      await DivisionsService.postSetConfigACStatus()
+    async updateDivision() {
+      var aux = []
+      for (var i = 0; i < this.iots_selected.length; i++) {
+        aux.push(this.iots_selected[i]['name'])
+      }
+      await DivisionsService.postDivisionUpdate(localStorage.getItem("uri"), localStorage.getItem("token"), this.division.id, this.division.name, aux, this.outdoorTemperature['name'], this.temperature['name'], this.humidity['name'], this.light['name'])
     },
   },
   computed: {

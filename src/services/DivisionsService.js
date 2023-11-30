@@ -3,8 +3,8 @@ import axios from 'axios';
 const DivisionsService = {
   divisions: "divisions",
   create_division: "divisions/create",
-  ac_status:"divisions/acstatus",
-  set_config_ac_status:"divisions/config/acstatus",
+  update_division: "divisions/update",
+  ac_status: "divisions/acstatus",
 
   async getDivisions(url, token) {
     const path = url + this.divisions + '?token=' + token
@@ -28,28 +28,31 @@ const DivisionsService = {
       console.error(error);
     };
   },
-  async getACStatus(url, token) {
+  async postACStatus(url, token, id) {
+    let payload = {
+      "id": id
+    }
     const path = url + this.ac_status + '?token=' + token
     try {
-      const response = await axios.get(path);
+      const response = await axios.post(path, payload);
       return response.data.ac_status
     } catch (error) {
       console.error(error);
     };
   },
-  async postSetConfigACStatus(url, token, outside_temperature_iot, outside_temperature_tag, temperature_iot, temperature_tag, humidity_iot, humidity_tag, light_iot, light_tag, division) {
+  async postDivisionUpdate(url, token, id, name, iots, outside_temperature, temperature, humidity,light) {
     let payload = {
-      "outside_temperature_iot": outside_temperature_iot,
-      "outside_temperature_tag": outside_temperature_tag,
-      "temperature_iot": temperature_iot,
-      "temperature_tag": temperature_tag,
-      "humidity_iot": humidity_iot,
-      "humidity_tag": humidity_tag,
-      "light_iot": light_iot,
-      "light_tag": light_tag,
-      "division": division
+      "id": id,
+      "name": name,
+      "iots": iots,
+      "ac_status_configuration": {
+        "outside_temperature": outside_temperature,
+        "temperature": temperature,
+        "humidity": humidity,
+        "light": light
     }
-    const path = url + this.set_config_ac_status + '?token=' + token
+    }
+    const path = url + this.update_division + '?token=' + token
     try {
       const response = await axios.post(path, payload);
       return response.data
