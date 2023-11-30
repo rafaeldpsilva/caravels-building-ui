@@ -9,7 +9,7 @@
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-12">
-            <create-division-card :newDivision="newDivision" @addDivision="handleAddDivision" />
+            <create-division-card :newDivision="newDivision" @handleAddDivision="handleAddDivision" />
           </div>
         </div>
       </div>

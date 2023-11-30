@@ -31,7 +31,7 @@
     },
     methods: {
       addNewDivision(newDivision){
-        this.$emit('add-division', newDivision)
+        this.$emit('handle-add-division', newDivision)
       },
       showCreateDivisionModal() {
         this.isModalVisible = true;
