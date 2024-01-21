@@ -12,12 +12,10 @@
           <thead>
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Capacity</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Capacity (Wh)</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Charging
-                Rate</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Charge
-              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Rate</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">State of Charge</th>
               <th></th>
             </tr>
           </thead>
@@ -35,7 +33,7 @@
                 </div>
               </td>
               <td>
-                <p class="text-sm font-weight-bold mb-0">{{ battery.capacity }} kWh</p>
+                <p class="text-sm font-weight-bold mb-0">{{ battery.capacity }}</p>
               </td>
               <td>
                 <span class="text-xs font-weight-bold">{{ battery.status }}</span>

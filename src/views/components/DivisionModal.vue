@@ -13,11 +13,11 @@
         </div>
 
         <div class="modal-body">
-          <div class="config">
-            <h6>AC Should be:</h6>
-            <h6>{{ ac_status }}</h6>
-            <!--span v-if="ac_status" class="badge badge-sm bg-gradient-success">{{ ac_status }}]</span>
-            <span v-else class="badge badge-sm bg-gradient-danger">{{ac_status}}</span-->
+          <div v-if="isACConfigured" class="config">
+            <h6 >AC Should be:</h6>
+            <span v-if="ac_status && ac_mode == 'warm'" class="badge badge-sm bg-gradient-warning">{{ ac_mode }}</span>
+            <span v-else-if="ac_status && ac_mode == 'cold'" class="badge badge-sm bg-gradient-info">{{ ac_mode }}</span>
+            <span v-else class="badge badge-sm bg-gradient-danger">Off</span>
           </div>
           <div class="config">
             <h6>IoT's</h6>
@@ -73,7 +73,12 @@
           </div>
         </div>
         <div class="text-center">
-          <argon-button class="m-2" variant="gradient" color="primary" size="sm"
+          <div v-if="this.loading" class="fa-3x text-center">
+            <argon-button class="m-2" variant="gradient" color="primary" size="sm">
+              <i class="fas fa-circle-notch fa-spin"></i>
+            </argon-button>
+          </div>
+          <argon-button v-else class="m-2" variant="gradient" color="primary" size="sm"
             @click="updateDivision()">Update</argon-button>
         </div>
       </div>
@@ -102,7 +107,9 @@ export default {
   },
   data() {
     return {
+      loading: false,
       ac_status: true,
+      ac_mode: "cold",
       iots_selected: [],
       iotsList: [],
       temperature_iots: [],
@@ -117,17 +124,25 @@ export default {
   async mounted() {
     this.iotsList = await this.getIots()
     this.savedConfigurations();
+    if (this.isACConfigured) {
+      const status = await DivisionsService.postACStatus(localStorage.getItem("uri"), localStorage.getItem("token"), this.division.id)
+      if (status == "off") {
+        this.ac_status = false
+      }
+    }
   },
   methods: {
     close() {
       this.$emit('close')
     },
     async updateDivision() {
+      this.loading = true;
       var aux = []
       for (var i = 0; i < this.iots_selected.length; i++) {
         aux.push(this.iots_selected[i]['name'])
       }
       await DivisionsService.postDivisionUpdate(localStorage.getItem("uri"), localStorage.getItem("token"), this.division.id, this.division.name, aux, this.outdoorTemperature['name'], this.temperature['name'], this.humidity['name'], this.light['name'])
+      this.loading = false;
     },
     async getIots() {
       var list = await IotService.getIots(localStorage.getItem("uri"), localStorage.getItem("token"))
@@ -172,6 +187,9 @@ export default {
     }
   },
   computed: {
+    isACConfigured: function () {
+      return this.outdoorTemperature != "" && this.temperature != "" && this.humidity != "" && this.light != "";
+    },
     isUpdateButtonDisabled: function () {
       return !this.name || !this.iots_selected || this.iots_selected.length === 0;
     },

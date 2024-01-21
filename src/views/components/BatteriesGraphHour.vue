@@ -136,7 +136,7 @@ export default defineComponent({
         trigger: 'axis'
       },
       legend: {
-        data: ['Total Stored Energy']
+        data: ['Total State of Charge']
       },
       grid: {
         left: '3%',
@@ -150,11 +150,12 @@ export default defineComponent({
         data: []
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        max: 100,
       },
       series: [
         {
-          name: 'Total Stored Energy',
+          name: 'Total State of Charge',
           type: 'line',
           color: "#825ee4",
           showSymbol: false,
