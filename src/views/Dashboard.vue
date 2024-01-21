@@ -96,13 +96,18 @@ export default {
     this.stats.generation.value = "0 W";
     this.stats.flexibility.value = "0 W";
     await this.updateMonitoringValues()
-    setInterval(() => {
+    this.monitoringInterval = setInterval(() => {
       this.updateMonitoringValues();
     }, 5000);
-    setInterval(() => {
+    this.detailInterval = setInterval(() => {
       this.i += 1;
       this.detail = "updated " + this.i + " seconds ago"
     }, 1000);
+  },
+  beforeUnmount() {
+    // Clear intervals to prevent memory leaks
+    clearInterval(this.monitoringInterval);
+    clearInterval(this.detailInterval);
   },
   components: {
     Card,

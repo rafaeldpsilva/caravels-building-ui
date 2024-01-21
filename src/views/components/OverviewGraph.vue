@@ -43,9 +43,12 @@ export default defineComponent({
     this.option.series[1].data = this.generation
     this.option.series[2].data = this.flexibility
     await this.updateMonitoringValues()
-    setInterval(() => {
+    this.monitoringInterval = setInterval(() => {
       this.updateMonitoringValues();
     }, 1000);
+  },
+  beforeUnmount(){
+    clearInterval(this.monitoringInterval);
   },
   methods: {
       async updateMonitoringValues() {

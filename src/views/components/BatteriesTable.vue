@@ -147,6 +147,12 @@ export default {
       this.showMenu.push(false)
     }
     this.loading = false;
+    this.batteriesInterval = setInterval(() => {
+      this.loadBatteryList();
+    }, 5000);
+  },
+  beforeUnmount(){
+    clearInterval(this.batteriesInterval);
   },
   methods: {
     async loadBatteryList() {

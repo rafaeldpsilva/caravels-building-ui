@@ -160,7 +160,7 @@ export default defineComponent({
           color: "#825ee4",
           showSymbol: false,
           data: []
-        }
+        },
       ]
     }
     );
