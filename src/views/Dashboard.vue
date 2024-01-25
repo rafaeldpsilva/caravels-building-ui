@@ -46,10 +46,10 @@
 </template>
 <script>
 import Card from "@/examples/Cards/Card.vue";
-import BuildingOverview from "./components/BuildingOverview.vue";
-import BuildingForecast from "./components/BuildingForecast.vue";
+import BuildingOverview from "./components/Dashboard/BuildingOverview.vue";
+import BuildingForecast from "./components/Dashboard/BuildingForecast.vue";
 import BuildingService from "../services/BuildingService.js"
-import DemandResponseEventsCard from "./components/DemandResponseEventsCard.vue";
+import DemandResponseEventsCard from "./components/Dashboard/DemandResponseEventsCard.vue";
 //import ProductionBreakdown from "./components/ProductionBreakdown.vue";
 
 export default {

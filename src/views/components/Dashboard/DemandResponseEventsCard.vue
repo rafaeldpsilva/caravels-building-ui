@@ -68,7 +68,7 @@
   
   <script>
   import ArgonButton from "@/components/ArgonButton.vue";
-  import DemandResponseService from "../../services/DemandResponseService.js"
+  import DemandResponseService from "../../../services/DemandResponseService.js"
 
   export default {
     name: "demand-response-events-card",

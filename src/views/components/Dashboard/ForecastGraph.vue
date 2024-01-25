@@ -15,7 +15,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
-import BuildingService from "../../services/BuildingService.js"
+import BuildingService from "../../../services/BuildingService.js"
 
 use([
   CanvasRenderer,
