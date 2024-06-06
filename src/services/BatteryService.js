@@ -1,12 +1,13 @@
 import axios from 'axios';
-
+//const url = process.env.BATTERY_SERVICE
+const url = "http://192.168.30.58:31005/"
 const BatteryService = {
   batteries: "batteries",
   batteries_historic: "batteries/historic",
   charge_battery: "batteries/charge",
 
-  async getBatteries(url, token) {
-    const path = url + this.batteries + '?token=' + token
+  async getBatteries() {
+    const path = url + this.batteries
     try {
       const response = await axios.get(path);
       return response.data.batteries
@@ -14,8 +15,8 @@ const BatteryService = {
       console.error(error);
     };
   },
-  async getBatteriesHistoric(url, token) {
-    const path = url + this.batteries_historic + '?token=' + token
+  async getBatteriesHistoric() {
+    const path = url + this.batteries_historic
     try {
       const response = await axios.get(path);
       return response.data.historic
@@ -23,12 +24,12 @@ const BatteryService = {
       console.error(error);
     };
   },
-  async postChargeBattery(url, token, battery, quantity) {
+  async postChargeBattery(battery, quantity) {
     let payload = {
       "battery": battery,
       "quantity": quantity,
     }
-    const path = url + this.charge_battery + '?token=' + token
+    const path = url + this.charge_battery
     try {
       const response = await axios.post(path, payload);
       return response.data

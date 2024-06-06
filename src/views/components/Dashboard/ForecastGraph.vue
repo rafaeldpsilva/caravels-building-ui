@@ -15,7 +15,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
-import BuildingService from "../../../services/BuildingService.js"
+import ForecastService from "../../../services/ForecastService.js"
 
 use([
   CanvasRenderer,
@@ -56,7 +56,7 @@ export default defineComponent({
   },
   methods: {  
     async loadBuildingForecast() {
-      await BuildingService.getForecastConsumption(localStorage.getItem("uri"),localStorage.getItem("token")).then( forecast => {
+      await ForecastService.getForecastConsumption(localStorage.getItem("token")).then( forecast => {
         let consumption = [];
         let hours = [];
         let i = 0;

@@ -1,14 +1,14 @@
 import axios from 'axios';
 
+const url = ""
 const DemandResponseService = {
-  communityOperatorURL : 'http://192.168.2.171:5000',
   get_unanswered_invitations : "invitation/unanswered",
   get_answered_invitations : "invitation/answered",
   answer_invitation : "invitation/answer",
   answer_auto : "invitation/auto",
   
-  async getUnansweredInvitations(url, token) {
-    const path = url+this.get_unanswered_invitations+'?token='+token
+  async getUnansweredInvitations() {
+    const path = url+this.get_unanswered_invitations
     try{
       const response = await axios.get(path);      
       return response.data['invitations']      
@@ -16,8 +16,8 @@ const DemandResponseService = {
       console.error(error);
     };
   },
-  async getAnsweredInvitations(url, token) {
-    const path = url+this.get_answered_invitations+'?token='+token
+  async getAnsweredInvitations() {
+    const path = url+this.get_answered_invitations
     try{
       const response = await axios.get(path);      
       return response.data['invitations']      
@@ -25,12 +25,12 @@ const DemandResponseService = {
       console.error(error);
     };
   },
-  async postAnsweredInvitation(url, token, event_time, response) {
+  async postAnsweredInvitation(event_time, response) {
     let payload = {
         "event_time": event_time,
         "response": response
     }
-    const path = url+this.answer_invitation+'?token='+token
+    const path = url+this.answer_invitation
     try{
       const response = await axios.post(path, payload);
       return response.data
@@ -38,8 +38,8 @@ const DemandResponseService = {
       console.error(error);
     };
   },
-  async getAutoAccept(url, token) {
-    const path = url+this.answer_auto+'?token='+token
+  async getAutoAccept() {
+    const path = url+this.answer_auto
     try{
       const response = await axios.get(path);      
       return response.data['auto_answer']      
@@ -47,11 +47,11 @@ const DemandResponseService = {
       console.error(error);
     };
   },
-  async postAutoAccept(url, token, auto_answer) {
+  async postAutoAccept(auto_answer) {
     let payload = {
         "auto_answer": auto_answer,
     }
-    const path = url+this.answer_auto+'?token='+token
+    const path = url+this.answer_auto
     try{
       const response = await axios.post(path, payload);
       return response.data

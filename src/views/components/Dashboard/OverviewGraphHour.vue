@@ -17,6 +17,7 @@ import {
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
 import BuildingService from "../../../services/BuildingService.js"
+import ForecastService from "../../../services/ForecastService.js"
 use([
   CanvasRenderer,
   LineChart,
@@ -57,7 +58,8 @@ export default defineComponent({
       this.option.series[1].data = overview[2].slice(6);
       this.option.series[2].data = overview[3].slice(6);
     }
-
+    console.log(this.nowHour.toString())
+    
     let i = 0;
     while (i < 6) {
       this.option.xAxis.data.push(this.nowHour + i + 1)
@@ -66,7 +68,7 @@ export default defineComponent({
       this.option.series[2].data.push(null)
       i++;
     }
-
+    
     const forecast = JSON.parse(localStorage.getItem("forecast-overview"))
     if (forecast.length != 2) {
       await this.loadBuildingForecast(this.nowHour);
@@ -78,7 +80,7 @@ export default defineComponent({
   },
   methods: {
     async loadBuildingForecast(hour) {
-      await BuildingService.getForecastConsumption(localStorage.getItem("uri"), localStorage.getItem("token")).then(forecast => {
+      await ForecastService.getForecastConsumption(localStorage.getItem("token")).then(forecast => {
         let consumption = [];
         let hours = [];
         let i = 0;
@@ -106,10 +108,10 @@ export default defineComponent({
         let hours = [];
         let i = 0;
         while (i < historic.length) {
-          consumption.push(historic[i][0].toFixed(2));
-          generation.push(historic[i][1].toFixed(2));
-          flexibility.push(historic[i][2].toFixed(2));
-          var dateObject = new Date(historic[i][3]);
+          consumption.push(historic[i][1].toFixed(2));
+          generation.push(historic[i][2].toFixed(2));
+          flexibility.push(historic[i][3].toFixed(2));
+          var dateObject = new Date(historic[i][0]);
           hours.push(dateObject.getUTCHours());
           i++;
         }
@@ -186,7 +188,7 @@ export default defineComponent({
           data: []
         },
         {
-          data: [null, null, null, null, null, null, null, 1320, 1330, 1210, 1230, 1190, 110, 130],
+          data: [],
           type: 'line',
           showSymbol: false,
           lineStyle: {
