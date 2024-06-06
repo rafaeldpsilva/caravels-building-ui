@@ -1,6 +1,6 @@
-# Energy Management UI
+# Caravels Building UI
 
-The Energy Management UI is a web-based interface designed to interact with the Energy Management API. It provides users with a comprehensive view of energy consumption and generation data, management of IoT devices, and control over AC status in different divisions. The UI allows for easy visualization and manipulation of energy-related data, enhancing the efficiency of energy usage and optimization within the system.
+The Caravels Building UI is a web-based interface designed to interact with the Energy Management API. It provides users with a comprehensive view of energy consumption and generation data, management of IoT devices, and control over AC status in different divisions. The UI allows for easy visualization and manipulation of energy-related data, enhancing the efficiency of energy usage and optimization within the system.
 
 ## Features
 
@@ -11,7 +11,7 @@ The Energy Management UI is a web-based interface designed to interact with the 
 
 ## Getting Started
 
-To start using the Energy Management UI, ensure that the Energy Management API is running and accessible. The UI will communicate with the API to retrieve and update data as needed.
+To start using the Caravels Building UI, ensure that the Energy Management API is running and accessible. The UI will communicate with the API to retrieve and update data as needed.
 
 Then execute:
 
