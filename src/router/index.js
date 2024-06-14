@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Battery from "../views/Battery.vue";
-import Tokens from "../views/Tokens.vue";
 import IoTs from "../views/IoTs.vue";
 import Divisions from "../views/Divisions.vue";
 import Profile from "../views/Profile.vue";
@@ -30,12 +29,6 @@ const routes = [
     path: "/divisions",
     name: "Divisions",
     component: Divisions,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/tokens",
-    name: "Tokens",
-    component: Tokens,
     meta: { requiresAuth: true }
   },
   {

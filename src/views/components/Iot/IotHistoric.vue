@@ -16,7 +16,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
-import IotService from "../../services/IotService.js"
+import IotService from "../../../services/IotService.js"
 use([
     CanvasRenderer,
     LineChart,

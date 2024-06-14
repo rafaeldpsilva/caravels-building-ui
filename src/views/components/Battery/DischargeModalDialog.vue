@@ -22,7 +22,7 @@
   </Transition>
 </template>
 <script>
-import BatteryService from "../../services/BatteryService";
+import BatteryService from "../../../services/BatteryService";
 import ArgonButton from "@/components/ArgonButton.vue";
 
 export default {

@@ -65,15 +65,6 @@ const BuildingService = {
       console.error(error);
     };
   },
-  async getCorrelations() {
-    const path = url + this.correlations
-    try {
-      const response = await axios.get(path);
-      return response.data.correlations
-    } catch (error) {
-      console.error(error);
-    };
-  },
   async getBalance() {
     const path = url + this.balance
     try {

@@ -24,7 +24,7 @@
               <td>
                 <div class="d-flex px-2">
                   <div>
-                    <img src="../../assets/img/icons/refrigerator.png" class="avatar avatar-sm rounded-circle me-2"
+                    <img src="../../../assets/img/icons/refrigerator.png" class="avatar avatar-sm rounded-circle me-2"
                       alt="{{battery.name}}" />
                   </div>
                   <div class="my-auto">
@@ -69,7 +69,7 @@
                     <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
                   </button>
                 </div>
-                <ul class="px-2 py-3 dropdown-menu dropdown-menu-end" :class="showMenu[battery.i] ? 'show' : ''"
+                <ul class="px-2 py-3 dropdown-menu dropdown-menu-end" ev"
                   aria-labelledby="dropdownMenuButton">
                   <li class="mb-2" @click="showChargeModal(battery.i)">
                     <a class="dropdown-item border-radius-md">
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import BatteryService from '../../services/BatteryService.js';
+import BatteryService from '../../../services/BatteryService.js';
 import ChargeModalDialog from './ChargeModalDialog.vue';
 import DischargeModalDialog from './DischargeModalDialog.vue';
 
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     async loadBatteryList() {
-      const batteries = await BatteryService.getBatteries(localStorage.getItem("token"))
+      const batteries = await BatteryService.getBatteries()
       var list = []
       for (var i = 0; i < batteries.length; i++) {
         var status = "on hold"

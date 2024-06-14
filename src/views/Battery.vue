@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import BatteriesTable from "./components/BatteriesTable.vue";
-import BatteriesGraphHour from "./components/BatteriesGraphHour.vue";
+import BatteriesTable from "./components/Battery/BatteriesTable.vue";
+import BatteriesGraphHour from "./components/Battery/BatteriesGraphHour.vue";
 
 export default {
   name: "tables",

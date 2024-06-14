@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import DivisionCard from "./components/DivisionCard.vue"
-import CreateDivisionCard from "./components/CreateDivisionCard.vue"
+import DivisionCard from "./components/Divisions/DivisionCard.vue"
+import CreateDivisionCard from "./components/Divisions/CreateDivisionCard.vue"
 import DivisionService from "../services/DivisionsService.js"
 
 export default {

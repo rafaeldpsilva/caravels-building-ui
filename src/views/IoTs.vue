@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import IotsTable from "./components/IotsTable.vue";
+import IotsTable from "./components/Iot/IotsTable.vue";
 
 export default {
   name: "iots",

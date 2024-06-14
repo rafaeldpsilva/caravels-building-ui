@@ -42,8 +42,8 @@
 import ArgonButton from "@/components/ArgonButton.vue";
 import VueMultiselect from 'vue-multiselect';
 import "vue-multiselect/dist/vue-multiselect.css";
-import IotService from '../../services/IotService.js';
-import DivisionsService from '../../services/DivisionsService.js';
+import IotService from '../../../services/IotService.js';
+import DivisionsService from '../../../services/DivisionsService.js';
 
 export default {
   name: "create-division-modal-dialog",

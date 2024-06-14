@@ -16,7 +16,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
-import BatteryService from "../../services/BatteryService.js"
+import BatteryService from "../../../services/BatteryService.js"
 use([
   CanvasRenderer,
   LineChart,
