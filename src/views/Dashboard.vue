@@ -42,7 +42,7 @@ import Card from "@/examples/Cards/Card.vue";
 import BuildingOverview from "./components/Dashboard/BuildingOverview.vue";
 import BuildingForecast from "./components/Dashboard/BuildingForecast.vue";
 import DemandResponseEventsCard from "./components/DemandResponse/DemandResponseEventsCard.vue";
-import EnergyService from "../services/EnergyService.js";
+//import EnergyService from "../services/EnergyService.js";
 
 export default {
   name: "dashboard-default",

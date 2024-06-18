@@ -1,6 +1,7 @@
 import axios from 'axios';
 //const url = process.env.BATTERY_SERVICE
 const url = "http://192.168.30.58:31005/"
+
 const BatteryService = {
   batteries: "batteries",
   batteries_historic: "batteries/historic",
